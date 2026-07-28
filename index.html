@@ -297,6 +297,16 @@
   .burger span:nth-child(2){top:19px;}
   .burger span:nth-child(3){top:24px;}
   .burger.open span:nth-child(1){transform:translateY(5px) rotate(45deg);}
+  .nav-icon-btn{
+    width:36px; height:36px; border-radius:50%; border:1.5px solid var(--line);
+    background:var(--white); font-size:15px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    transition:border-color .25s, transform .25s var(--ease), box-shadow .25s;
+  }
+  .nav-icon-btn:hover{
+    border-color:var(--sky-deep); transform:translateY(-1px);
+    box-shadow:0 4px 12px rgba(28,43,51,.1);
+  }
   .burger.open span:nth-child(2){opacity:0;}
   .burger.open span:nth-child(3){transform:translateY(-5px) rotate(-45deg);}
 
@@ -382,10 +392,11 @@
 
   @media (max-width:860px){
     .nav-links{display:none;}
+    .nav-icon-btn{display:none;}
     .burger{display:block;}
   }
   @media (max-width:520px){
-    .nav-more{padding:9px;}
+    .burger{padding:9px;}
   }
 
   /* ---------------- HERO ---------------- */
@@ -1368,6 +1379,9 @@ document.addEventListener('DOMContentLoaded', () => {
         <a href="#contact" class="nav-cta">Обсудить проект</a>
       </div>
       <div class="nav-right">
+        <button class="nav-icon-btn" onclick="openChat()" title="Помощник" aria-label="Помощник">💬</button>
+        <button class="nav-icon-btn" onclick="openPage('portfolioPage')" title="Портфолио" aria-label="Портфолио">◆</button>
+        <button class="nav-icon-btn" onclick="openPage('calendarPage')" title="Запись" aria-label="Запись">📅</button>
         <button class="burger" id="burger" aria-label="Меню"><span></span><span></span><span></span></button>
       </div>
     </nav>
