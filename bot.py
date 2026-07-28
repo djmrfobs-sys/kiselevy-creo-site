@@ -322,6 +322,22 @@ def save_projects(projects):
     with open(PROJECTS_FILE, 'w', encoding='utf-8') as f:
         json.dump(projects, f, ensure_ascii=False, indent=2)
 
+def git_commit_and_push(message):
+    """Commit and push projects.json to GitHub."""
+    import subprocess
+    repo_dir = os.path.dirname(os.path.abspath(__file__))
+    try:
+        subprocess.run(['git', '-C', repo_dir, 'add', 'projects.json'], capture_output=True)
+        result = subprocess.run(['git', '-C', repo_dir, 'diff', '--cached', '--quiet'], capture_output=True)
+        if result.returncode == 0:
+            return False  # No changes
+        subprocess.run(['git', '-C', repo_dir, 'commit', '-m', message], capture_output=True)
+        subprocess.run(['git', '-C', repo_dir, 'push'], capture_output=True)
+        return True
+    except Exception as e:
+        logger.warning(f'Git push failed: {e}')
+        return False
+
 def generate_portfolio_js():
     """Сгенерировать JS-код для обновления портфолио на сайте."""
     projects = load_projects()
@@ -412,7 +428,16 @@ async def addproject(update: Update, _context):
     projects.append(project)
     save_projects(projects)
     
-    # Generate the JavaScript injection
+    # Auto-commit and push to GitHub (for Cloudflare Pages auto-deploy)
+    pushed = git_commit_and_push(f'➕ Новый проект: {title}')
+    if pushed:
+        await update.message.reply_text(
+            f'🚀 *Автоматически залито на GitHub!*\n'
+            f'После деплоя проект появится на сайте.',
+            parse_mode='Markdown'
+        )
+    
+    # Generate the JavaScript injection (fallback)
     js_code = generate_portfolio_js()
     
     await update.message.reply_text(

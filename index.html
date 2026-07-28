@@ -3,6 +3,50 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="KISELEVY CREO — автоматизация, чат-боты, AI, вайбкодинг, маркетинг, продюсирование. Работаем по всему миру.">
+<meta name="keywords" content="автоматизация, чат-боты, AI, вайбкодинг, маркетинг, продюсирование, сайты, разработка, KISELEVY CREO, digital agency">
+<meta name="robots" content="index, follow">
+<meta name="author" content="KISELEVY CREO">
+<meta name="language" content="ru, en">
+<link rel="canonical" href="https://kiselevy-creo.ru">
+
+<!-- Open Graph / Facebook / Telegram -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="KISELEVY CREO — AI, боты, автоматизация, маркетинг">
+<meta property="og:description" content="Превращаем идеи в готовые цифровые продукты.">
+<meta property="og:url" content="https://kiselevy-creo.ru">
+<meta property="og:image" content="https://kiselevy-creo.ru/og-image.jpg">
+<meta property="og:locale" content="ru_RU">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="KISELEVY CREO — AI, боты, автоматизация, маркетинг">
+<meta name="twitter:description" content="Превращаем идеи в готовые цифровые продукты.">
+<meta name="twitter:image" content="https://kiselevy-creo.ru/og-image.jpg">
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "KISELEVY CREO",
+  "description": "Автоматизация, AI, чат-боты, маркетинг, продюсирование — под ключ.",
+  "url": "https://kiselevy-creo.ru",
+  "email": "hello@kiselevy-creo.ru",
+  "telegram": "https://t.me/kiselevy_creo",
+  "foundingDate": "2025",
+  "founders": [
+    {"@type": "Person", "name": "Артур Киселев"},
+    {"@type": "Person", "name": "Екатерина Киселева"}
+  ],
+  "sameAs": [
+    "https://t.me/kiselevy_creo",
+    "https://github.com/djmrfobs-sys/kiselevy-creo-site",
+    "https://instagram.com/kiselevy_creo"
+  ]
+}
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kiselevy_creo — автоматизация, чат-боты, AI, продюсирование, маркетинг</title>
 <meta name="description" content="Kiselevy_creo — портфолио проектов по автоматизации, чат-ботам, AI-системам, продюсированию и маркетингу. Свяжитесь для сотрудничества.">
 <meta property="og:title" content="Kiselevy_creo">
@@ -3340,6 +3384,47 @@ document.addEventListener('DOMContentLoaded', () => {
     const activeFilter = document.querySelector('.portfolio-filter.active');
     renderPortfolio(activeFilter?.dataset?.filter || 'all');
   }, 30000);
+});
+
+</script>
+
+<script>
+
+/* ==============================================
+   🔄 АВТО-ОБНОВЛЕНИЕ портфолио с GitHub
+   ============================================== */
+async function syncProjectsFromServer() {
+  try {
+    // Try to load projects.json from the current domain
+    const resp = await fetch('/projects.json');
+    if (!resp.ok) throw new Error('Not found');
+    const serverProjects = await resp.json();
+    if (!Array.isArray(serverProjects) || serverProjects.length === 0) return;
+    
+    // Merge with local
+    const existing = JSON.parse(localStorage.getItem('kc_projects') || '[]');
+    const merged = [...existing];
+    for (const sp of serverProjects) {
+      if (!merged.find(p => p.id === sp.id)) {
+        merged.push(sp);
+      }
+    }
+    localStorage.setItem('kc_projects', JSON.stringify(merged));
+    
+    // Re-render if portfolio is visible
+    if (typeof renderPortfolio === 'function') {
+      const activeFilter = document.querySelector('.portfolio-filter.active');
+      renderPortfolio(activeFilter ? activeFilter.dataset.filter : 'all');
+    }
+  } catch(e) {
+    // projects.json not available yet — that's fine
+    console.log('KC: projects.json sync skipped (will work after Cloudflare deploy)');
+  }
+}
+
+// Sync when page loads
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(syncProjectsFromServer, 2000);
 });
 
 </script>
