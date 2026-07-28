@@ -1979,33 +1979,6 @@ document.addEventListener('DOMContentLoaded', () => {
   </div>
 </footer>
 
-<!-- ================= ЖИВОЙ ЧАТ / НЕЙРО-ПРОДАВЕЦ ================= -->
-<div class="chat-teaser" id="chatTeaser">Здравствуйте! Подскажу по автоматизации, ботам, AI и ценам — спросите что-нибудь 👋</div>
-<button class="chat-launcher" id="chatLauncher" aria-label="Открыть чат с AI-консультантом">
-  <span class="ring"></span>
-  <span id="chatLauncherIcon">💬</span>
-  <span class="chat-badge" id="chatBadge">1</span>
-</button>
-
-<div class="chat-window" id="chatWindow" role="dialog" aria-label="Чат с AI-консультантом Kiselevy_creo">
-  <div class="chat-head">
-    <div class="chat-avatar">K</div>
-    <div class="chat-head-text">
-      <b>AI-консультант Kiselevy_creo</b>
-      <span>на связи</span>
-    </div>
-    <button class="chat-close" id="chatClose" aria-label="Свернуть чат">✕</button>
-  </div>
-  <div class="chat-body" id="chatBody"></div>
-  <div class="chat-quick" id="chatQuick"></div>
-  <div class="chat-input-row">
-    <input type="text" id="chatInput" placeholder="Спросите про автоматизацию, ботов, цены..." autocomplete="off">
-    <button class="chat-send" id="chatSend" aria-label="Отправить">➤</button>
-  </div>
-</div>
-
-<button class="music-toggle" id="musicToggle" aria-pressed="false" aria-label="Включить фоновую музыку">🎵</button>
-<button class="theme-toggle" id="themeToggle" aria-pressed="false" aria-label="Включить тёмную космическую тему">🌙</button>
       <button class="lang-toggle btn btn-ghost" onclick="switchLang(currentLang==='ru'?'en':'ru')" style="padding:6px 12px;font-size:13px;font-weight:700;min-width:44px;">EN</button>
 <button class="sound-toggle" id="soundToggle" aria-pressed="true" aria-label="Выключить звуковые эффекты">🔊</button>
 
@@ -3021,141 +2994,6 @@ async function getBotReply(userText){
   return classifyLocal(userText);
 }
 
-/* ---------------- ЛОГИКА ЧАТА ---------------- */
-const chatLauncher = document.getElementById('chatLauncher');
-const chatBadge = document.getElementById('chatBadge');
-const chatTeaser = document.getElementById('chatTeaser');
-const chatWindow = document.getElementById('chatWindow');
-const chatClose = document.getElementById('chatClose');
-const chatBody = document.getElementById('chatBody');
-const chatQuick = document.getElementById('chatQuick');
-const chatInput = document.getElementById('chatInput');
-const chatSend = document.getElementById('chatSend');
-
-let chatOpened = false;
-
-function addBubble(text, sender){
-  const el = document.createElement('div');
-  el.className = 'chat-msg ' + sender;
-  el.textContent = text;
-  chatBody.appendChild(el);
-  chatBody.scrollTop = chatBody.scrollHeight;
-}
-
-function setQuickReplies(list){
-  chatQuick.innerHTML = '';
-  list.forEach(label=>{
-    const b = document.createElement('button');
-    b.className = 'chat-chip'; b.textContent = label;
-    b.addEventListener('click', ()=> sendUserMessage(label));
-    chatQuick.appendChild(b);
-  });
-}
-
-function showLeadForm(){
-  chatQuick.innerHTML = '';
-  const wrap = document.createElement('div');
-  wrap.className = 'chat-lead';
-  wrap.innerHTML = `
-    <p>Оставьте контакт — свяжусь в течение суток:</p>
-    <input type="text" placeholder="Имя" id="leadName">
-    <input type="text" placeholder="Telegram, телефон или email" id="leadContact">
-    <button type="button" id="leadSubmit">Отправить</button>`;
-  chatBody.appendChild(wrap);
-  chatBody.scrollTop = chatBody.scrollHeight;
-  wrap.querySelector('#leadSubmit').addEventListener('click', async ()=>{
-    const name = wrap.querySelector('#leadName').value.trim();
-    const contact = wrap.querySelector('#leadContact').value.trim();
-    if(!name || !contact) return;
-    wrap.remove();
-    addBubble(name + ' · ' + contact, 'user');
-    if(FORM_ENDPOINT){
-      try{
-        await fetch(FORM_ENDPOINT, {
-          method:'POST', headers:{'Content-Type':'application/json','Accept':'application/json'},
-          body: JSON.stringify({ source:'chat_lead', name, contact })
-        });
-      }catch(e){}
-    }
-    SoundFX.success();
-    setTimeout(()=> addBubble('Спасибо, ' + name.split(' ')[0] + '! Записал контакт — свяжусь в течение суток.', 'bot'), 300);
-    if(!FORM_ENDPOINT) console.info('Kiselevy_creo: заявка из чата поймана локально. Подключите FORM_ENDPOINT, чтобы она приходила вам на почту/в Telegram.');
-  });
-}
-
-let chatExchangeCount = 0;
-let leadNudged = false;
-
-async function sendUserMessage(text){
-  if(!text.trim()) return;
-  addBubble(text, 'user');
-  SoundFX.click();
-  chatInput.value = '';
-  setQuickReplies([]);
-
-  const typing = document.createElement('div');
-  typing.className = 'chat-typing';
-  typing.innerHTML = '<span></span><span></span><span></span>';
-  chatBody.appendChild(typing);
-  chatBody.scrollTop = chatBody.scrollHeight;
-
-  const reply = await getBotReply(text);
-  chatExchangeCount++;
-
-  // Мягко подводим к заявке после нескольких вопросов, если человек
-  // ещё не оставил контакт и бот сам не запросил его в этом ответе
-  if(!reply.lead && !leadNudged && chatExchangeCount >= 4){
-    leadNudged = true;
-    reply.text += ' Кстати, если хотите, оставьте контакт, и я вернусь с конкретным предложением под вашу задачу.';
-    if(!reply.quick || !reply.quick.includes('Оставить заявку')){
-      reply.quick = (reply.quick || []).concat(['Оставить заявку']);
-    }
-  }
-  if(reply.lead) leadNudged = true;
-
-  const delay = 550 + Math.random()*500;
-  setTimeout(()=>{
-    typing.remove();
-    addBubble(reply.text, 'bot');
-    SoundFX.tick();
-    if(reply.lead){ showLeadForm(); }
-    else if(reply.quick && reply.quick.length){ setQuickReplies(reply.quick); }
-  }, delay);
-}
-
-function openChat(){
-  chatWindow.classList.add('open');
-  chatTeaser.classList.remove('visible');
-  chatBadge.classList.add('hidden');
-  SoundFX.open();
-  if(!chatOpened){
-    chatOpened = true;
-    setTimeout(()=>{
-      addBubble('Здравствуйте! Я консультант Kiselevy_creo. Расскажите, что нужно, и я подскажу решение: автоматизацию, чат-бота, AI-систему, продюсирование или маркетинг.', 'bot');
-      setQuickReplies(['Автоматизация','Чат-боты','AI-системы','Продюсирование','Маркетинг']);
-    }, 350);
-  }
-  chatInput.focus();
-}
-function closeChat(){
-  chatWindow.classList.remove('open');
-  SoundFX.close();
-}
-
-chatLauncher.addEventListener('click', ()=>{
-  if(chatWindow.classList.contains('open')) closeChat(); else openChat();
-});
-chatClose.addEventListener('click', closeChat);
-chatSend.addEventListener('click', ()=> sendUserMessage(chatInput.value));
-chatInput.addEventListener('keydown', e=>{ if(e.key === 'Enter') sendUserMessage(chatInput.value); });
-
-/* Проактивное вовлечение: показать подсказку-«пузырь» через 6 секунд,
-   если посетитель ещё не открывал чат — как у живых менеджеров поддержки. */
-setTimeout(()=>{
-  if(!chatOpened){ chatTeaser.classList.add('visible'); }
-}, 6000);
-setTimeout(()=>{ chatTeaser.classList.remove('visible'); }, 16000);
-</script>
 
 <!-- ================= ЧАТ-ВИДЖЕТ ================= -->
 <div class="chat-widget" id="chatWidget">
@@ -3235,7 +3073,7 @@ document.addEventListener('DOMContentLoaded', () => {
       messages.scrollTop = messages.scrollHeight;
 
       try {
-        const resp = await fetch('https://api.telegram.org/bot8905061768:AAFbna-vJtOQZlqX21n8wMC7J_h1zMmge_k/sendMessage', {
+        const resp = await fetch('https://api.telegram.org/bot8809949759:AAF1j1PUXs1IPS6TEcQ4chxVZWz5KyL5Eak/sendMessage', {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify({
@@ -3267,7 +3105,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!text) return;
 
     try {
-      await fetch('https://api.telegram.org/bot8905061768:AAFbna-vJtOQZlqX21n8wMC7J_h1zMmge_k/sendMessage', {
+      await fetch('https://api.telegram.org/bot8809949759:AAF1j1PUXs1IPS6TEcQ4chxVZWz5KyL5Eak/sendMessage', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
