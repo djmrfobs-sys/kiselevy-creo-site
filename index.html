@@ -47,14 +47,20 @@
 }
 </script>
 <script>
-/* Гарантированное скрытие загрузчика, если основной JS упал */
-setTimeout(function(){
-  var el = document.getElementById && document.getElementById('siteLoader');
-  if(el && !el.classList.contains('hide')) {
+/* Гарантированное скрытие загрузчика — сработает в любом случае */
+!function(){
+  var t = setInterval(function(){ 
+    var el = document.getElementById('siteLoader');
+    if(!el){ clearInterval(t); return; }
     el.classList.add('hide');
-    setTimeout(function(){ try{ el.remove(); }catch(e){} }, 900);
-  }
-}, 3000);
+    el.style.display = 'none';
+    clearInterval(t);
+  }, 600);
+  setTimeout(function(){
+    var el = document.getElementById('siteLoader');
+    if(el){ el.classList.add('hide'); el.style.display = 'none'; }
+  }, 2500);
+}();
 </script>
 <title>Kiselevy_creo — автоматизация, чат-боты, AI, продюсирование, маркетинг</title>
 <meta name="description" content="Kiselevy_creo — портфолио проектов по автоматизации, чат-ботам, AI-системам, продюсированию и маркетингу. Свяжитесь для сотрудничества.">
@@ -153,7 +159,7 @@ setTimeout(function(){
     display:flex; align-items:center; justify-content:center;
     transition:opacity .6s var(--ease), transform .75s var(--ease);
   }
-  .site-loader.hide{ opacity:0; transform:translateY(-100%); pointer-events:none; }
+  .site-loader.hide{ opacity:0; transform:translateY(-100%); pointer-events:none; display:none; }
   .loader-inner{ display:flex; flex-direction:column; align-items:center; gap:20px; }
   .loader-logo{
     font-family:var(--font-display); font-weight:800; font-size:21px; letter-spacing:-.01em;
@@ -173,7 +179,7 @@ setTimeout(function(){
   }
   @media (prefers-reduced-motion: reduce){
     .site-loader{ transition:opacity .3s linear; }
-    .site-loader.hide{ transform:none; }
+    .site-loader.hide{ transform:none; display:none; }
   }
 
   /* ================================================================
