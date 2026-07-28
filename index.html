@@ -1062,6 +1062,25 @@
   /* ========== INTERACTIVE HERO (mouse-follow orbs) ========== */
   .hero-interactive{ --mx:50%; --my:50%; }
   .hero-interactive .cosmic-orb{ transition:transform .8s cubic-bezier(.16,.84,.44,1); }
+
+  /* ========== ПОРТФОЛИО / НАШИ РАБОТЫ ========== */
+  .portfolio-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:24px; margin-top:40px; }
+  .portfolio-card{ border:1px solid var(--line); border-radius:var(--radius-lg); overflow:hidden; background:var(--glass); backdrop-filter:blur(8px); transition:.4s var(--ease); cursor:pointer; }
+  .portfolio-card:hover{ transform:translateY(-8px); box-shadow:0 20px 50px rgba(0,0,0,.1); border-color:var(--sky-deep); }
+  .portfolio-card-img{ width:100%; aspect-ratio:16/10; object-fit:cover; display:block; background:var(--ice); transition:.4s var(--ease); }
+  .portfolio-card:hover .portfolio-card-img{ transform:scale(1.03); }
+  .portfolio-card-body{ padding:20px 22px 24px; }
+  .portfolio-card-tag{ display:inline-block; padding:3px 10px; border-radius:20px; background:var(--sky); color:#fff; font-size:11px; font-weight:700; letter-spacing:.5px; text-transform:uppercase; margin-bottom:10px; }
+  .portfolio-card h3{ font-size:17px; font-weight:700; color:var(--ink); margin-bottom:6px; line-height:1.3; }
+  .portfolio-card p{ font-size:14px; color:var(--ink-soft); line-height:1.5; margin-bottom:14px; }
+  .portfolio-card-link{ font-size:14px; font-weight:600; color:var(--peach-deep); text-decoration:none; display:inline-flex; align-items:center; gap:6px; }
+  .portfolio-card-link:hover{ gap:10px; }
+  .portfolio-filters{ display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:30px; }
+  .portfolio-filter{ padding:8px 20px; border:1px solid var(--line); border-radius:30px; background:none; color:var(--ink); font:inherit; font-size:14px; cursor:pointer; transition:.3s var(--ease); }
+  .portfolio-filter:hover{ border-color:var(--sky-deep); color:var(--sky-deep); }
+  .portfolio-filter.active{ background:var(--sky-deep); color:#fff; border-color:var(--sky-deep); }
+  .portfolio-empty{ text-align:center; padding:60px 20px; color:var(--ink-soft); font-size:15px; display:none; }
+  @media(max-width:640px){ .portfolio-grid{ grid-template-columns:1fr; } }
 </style>
 </head>
 <body>
@@ -1124,6 +1143,9 @@ const LANG = {
     chat_welcome: 'Привет! Я помощник KISELEVY CREO. Чем могу помочь?',
     all_projects: 'Все проекты',
     filter_all: 'Все',
+    portfolio_title: 'Наши работы',
+    portfolio_subtitle: 'Проекты, которыми гордимся',
+    portfolio_empty: 'Проекты скоро появятся',
   },
   en: {
     site_title: 'Kiselevy_creo — automation, chatbots, AI, production, marketing',
@@ -1172,7 +1194,10 @@ const LANG = {
     chat_welcome: 'Hi! I am KISELEVY CREO assistant. How can I help?',
     all_projects: 'All projects',
     filter_all: 'All',
-  }
+  
+    portfolio_title: 'Our Work',
+    portfolio_subtitle: 'Projects we are proud of',
+    portfolio_empty: 'Projects coming soon',}
 };
 
 let currentLang = localStorage.getItem('kc_lang') || 'ru';
@@ -1363,16 +1388,36 @@ document.addEventListener('DOMContentLoaded', () => {
   </div>
 
   <!-- ================= PORTFOLIO ================= -->
-  <section id="work">
+  
+  <!-- ================= НАШИ РАБОТЫ / ПОРТФОЛИО ================= -->
+  <section class="portfolio-section" id="portfolio">
     <div class="wrap">
       <div class="section-head reveal">
-        <h2>Избранные проекты</h2>
-        <p>Автоматизация, боты, AI, продюсирование и маркетинг — всё в одном месте. Фильтруйте по направлению.</p>
+        <h2 data-i18n="portfolio_title">Наши работы</h2>
+        <p data-i18n="portfolio_subtitle">Проекты, которыми гордимся</p>
       </div>
-      <div class="filters reveal" id="filters"></div>
-      <div class="gallery" id="gallery"></div>
+      
+      <!-- Filters -->
+      <div class="portfolio-filters" id="portfolioFilters">
+        <button class="portfolio-filter active" data-filter="all" data-i18n="filter_all">Все</button>
+        <button class="portfolio-filter" data-filter="site">Сайты</button>
+        <button class="portfolio-filter" data-filter="bot">Боты</button>
+        <button class="portfolio-filter" data-filter="ai">AI</button>
+        <button class="portfolio-filter" data-filter="marketing">Маркетинг</button>
+        <button class="portfolio-filter" data-filter="design">Дизайн</button>
+      </div>
+      
+      <!-- Grid -->
+      <div class="portfolio-grid" id="portfolioGrid">
+        <!-- Cards injected from JS/data -->
+      </div>
+      
+      <div class="portfolio-empty" id="portfolioEmpty">
+        <span data-i18n="portfolio_empty">Проекты скоро появятся</span>
+      </div>
     </div>
   </section>
+
 
   <!-- ================= ABOUT ================= -->
   
@@ -3161,6 +3206,140 @@ document.addEventListener('DOMContentLoaded', () => {
     // Fallback: animate after delay
     setTimeout(animateCounters, 1000);
   }
+});
+
+</script>
+<script>
+
+/* ==============================================
+   🖼 ПОРТФОЛИО — фильтры + карточки
+   ============================================== */
+const projects = [
+  // ⬇️ ТУТ ТЫ ДОБАВЛЯЕШЬ СВОИ ПРОЕКТЫ ⬇️
+  // Формат добавления в боте:
+  // /addproject название | категория | описание | ссылка | ссылка_на_фото
+  // Категории: site, bot, ai, marketing, design
+  
+  // Примеры (замени на свои!)
+  {
+    id: 'proj-1',
+    title_ru: 'Чат-бот для доставки',
+    title_en: 'Delivery Chatbot',
+    category: 'bot',
+    desc_ru: 'Автоматический бот для приёма заказов с интеграцией в Telegram и CRM',
+    desc_en: 'Automatic order bot with Telegram and CRM integration',
+    image: '',
+    link: 'https://t.me/your_bot',
+    link_label_ru: 'Посмотреть бота →',
+    link_label_en: 'View bot →',
+  },
+  {
+    id: 'proj-2',
+    title_ru: 'Сайт для студии йоги',
+    title_en: 'Yoga Studio Website',
+    category: 'site',
+    desc_ru: 'Одностраничный сайт с записью на занятия, интеграцией календаря',
+    desc_en: 'Single-page site with booking and calendar integration',
+    image: '',
+    link: '#',
+    link_label_ru: 'Смотреть сайт →',
+    link_label_en: 'View site →',
+  },
+  {
+    id: 'proj-3',
+    title_ru: 'AI-помощник для маркетинга',
+    title_en: 'AI Marketing Assistant',
+    category: 'ai',
+    desc_ru: 'Нейросеть для генерации контента, анализа аудитории и авто-постинга',
+    desc_en: 'Neural network for content generation, audience analysis, auto-posting',
+    image: '',
+    link: '#',
+    link_label_ru: 'Узнать больше →',
+    link_label_en: 'Learn more →',
+  },
+];
+
+// Try to load additional projects from localStorage (added via bot)
+function loadProjects() {
+  try {
+    const stored = localStorage.getItem('kc_projects');
+    if (stored) {
+      const extra = JSON.parse(stored);
+      return [...projects, ...extra];
+    }
+  } catch(e) {}
+  return [...projects];
+}
+
+function renderPortfolio(filter = 'all') {
+  const grid = document.getElementById('portfolioGrid');
+  const empty = document.getElementById('portfolioEmpty');
+  const allProjects = loadProjects();
+  
+  const filtered = filter === 'all' ? allProjects : allProjects.filter(p => p.category === filter);
+  
+  if (filtered.length === 0) {
+    grid.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+  
+  grid.innerHTML = filtered.map(p => {
+    const title = t ? (currentLang === 'en' ? (p.title_en || p.title_ru) : p.title_ru) : p.title_ru;
+    const desc = t ? (currentLang === 'en' ? (p.desc_en || p.desc_ru) : p.desc_ru) : p.desc_ru;
+    const linkLabel = t ? (currentLang === 'en' ? (p.link_label_en || p.link_label_ru) : p.link_label_ru) : p.link_label_ru;
+    
+    const imgHtml = p.image 
+      ? `<img class="portfolio-card-img" src="${p.image}" alt="${title}" loading="lazy">`
+      : `<div class="portfolio-card-img" style="display:flex;align-items:center;justify-content:center;font-size:48px;color:var(--ink-soft);background:var(--ice);">${title[0]}</div>`;
+    
+    const categoryLabels = {site:'Сайт', bot:'Бот', ai:'AI', marketing:'Маркетинг', design:'Дизайн'};
+    
+    return `
+      <div class="portfolio-card" data-category="${p.category}">
+        <a href="${p.link}" target="_blank" rel="noopener">
+          ${imgHtml}
+        </a>
+        <div class="portfolio-card-body">
+          <span class="portfolio-card-tag">${categoryLabels[p.category] || p.category}</span>
+          <h3>${title}</h3>
+          <p>${desc}</p>
+          <a href="${p.link}" target="_blank" rel="noopener" class="portfolio-card-link">${linkLabel}</a>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Init portfolio
+  renderPortfolio();
+  
+  // Filter buttons
+  const filters = document.querySelectorAll('.portfolio-filter');
+  filters.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filters.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderPortfolio(btn.dataset.filter);
+    });
+  });
+  
+  // If language changes, re-render
+  if (typeof applyLang === 'function') {
+    const origApply = applyLang;
+    applyLang = function() {
+      origApply.apply(this, arguments);
+      renderPortfolio(document.querySelector('.portfolio-filter.active')?.dataset?.filter || 'all');
+    };
+  }
+  
+  // Check if bot added new projects (poll every 30s)
+  setInterval(() => {
+    const activeFilter = document.querySelector('.portfolio-filter.active');
+    renderPortfolio(activeFilter?.dataset?.filter || 'all');
+  }, 30000);
 });
 
 </script>
