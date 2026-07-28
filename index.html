@@ -1043,7 +1043,7 @@
   .chat-panel.open{ display:flex; animation:chatIn .35s var(--ease) forwards; }
   @keyframes chatIn{ from{ opacity:0; transform:translateY(20px) scale(.95); } to{ opacity:1; transform:translateY(0) scale(1); } }
   .chat-header{ display:flex; justify-content:space-between; align-items:center; padding:14px 16px; background:var(--glass-strong); border-bottom:1px solid var(--line); font-weight:600; font-size:14px; color:var(--ink); }
-  .chat-close{ background:none; border:none; color:var(--ink-soft); font-size:16px; cursor:pointer; padding:4px; }
+  .chat-close{ background:none; border:none; color:var(--ink-soft); font-size:16px; cursor:pointer; padding:4px; position:relative; z-index:10; }
   .chat-close:hover{ color:var(--ink); }
   .chat-msg{ max-width:85%; padding:10px 14px; border-radius:14px; font-size:14px; line-height:1.5; word-wrap:break-word; }
   .chat-msg.bot{ align-self:flex-start; background:var(--ice); color:var(--ink); border-bottom-left-radius:4px; }
@@ -3047,10 +3047,27 @@ document.addEventListener('DOMContentLoaded', () => {
     panel.classList.toggle('open');
   });
   if (close) {
-    close.addEventListener('click', () => {
+    close.addEventListener('click', (e) => {
+      e.preventDefault();
       panel.classList.remove('open');
     });
   }
+  
+  // Закрытие при клике вне панели
+  document.addEventListener('click', (e) => {
+    if (panel.classList.contains('open') &&
+        !panel.contains(e.target) &&
+        !toggle.contains(e.target)) {
+      panel.classList.remove('open');
+    }
+  });
+  
+  // Закрытие по Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && panel.classList.contains('open')) {
+      panel.classList.remove('open');
+    }
+  });
   if (form) {
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
