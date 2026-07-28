@@ -1186,8 +1186,15 @@
 </div>
 <script>
 /* ==============================================
-   🌐 ДВУЯЗЫЧНОСТЬ RU / EN
+   BILINGUAL RU / EN
    ============================================== */
+window.__KC_DEBUG = {};
+window.onerror = function(msg, url, line) {
+  window.__KC_ERR = {msg, url, line};
+  console.warn('KC caught: ', msg, line);
+  return true;
+};
+
 const LANG = {
   ru: {
     site_title: 'Kiselevy_creo — автоматизация, чат-боты, AI, продюсирование, маркетинг',
@@ -2820,7 +2827,7 @@ contactForm.addEventListener('submit', async (e)=>{
   const data = Object.fromEntries(new FormData(contactForm).entries());
 
   if(!FORM_ENDPOINT){
-    formMsg.textContent = 'Форма настроена локально: подключите FORM_ENDPOINT в коде, чтобы заявки приходили вам (см. комментарий в <script>).';
+    formMsg.textContent = 'Форма настроена локально: подключите FORM_ENDPOINT в коде, чтобы заявки приходили вам (см. комментарий).';
     formMsg.className = 'form-msg err';
     SoundFX.error();
     return;
@@ -3016,7 +3023,7 @@ async function getBotReply(userText){
 
 <script>
 /* ==============================================
-   🛠️ FAQ — аккордеон
+   FAQ — accordion
    ============================================== */
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.faq-question').forEach(btn => {
@@ -3031,7 +3038,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /* ==============================================
-   💬 Чат-виджет
+   Chat widget
    ============================================== */
 document.addEventListener('DOMContentLoaded', () => {
   const toggle = document.getElementById('chatToggle');
@@ -3108,7 +3115,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /* ==============================================
-   📋 Форма задач
+   Task form
    ============================================== */
 document.addEventListener('DOMContentLoaded', () => {
   const taskForm = document.getElementById('taskInput');
@@ -3179,7 +3186,7 @@ document.addEventListener('DOMContentLoaded', () => {
 <script>
 
 /* ==============================================
-   🎯 INTERACTIVE HERO — мышь управляет орбами
+   INTERACTIVE HERO — mouse orbs
    ============================================== */
 document.addEventListener('DOMContentLoaded', () => {
   const hero = document.querySelector('.hero');
@@ -3234,7 +3241,7 @@ document.addEventListener('DOMContentLoaded', () => {
 <script>
 
 /* ==============================================
-   📊 АНИМИРОВАННАЯ СТАТИСТИКА
+   ANIMATED STATISTICS
    ============================================== */
 document.addEventListener('DOMContentLoaded', () => {
   // Animate ring percentage counters
@@ -3307,7 +3314,7 @@ document.addEventListener('DOMContentLoaded', () => {
 <script>
 
 /* ==============================================
-   🖼 ПОРТФОЛИО — фильтры + карточки
+   PORTFOLIO — filters + cards
    ============================================== */
 const projects = [
   // ⬇️ ТУТ ТЫ ДОБАВЛЯЕШЬ СВОИ ПРОЕКТЫ ⬇️
@@ -3442,7 +3449,7 @@ document.addEventListener('DOMContentLoaded', () => {
 <script>
 
 /* ==============================================
-   🔄 АВТО-ОБНОВЛЕНИЕ портфолио с GitHub
+   AUTO-UPDATE portfolio from GitHub
    ============================================== */
 async function syncProjectsFromServer() {
   try {
