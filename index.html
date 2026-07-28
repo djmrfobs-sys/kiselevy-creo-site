@@ -46,7 +46,6 @@
   ]
 }
 </script>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kiselevy_creo — автоматизация, чат-боты, AI, продюсирование, маркетинг</title>
 <meta name="description" content="Kiselevy_creo — портфолио проектов по автоматизации, чат-ботам, AI-системам, продюсированию и маркетингу. Свяжитесь для сотрудничества.">
 <meta property="og:title" content="Kiselevy_creo">
@@ -1092,6 +1091,56 @@
   @keyframes trustScroll{ 0%{ transform:translateX(0); } 100%{ transform:translateX(-50%); } }
 
   /* ========== HOW WE WORK (КАК МЫ РАБОТАЕМ) ========== */
+
+  /* ========== ДОСТИЖЕНИЯ (Big Human-style) ========== */
+  .achievements-section{ padding:100px 0; }
+  .achievements-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:24px; margin-top:50px; }
+  .achieve-card{ text-align:center; padding:40px 20px 32px; border:1px solid var(--line); border-radius:var(--radius-lg); background:var(--glass); backdrop-filter:blur(8px); transition:.4s var(--ease); position:relative; overflow:hidden; }
+  .achieve-card::before{ content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg, var(--sky-deep), var(--peach-deep)); opacity:0; transition:opacity .4s; }
+  .achieve-card:hover::before{ opacity:1; }
+  .achieve-card:hover{ transform:translateY(-4px); box-shadow:0 12px 32px rgba(0,0,0,.08); }
+  .achieve-number{ font-size:48px; font-weight:800; font-family:var(--font-display); color:var(--ink); line-height:1.1; margin-bottom:8px; }
+  .achieve-number .stat-number{ display:inline-block; background:linear-gradient(135deg, var(--sky-deep), var(--peach-deep)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+  .achieve-label{ font-size:14px; color:var(--ink-soft); font-weight:500; }
+  .achieve-icon{ font-size:36px; margin-top:14px; }
+  @media (max-width:720px){
+    .achievements-grid{ grid-template-columns:repeat(2,1fr); gap:14px; }
+    .achieve-number{ font-size:36px; }
+  }
+  @media (max-width:420px){
+    .achievements-grid{ grid-template-columns:1fr 1fr; gap:10px; }
+  }
+
+  /* ========== LOGO TRUST BAR ========== */
+  .logobar-section{ padding:40px 0 60px; overflow:hidden; }
+  .logobar-track{ display:flex; gap:60px; animation:trustScroll 30s linear infinite; width:max-content; }
+  .logobar-track:hover{ animation-play-state:paused; }
+  .logobar-item{ display:flex; align-items:center; gap:10px; white-space:nowrap; font-size:15px; font-weight:600; color:var(--ink-soft); opacity:.55; transition:opacity .3s; }
+  .logobar-item:hover{ opacity:1; }
+  .logobar-item span{ font-size:22px; }
+
+  /* ========== КОМАНДА (Big Human-style) ========== */
+  .team-section{ padding:100px 0; background:var(--glass); }
+  .team-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:50px; }
+  .team-card{ text-align:center; padding:32px 24px; border:1px solid var(--line); border-radius:var(--radius-lg); background:var(--white); transition:.4s var(--ease); }
+  .team-card:hover{ transform:translateY(-6px); box-shadow:0 16px 48px rgba(0,0,0,.08); }
+  .team-card-cta{ background:linear-gradient(135deg, var(--ink), #1d2d36); border-color:transparent; }
+  .team-card-cta h3{ color:var(--white) !important; }
+  .team-card-cta .team-role{ color:var(--ink-faint) !important; }
+  .team-card-cta p{ color:var(--ink-faint) !important; }
+  .team-photo{ width:100px; height:100px; border-radius:50%; margin:0 auto 18px; display:flex; align-items:center; justify-content:center; font-size:44px; border:2px solid var(--line); transition:.4s; }
+  .team-card:hover .team-photo{ border-color:var(--sky-deep); transform:scale(1.05); }
+  .team-card h3{ font-size:22px; font-weight:700; font-family:var(--font-display); margin-bottom:4px; color:var(--ink); }
+  .team-role{ font-size:13px; font-weight:600; color:var(--sky-deep); text-transform:uppercase; letter-spacing:.06em; }
+  .team-card p{ font-size:14px; color:var(--ink-soft); line-height:1.6; margin:14px 0 20px; }
+  .team-social{ display:flex; justify-content:center; gap:10px; }
+  .team-social a{ font-size:22px; text-decoration:none; opacity:.6; transition:opacity .3s; }
+  .team-social a:hover{ opacity:1; }
+  .btn-sm{ padding:8px 18px; font-size:13px; }
+  @media (max-width:720px){
+    .team-grid{ grid-template-columns:1fr; gap:18px; }
+  }
+
   .how-section{ padding:100px 0; }
   .how-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:20px; margin-top:50px; }
   .how-step{ text-align:center; padding:32px 20px; border:1px solid var(--line); border-radius:var(--radius-lg); background:var(--glass); backdrop-filter:blur(8px); transition:.4s var(--ease); position:relative; }
@@ -1190,6 +1239,26 @@ const LANG = {
     portfolio_title: 'Наши работы',
     portfolio_subtitle: 'Проекты, которыми гордимся',
     portfolio_empty: 'Проекты скоро появятся',
+
+    achiev_title: 'Цифры и факты',
+    achiev_subtitle: 'То, чем мы гордимся',
+    achiev_1: 'Запущенных проектов',
+    achiev_2: 'Довольных клиентов',
+    achiev_3: 'Ниш и направлений',
+    achiev_4: 'Года на рынке',
+    logobar_title: 'Нам доверяют',
+    team_title: 'Кто мы',
+    team_subtitle: 'Команда, которая превращает идеи в продукты',
+    team_artur_name: 'Артур',
+    team_artur_role: 'AI-инженер, вайбкодер',
+    team_artur_desc: 'Автоматизирую процессы, пишу ботов, строю AI-системы. Вайбкодящий инженер с любовью к элегантным решениям.',
+    team_keti_name: 'Кети',
+    team_keti_role: 'Маркетолог, продюсер',
+    team_keti_desc: 'Стратегия, упаковка, запуски. Помогаю проектам звучать и продавать.',
+    team_you_title: 'Вы?',
+    team_you_role: 'Наш следующий клиент',
+    team_you_desc: 'Расскажите о своей задаче — подберём решение и соберём команду под ваш проект.',
+    team_you_cta: 'Связаться с нами →',
   },
   en: {
     site_title: 'Kiselevy_creo — automation, chatbots, AI, production, marketing',
@@ -1433,6 +1502,113 @@ document.addEventListener('DOMContentLoaded', () => {
 
   <!-- ================= PORTFOLIO ================= -->
   
+
+  <!-- ================= ДОСТИЖЕНИЯ ================= -->
+  <section class="achievements-section" id="achievements">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2 data-i18n="achiev_title">Цифры и факты</h2>
+        <p data-i18n="achiev_subtitle">То, чем мы гордимся</p>
+      </div>
+      <div class="achievements-grid">
+        <div class="achieve-card reveal">
+          <div class="achieve-number"><span class="stat-number" data-target="84">0</span>+</div>
+          <div class="achieve-label" data-i18n="achiev_1">Запущенных проектов</div>
+          <div class="achieve-icon">🚀</div>
+        </div>
+        <div class="achieve-card reveal">
+          <div class="achieve-number"><span class="stat-number" data-target="97">0</span>%</div>
+          <div class="achieve-label" data-i18n="achiev_2">Довольных клиентов</div>
+          <div class="achieve-icon">⭐</div>
+        </div>
+        <div class="achieve-card reveal">
+          <div class="achieve-number"><span class="stat-number" data-target="12">0</span>+</div>
+          <div class="achieve-label" data-i18n="achiev_3">Ниш и направлений</div>
+          <div class="achieve-icon">🎯</div>
+        </div>
+        <div class="achieve-card reveal">
+          <div class="achieve-number"><span class="stat-number" data-target="3">0</span></div>
+          <div class="achieve-label" data-i18n="achiev_4">Года на рынке</div>
+          <div class="achieve-icon">📈</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= LOGO TRUST BAR ================= -->
+  <section class="logobar-section" id="clients">
+    <div class="wrap">
+      <div class="trust-heading" data-i18n="logobar_title">Нам доверяют</div>
+      <div class="trust-container">
+        <div class="logobar-track">
+          <span class="logobar-item"><span>🤖</span> Чат-боты</span>
+          <span class="logobar-item"><span>🌐</span> Сайты</span>
+          <span class="logobar-item"><span>🧠</span> AI-решения</span>
+          <span class="logobar-item"><span>📢</span> Маркетинг</span>
+          <span class="logobar-item"><span>🎨</span> Дизайн</span>
+          <span class="logobar-item"><span>⚡</span> Автоматизация</span>
+          <span class="logobar-item"><span>🔄</span> Воронки</span>
+          <span class="logobar-item"><span>📱</span> Telegram</span>
+          <span class="logobar-item"><span>🤖</span> Чат-боты</span>
+          <span class="logobar-item"><span>🌐</span> Сайты</span>
+          <span class="logobar-item"><span>🧠</span> AI-решения</span>
+          <span class="logobar-item"><span>📢</span> Маркетинг</span>
+          <span class="logobar-item"><span>🎨</span> Дизайн</span>
+          <span class="logobar-item"><span>⚡</span> Автоматизация</span>
+          <span class="logobar-item"><span>🔄</span> Воронки</span>
+          <span class="logobar-item"><span>📱</span> Telegram</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= КОМАНДА ================= -->
+  <section class="team-section" id="team">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2 data-i18n="team_title">Кто мы</h2>
+        <p data-i18n="team_subtitle">Команда, которая превращает идеи в продукты</p>
+      </div>
+      <div class="team-grid">
+        <div class="team-card reveal">
+          <div class="team-photo" style="background:linear-gradient(135deg, var(--sky), var(--ice-2));">
+            <span>🧑‍💻</span>
+          </div>
+          <h3 data-i18n="team_artur_name">Артур</h3>
+          <span class="team-role" data-i18n="team_artur_role">AI-инженер, вайбкодер</span>
+          <p data-i18n="team_artur_desc">Автоматизирую процессы, пишу ботов, строю AI-системы. Вайбкодящий инженер с любовью к элегантным решениям.</p>
+          <div class="team-social">
+            <a href="https://t.me/djmrfobs" target="_blank" rel="noopener">📱</a>
+            <a href="https://github.com/djmrfobs-sys" target="_blank" rel="noopener">💻</a>
+          </div>
+        </div>
+        <div class="team-card reveal">
+          <div class="team-photo" style="background:linear-gradient(135deg, var(--peach), var(--peach-2));">
+            <span>👩‍🎨</span>
+          </div>
+          <h3 data-i18n="team_keti_name">Кети</h3>
+          <span class="team-role" data-i18n="team_keti_role">Маркетолог, продюсер</span>
+          <p data-i18n="team_keti_desc">Стратегия, упаковка, запуски. Помогаю проектам звучать и продавать.</p>
+          <div class="team-social">
+            <a href="https://t.me/keti_creo" target="_blank" rel="noopener">📱</a>
+            <a href="https://instagram.com/kiselevy_creo" target="_blank" rel="noopener">📸</a>
+          </div>
+        </div>
+        <div class="team-card reveal team-card-cta">
+          <div class="team-photo" style="background:linear-gradient(135deg, var(--ink), var(--ink-soft));">
+            <span>👋</span>
+          </div>
+          <h3 data-i18n="team_you_title">Вы?</h3>
+          <span class="team-role" data-i18n="team_you_role">Наш следующий клиент</span>
+          <p data-i18n="team_you_desc">Расскажите о своей задаче — подберём решение и соберём команду под ваш проект.</p>
+          <div class="team-social">
+            <a href="#" class="btn btn-primary btn-sm" data-i18n="team_you_cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Связаться с нами →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ================= НАШИ РАБОТЫ / ПОРТФОЛИО ================= -->
   <section class="portfolio-section" id="portfolio">
     <div class="wrap">
@@ -1458,6 +1634,26 @@ document.addEventListener('DOMContentLoaded', () => {
       
       <div class="portfolio-empty" id="portfolioEmpty">
         <span data-i18n="portfolio_empty">Проекты скоро появятся</span>
+
+    achiev_title: 'Facts & Figures',
+    achiev_subtitle: 'What we are proud of',
+    achiev_1: 'Projects launched',
+    achiev_2: 'Happy clients',
+    achiev_3: 'Niches & directions',
+    achiev_4: 'Years on the market',
+    logobar_title: 'Trusted by',
+    team_title: 'Who we are',
+    team_subtitle: 'A team that turns ideas into products',
+    team_artur_name: 'Arthur',
+    team_artur_role: 'AI engineer, vibecoder',
+    team_artur_desc: 'I automate processes, build bots and AI systems. A vibecoding engineer with love for elegant solutions.',
+    team_keti_name: 'Keti',
+    team_keti_role: 'Marketer, producer',
+    team_keti_desc: 'Strategy, packaging, launches. I help projects sound right and sell.',
+    team_you_title: 'You?',
+    team_you_role: 'Our next client',
+    team_you_desc: 'Tell us about your task — we will find a solution and build a team for your project.',
+    team_you_cta: 'Contact us →',
       </div>
     </div>
   </section>
