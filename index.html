@@ -46,6 +46,16 @@
   ]
 }
 </script>
+<script>
+/* Гарантированное скрытие загрузчика, если основной JS упал */
+setTimeout(function(){
+  var el = document.getElementById && document.getElementById('siteLoader');
+  if(el && !el.classList.contains('hide')) {
+    el.classList.add('hide');
+    setTimeout(function(){ try{ el.remove(); }catch(e){} }, 900);
+  }
+}, 3000);
+</script>
 <title>Kiselevy_creo — автоматизация, чат-боты, AI, продюсирование, маркетинг</title>
 <meta name="description" content="Kiselevy_creo — портфолио проектов по автоматизации, чат-ботам, AI-системам, продюсированию и маркетингу. Свяжитесь для сотрудничества.">
 <meta property="og:title" content="Kiselevy_creo">
