@@ -301,44 +301,7 @@
   .burger.open span:nth-child(3){transform:translateY(-5px) rotate(-45deg);}
 
   /* ---------------- ДОПОЛНИТЕЛЬНЫЕ СТРАНИЦЫ (dropdown у бургера) ---------------- */
-  .nav-more-wrap{ position:relative; }
-  .nav-more{
-    display:flex; align-items:center; gap:8px; padding:10px 14px;
-    border-radius:100px; border:1.5px solid var(--line); background:var(--white);
-    font-size:13.5px; font-weight:700; color:var(--ink);
-    transition:border-color .25s, transform .25s var(--ease);
-  }
-  .nav-more:hover{ border-color:var(--sky-deep); transform:translateY(-1px); }
-  .nav-more .grid-ic{
-    width:26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center;
-    background:linear-gradient(135deg, var(--ice), var(--peach)); font-size:13px;
-  }
-  .nav-more .chev{ transition:transform .25s var(--ease); font-size:10px; }
-  .nav-more.open .chev{ transform:rotate(180deg); }
-
-  .nav-more-panel{
-    position:absolute; top:calc(100% + 12px); right:0; width:250px;
-    background:var(--white); border:1px solid var(--line); border-radius:18px;
-    box-shadow:0 24px 50px rgba(28,43,51,.16); padding:10px; z-index:1400;
-    opacity:0; transform:translateY(-8px) scale(.97); pointer-events:none;
-    transition:opacity .22s var(--ease), transform .22s var(--ease);
-  }
-  .nav-more-panel.open{ opacity:1; transform:translateY(0) scale(1); pointer-events:auto; }
-  .nav-more-item{
-    display:flex; align-items:center; gap:12px; width:100%; padding:11px 12px; border-radius:12px;
-    font-size:13.5px; font-weight:600; color:var(--ink); text-align:left; border:none; background:none;
-    transition:background .2s;
-  }
-  .nav-more-item:hover{ background:var(--cream); }
-  .nav-more-item .ic{
-    width:32px; height:32px; border-radius:10px; flex:none; font-size:14px;
-    display:flex; align-items:center; justify-content:center;
-    background:linear-gradient(135deg, var(--ice), var(--sky)); 
-  }
-  .nav-more-item:nth-child(2) .ic{ background:linear-gradient(135deg, var(--peach), var(--peach-warm)); }
-  .nav-more-item:nth-child(3) .ic{ background:linear-gradient(135deg, var(--ice-2), var(--peach-2)); }
-  .nav-more-item:nth-child(4) .ic{ background:linear-gradient(135deg, var(--sky), var(--peach-warm)); }
-  .nav-more-item:nth-child(5) .ic{ background:linear-gradient(135deg, var(--peach-2), var(--sky-deep)); }
+/* nav-more удалён — всё в бургер-меню */
 
   .mobile-more-divider{ margin-top:10px; padding-top:18px; border-top:1px solid var(--line); font-family:var(--font-mono); font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-faint); }
   .mobile-menu button.mobile-page-link{
@@ -1405,18 +1368,6 @@ document.addEventListener('DOMContentLoaded', () => {
         <a href="#contact" class="nav-cta">Обсудить проект</a>
       </div>
       <div class="nav-right">
-        <div class="nav-more-wrap">
-          <button class="nav-more" id="navMoreBtn" aria-haspopup="true" aria-expanded="false" aria-label="Дополнительные страницы">
-            <span class="grid-ic">⊞</span> <span class="chev">▾</span>
-          </button>
-          <div class="nav-more-panel" id="navMorePanel">
-            <button class="nav-more-item" data-nav="about"><span class="ic">◍</span> О нас</button>
-            <button class="nav-more-item" data-nav="portfolio-page"><span class="ic">◆</span> Портфолио</button>
-            <button class="nav-more-item" data-nav="work"><span class="ic">▶</span> Наши работы</button>
-            <button class="nav-more-item" data-nav="assistant"><span class="ic">💬</span> Помощник</button>
-            <button class="nav-more-item" data-nav="calendar-page"><span class="ic">📅</span> Календарь</button>
-          </div>
-        </div>
         <button class="burger" id="burger" aria-label="Меню"><span></span><span></span><span></span></button>
       </div>
     </nav>
@@ -2512,27 +2463,6 @@ document.querySelectorAll('.nav-links a, .logo').forEach(a=>{
    ДОПОЛНИТЕЛЬНЫЕ СТРАНИЦЫ: dropdown «Страницы», мобильные пункты,
    полноэкранные страницы «Портфолио» и «Календарь»
    ================================================================ */
-const navMoreBtn = document.getElementById('navMoreBtn');
-const navMorePanel = document.getElementById('navMorePanel');
-
-function closeNavMore(){
-  navMoreBtn.classList.remove('open');
-  navMorePanel.classList.remove('open');
-  navMoreBtn.setAttribute('aria-expanded','false');
-}
-navMoreBtn.addEventListener('click', (e)=>{
-  e.stopPropagation();
-  SoundFX.tick();
-  const willOpen = !navMorePanel.classList.contains('open');
-  navMoreBtn.classList.toggle('open', willOpen);
-  navMorePanel.classList.toggle('open', willOpen);
-  navMoreBtn.setAttribute('aria-expanded', String(willOpen));
-});
-document.addEventListener('click', (e)=>{
-  if(!e.target.closest('.nav-more-wrap')) closeNavMore();
-});
-document.addEventListener('keydown', e=>{ if(e.key === 'Escape') closeNavMore(); });
-
 function openPage(id){
   const el = document.getElementById(id);
   el.classList.add('open');
@@ -2556,7 +2486,6 @@ document.addEventListener('keydown', e=>{
 
 // Единая маршрутизация для пунктов "Страницы" (десктоп-дропдаун и мобильное меню)
 function handlePageNav(key){
-  closeNavMore();
   burger.classList.remove('open'); mobileMenu.classList.remove('open');
   if(key === 'about' || key === 'work' || key === 'faq'){
     SoundFX.click();
@@ -2573,7 +2502,7 @@ function handlePageNav(key){
     openChat();
   }
 }
-document.querySelectorAll('.nav-more-item, .mobile-page-link').forEach(btn=>{
+document.querySelectorAll('.mobile-page-link').forEach(btn=>{
   btn.addEventListener('click', ()=> handlePageNav(btn.dataset.nav));
 });
 
