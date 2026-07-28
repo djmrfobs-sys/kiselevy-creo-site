@@ -1427,15 +1427,17 @@ document.addEventListener('DOMContentLoaded', () => {
   <a href="#work">Работы</a>
   <a href="#about">О нас</a>
   <a href="#services">Услуги</a>
+  <a href="#achievements">Достижения</a>
+  <a href="#team">Команда</a>
   <a href="#reviews">Отзывы</a>
   <a href="#contact">Контакты</a>
-  <div class="mobile-more-divider">Ещё страницы  <button class="mobile-page-link lang-toggle-mobile" onclick="switchLang(currentLang==='ru'?'en':'ru')" style="font-weight:700;">🌐 EN</button>
-</div>
-  <button class="mobile-page-link" data-nav="about">О нас</button>
-  <button class="mobile-page-link" data-nav="portfolio-page">Портфолио</button>
-  <button class="mobile-page-link" data-nav="work">Наши работы</button>
-  <button class="mobile-page-link" data-nav="assistant">Помощник</button>
-  <button class="mobile-page-link" data-nav="calendar-page">Календарь</button>
+  <div class="mobile-more-divider">Ещё страницы <button class="mobile-page-link lang-toggle-mobile" onclick="switchLang(currentLang==='ru'?'en':'ru')" style="font-weight:700;">🌐 EN</button></div>
+  <button class="mobile-page-link" data-nav="portfolio-page">◆ Портфолио</button>
+  <button class="mobile-page-link" data-nav="work">▶ Наши работы</button>
+  <button class="mobile-page-link" data-nav="assistant">💬 Помощник</button>
+  <button class="mobile-page-link" data-nav="faq">❓ FAQ</button>
+  <button class="mobile-page-link" data-nav="task-page">📋 Задачи</button>
+  <button class="mobile-page-link" data-nav="calendar-page">📅 Календарь</button>
 </div>
 
 <!-- ================= СТРАНИЦА: ПОРТФОЛИО (полная версия) ================= -->
@@ -1510,18 +1512,7 @@ document.addEventListener('DOMContentLoaded', () => {
   </div>
 
   <!-- ================= БЫСТРЫЙ ДОСТУП К СТРАНИЦАМ ================= -->
-  <div class="quicknav-strip">
-    <div class="wrap quicknav-inner">
-      <span class="quicknav-label">Быстрый доступ:</span>
-      <div class="quicknav-btns">
-        <button class="quicknav-btn" data-nav="about">◍ О нас</button>
-        <button class="quicknav-btn" data-nav="portfolio-page">◆ Портфолио</button>
-        <button class="quicknav-btn" data-nav="work">▶ Наши работы</button>
-        <button class="quicknav-btn" data-nav="assistant">💬 Помощник</button>
-        <button class="quicknav-btn" data-nav="calendar-page">📅 Календарь</button>
-      </div>
-    </div>
-  </div>
+  <!-- quicknav удалён — всё перенесено в мобильное меню -->
 
   <!-- ================= PORTFOLIO ================= -->
   
@@ -2567,9 +2558,12 @@ document.addEventListener('keydown', e=>{
 function handlePageNav(key){
   closeNavMore();
   burger.classList.remove('open'); mobileMenu.classList.remove('open');
-  if(key === 'about' || key === 'work'){
+  if(key === 'about' || key === 'work' || key === 'faq'){
     SoundFX.click();
     document.getElementById(key).scrollIntoView({behavior:'smooth'});
+  } else if(key === 'task-page'){
+    SoundFX.click();
+    document.getElementById('tasks').scrollIntoView({behavior:'smooth'});
   } else if(key === 'portfolio-page'){
     openPage('portfolioPage');
   } else if(key === 'calendar-page'){
@@ -2579,7 +2573,7 @@ function handlePageNav(key){
     openChat();
   }
 }
-document.querySelectorAll('.nav-more-item, .mobile-page-link, .quicknav-btn').forEach(btn=>{
+document.querySelectorAll('.nav-more-item, .mobile-page-link').forEach(btn=>{
   btn.addEventListener('click', ()=> handlePageNav(btn.dataset.nav));
 });
 
