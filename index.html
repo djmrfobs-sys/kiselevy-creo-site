@@ -2953,7 +2953,7 @@ async function getBotReply(userText){
   }
   return classifyLocal(userText);
 }
-
+</script>
 
 <!-- ================= ЧАТ-ВИДЖЕТ ================= -->
 <div class="chat-widget" id="chatWidget">
@@ -3050,7 +3050,7 @@ document.addEventListener('DOMContentLoaded', () => {
       messages.scrollTop = messages.scrollHeight;
 
       try {
-        const resp = await fetch('https://api.telegram.org/bot8809949759:AAF1j1PUXs1IPS6TEcQ4chxVZWz5KyL5Eak/sendMessage', {
+        const resp = await fetch('https://api.telegram.org/botОШИБКА_ТОКЕН_СЕРВЕР_НЕ_НАСТРОЕН/sendMessage', {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify({
@@ -3082,7 +3082,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!text) return;
 
     try {
-      await fetch('https://api.telegram.org/bot8809949759:AAF1j1PUXs1IPS6TEcQ4chxVZWz5KyL5Eak/sendMessage', {
+      await fetch('https://api.telegram.org/botОШИБКА_ТОКЕН_СЕРВЕР_НЕ_НАСТРОЕН/sendMessage', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
@@ -3169,24 +3169,6 @@ document.addEventListener('DOMContentLoaded', () => {
     orbs.forEach(orb => {
       orb.style.transform = 'translate(0, 0) scale(1)';
     });
-
-    trust_heading: 'TRUSTED BY',
-    trust_ai: 'AI Projects',
-    trust_bots: 'Chatbots',
-    trust_automation: 'Automation',
-    trust_dev: 'Web Development',
-    trust_marketing: 'Marketing',
-    trust_production: 'Production',
-    how_title: 'How We Work',
-    how_subtitle: 'From idea to ready product — 4 simple steps',
-    how_step1_title: 'Request & Brief',
-    how_step1_desc: 'Describe your task — we clarify details and timeline',
-    how_step2_title: 'Planning',
-    how_step2_desc: 'Architecture, design, technology selection',
-    how_step3_title: 'Development',
-    how_step3_desc: 'Building the product with stage-by-stage previews',
-    how_step4_title: 'Launch & Support',
-    how_step4_desc: 'Deployment, testing, ongoing maintenance',
   });
 });
 
