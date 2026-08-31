@@ -22,7 +22,10 @@
   *{box-sizing:border-box;margin:0;padding:0}
   body{
     font-family:'Segoe UI', Roboto, Arial, sans-serif;
-    background:var(--bg);
+    background:
+      radial-gradient(ellipse 1400px 900px at 50% -8%, rgba(201,188,224,0.05) 0%, transparent 65%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.702  0 0 0 0 0.616  0 0 0 0 0.847  0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+      var(--bg);
     color:var(--text);
     line-height:1.6;
   }
@@ -49,9 +52,7 @@
 
   /* HERO */
   .hero{
-    background:
-      radial-gradient(ellipse 900px 500px at 15% 0%, var(--bg-glow) 0%, transparent 60%),
-      var(--bg);
+    background: radial-gradient(ellipse 900px 500px at 15% 0%, rgba(201,188,224,0.04) 0%, transparent 60%);
     padding:100px 0 96px;
   }
   .hero .container{
