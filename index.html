@@ -117,6 +117,12 @@
     transition:transform 0.15s ease, box-shadow 0.15s ease;
   }
   .btn:hover{transform:translateY(-2px);box-shadow:0 0 26px rgba(196,163,166,0.35)}
+  @keyframes btn-pulse{
+    0%,100%{box-shadow:0 0 0 rgba(196,163,166,0.3);transform:scale(1)}
+    50%{box-shadow:0 0 30px rgba(196,163,166,0.55);transform:scale(1.035)}
+  }
+  .btn-pulse{animation:btn-pulse 2.6s ease-in-out infinite}
+  .btn-pulse:hover{animation-play-state:paused}
 
   /* ABOUT */
   .about p{max-width:680px;margin:0 auto;font-size:1.05rem;text-align:center;color:var(--text-dim)}
@@ -275,7 +281,7 @@
   <div class="container">
     <div class="hero-text">
       <h1>KISELEVY CREO</h1>
-      <a class="btn" href="https://t.me/KISELEVY_CREO" target="_blank" rel="noopener">Обсудить проект</a>
+      <a class="btn btn-pulse" href="https://t.me/KISELEVY_CREO" target="_blank" rel="noopener">Обсудить проект</a>
     </div>
   </div>
 </section>
