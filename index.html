@@ -57,11 +57,12 @@
 
   section{padding:72px 0}
   h1,h2,h3{font-weight:700;font-family:'Space Grotesk', 'Segoe UI', Roboto, Arial, sans-serif}
-  h2{font-size:1.8rem;margin-bottom:32px;text-align:center}
+  h2{font-size:2.5rem;line-height:1.1;letter-spacing:0.005em;margin-bottom:32px;text-align:center}
+  h2 .accent{color:var(--amethyst)}
   .eyebrow{
     display:block;text-align:center;
     font-size:0.82rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
-    color:var(--amethyst);margin-bottom:8px;
+    color:var(--amethyst);margin-bottom:10px;
   }
 
   /* HERO */
@@ -249,6 +250,7 @@
   }
   @media (max-width:600px){
     .hero h1{font-size:2.1rem}
+    h2{font-size:1.9rem}
     header .container{flex-wrap:wrap;gap:8px 0}
     nav{width:100%;display:flex;flex-wrap:wrap;justify-content:center}
     nav a{margin-left:0;margin:4px 10px;font-size:0.85rem}
@@ -289,7 +291,7 @@
 <section class="about" id="about">
   <div class="container">
     <span class="eyebrow">Цифровой бутик KISELEVY CREO</span>
-    <h2>О нас</h2>
+    <h2>О <span class="accent">нас</span></h2>
     <p>Мы команда KISELEVY CREO: Артур придумывает и собирает продукт, Telegram-боты,
       сайты, нейропомощников, автоматизацию рутинных процессов, а Кети отвечает
       за стратегию, упаковку и продвижение. Работаем в паре над каждым проектом
@@ -299,7 +301,7 @@
 
 <section class="team" id="team">
   <div class="container">
-    <h2>Команда</h2>
+    <h2>Наша <span class="accent">команда</span></h2>
     <div class="team-grid">
       <div class="team-card">
         <div class="team-avatar">АК</div>
@@ -319,7 +321,7 @@
 
 <section class="services" id="services">
   <div class="container">
-    <h2>Услуги</h2>
+    <h2>Наши <span class="accent">услуги</span></h2>
     <div class="services-grid">
       <div class="service-card">
         <h3>Telegram-боты</h3>
@@ -365,7 +367,7 @@
 
 <section class="portfolio" id="portfolio">
   <div class="container">
-    <h2>Портфолио</h2>
+    <h2>Наше <span class="accent">портфолио</span></h2>
     <div class="portfolio-grid">
       <div class="portfolio-card">
         <img src="assets/portfolio/bagovskaia-boho.jpg" alt="Сайт бронирования дома «Баговская Boho»">
@@ -498,7 +500,7 @@
 
 <section class="tech" id="tech">
   <div class="container">
-    <h2>Технологии</h2>
+    <h2>Наши <span class="accent">технологии</span></h2>
     <div class="tech-badges">
       <span class="badge">Python / aiogram</span>
       <span class="badge">JavaScript / Node.js</span>
@@ -515,8 +517,8 @@
 
 <section class="contacts" id="contacts">
   <div class="container">
-    <h2>Контакты</h2>
-    <p>Пишите напрямую в Telegram, отвечаю лично. Следите за новыми цифровыми
+    <h2>Свяжитесь с <span class="accent">нами</span></h2>
+    <p>Пишите напрямую в Telegram, отвечаем лично. Следите за новыми цифровыми
       продуктами в канале KISELEVY CREO.</p>
     <div class="contact-buttons">
       <a class="btn" href="https://t.me/KISELEVY_CREO" target="_blank" rel="noopener">Написать в Telegram</a>
