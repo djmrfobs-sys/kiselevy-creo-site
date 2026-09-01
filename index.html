@@ -67,26 +67,24 @@
   /* HERO */
   .hero{
     position:relative;
-    min-height:100vh;
-    display:flex;
-    align-items:flex-end;
+    width:100%;
+    aspect-ratio:16/9;
     overflow:hidden;
-    padding:140px 0 72px;
     background:var(--bg);
   }
   .hero-bg{
     position:absolute;inset:0;
     width:100%;height:100%;
-    object-fit:contain;object-position:center center;
+    object-fit:cover;object-position:center 22%;
     z-index:0;
   }
   .hero-overlay{
     position:absolute;inset:0;
     background:
-      linear-gradient(180deg, rgba(10,10,11,0.55) 0%, rgba(10,10,11,0.15) 30%, rgba(10,10,11,0.25) 60%, rgba(10,10,11,0.8) 100%);
+      linear-gradient(180deg, rgba(10,10,11,0.5) 0%, rgba(10,10,11,0.1) 30%, rgba(10,10,11,0.2) 60%, rgba(10,10,11,0.85) 100%);
     z-index:1;
   }
-  .hero .container{position:relative;z-index:2}
+  .hero .container{position:absolute;left:0;right:0;bottom:0;z-index:2;padding-bottom:56px}
   .hero-text{text-align:center;max-width:720px;margin:0 auto}
   .badge-pill{
     display:inline-block;
@@ -238,8 +236,10 @@
   footer a{text-decoration:underline;color:var(--lavender)}
 
   @media (max-width:760px){
-    .hero{padding:120px 0 72px;flex-direction:column;justify-content:flex-end;align-items:center}
-    .hero-badge{position:absolute;top:10%;left:50%;right:auto;transform:translateX(-50%)}
+    .hero{aspect-ratio:4/5}
+    .hero-bg{object-position:center top}
+    .hero .container{padding-bottom:32px}
+    .hero-badge{position:absolute;top:6%;left:50%;right:auto;transform:translateX(-50%)}
   }
   @media (max-width:600px){
     .hero h1{font-size:2.1rem}
