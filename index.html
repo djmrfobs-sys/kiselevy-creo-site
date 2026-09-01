@@ -64,9 +64,9 @@
     position:relative;
     min-height:100vh;
     display:flex;
-    align-items:center;
+    align-items:flex-end;
     overflow:hidden;
-    padding:140px 0 96px;
+    padding:140px 0 72px;
   }
   .hero-bg{
     position:absolute;inset:0;
@@ -90,16 +90,17 @@
     padding:8px 18px;
     border-radius:999px;
     font-size:0.78rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;
-    margin-bottom:24px;
+  }
+  .hero-badge{
+    position:absolute;z-index:2;
+    top:16%;right:9%;
   }
   .hero h1{
-    font-size:3.2rem;line-height:1.05;margin-bottom:14px;
+    font-size:3.2rem;line-height:1.05;margin-bottom:32px;
     color:var(--lilac-pale);
     text-shadow:0 0 20px rgba(196,163,166,0.28), 0 0 48px rgba(196,163,166,0.12);
     letter-spacing:0.01em;
   }
-  .hero p.subtitle{font-size:1.1rem;color:var(--text-dim);font-weight:600;margin-bottom:18px}
-  .hero p.desc{max-width:480px;margin:0 auto 32px;font-size:1.08rem;color:var(--text)}
   .btn{
     display:inline-block;
     background:var(--amethyst);
@@ -231,8 +232,8 @@
   footer a{text-decoration:underline;color:var(--lavender)}
 
   @media (max-width:760px){
-    .hero{padding:120px 0 72px}
-    .hero p.desc{margin-left:auto;margin-right:auto}
+    .hero{padding:120px 0 72px;flex-direction:column;justify-content:flex-end;align-items:center}
+    .hero-badge{position:static;display:inline-block;margin-bottom:24px}
   }
   @media (max-width:600px){
     .hero h1{font-size:2.1rem}
@@ -261,13 +262,10 @@
 <section class="hero">
   <img class="hero-bg" src="assets/photos/artur-i-keti-main.jpg" alt="Артур и Кети, команда KISELEVY CREO">
   <div class="hero-overlay"></div>
+  <span class="badge-pill hero-badge">AI продукты · боты · автоматизация</span>
   <div class="container">
     <div class="hero-text">
-      <span class="badge-pill">AI продукты · боты · автоматизация</span>
       <h1>KISELEVY CREO</h1>
-      <p class="subtitle">Артур Киселёв, вайбкодер, создатель цифровых приложений</p>
-      <p class="desc">Создаём сайты, нейропомощников и воронки, которые приносят
-        клиентов и вызывают доверие: от идеи до готового продукта.</p>
       <a class="btn" href="https://t.me/KISELEVY_CREO" target="_blank" rel="noopener">Обсудить проект</a>
     </div>
   </div>
