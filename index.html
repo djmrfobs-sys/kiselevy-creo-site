@@ -58,13 +58,27 @@
 
   /* HERO */
   .hero{
-    background: radial-gradient(ellipse 900px 500px at 15% 0%, rgba(184,154,156,0.04) 0%, transparent 60%);
-    padding:100px 0 96px;
+    position:relative;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    overflow:hidden;
+    padding:140px 0 96px;
   }
-  .hero .container{
-    display:grid;grid-template-columns:1.15fr 0.85fr;gap:56px;align-items:center;
+  .hero-bg{
+    position:absolute;inset:0;
+    width:100%;height:100%;
+    object-fit:cover;object-position:center 20%;
+    z-index:0;
   }
-  .hero-text{text-align:left}
+  .hero-overlay{
+    position:absolute;inset:0;
+    background:
+      linear-gradient(180deg, rgba(10,10,11,0.88) 0%, rgba(10,10,11,0.5) 38%, rgba(10,10,11,0.55) 65%, rgba(10,10,11,0.95) 100%);
+    z-index:1;
+  }
+  .hero .container{position:relative;z-index:2}
+  .hero-text{text-align:center;max-width:720px;margin:0 auto}
   .badge-pill{
     display:inline-block;
     background:var(--lavender-dim);
@@ -76,13 +90,13 @@
     margin-bottom:24px;
   }
   .hero h1{
-    font-size:3rem;line-height:1.05;margin-bottom:14px;
+    font-size:3.2rem;line-height:1.05;margin-bottom:14px;
     color:var(--lilac-pale);
     text-shadow:0 0 20px rgba(196,163,166,0.28), 0 0 48px rgba(196,163,166,0.12);
     letter-spacing:0.01em;
   }
-  .hero p.subtitle{font-size:1.05rem;color:var(--text-dim);font-weight:600;margin-bottom:18px}
-  .hero p.desc{max-width:480px;font-size:1.08rem;color:var(--text);margin-bottom:32px}
+  .hero p.subtitle{font-size:1.1rem;color:var(--text-dim);font-weight:600;margin-bottom:18px}
+  .hero p.desc{max-width:480px;margin:0 auto 32px;font-size:1.08rem;color:var(--text)}
   .btn{
     display:inline-block;
     background:var(--amethyst);
@@ -95,14 +109,6 @@
     transition:transform 0.15s ease, box-shadow 0.15s ease;
   }
   .btn:hover{transform:translateY(-2px);box-shadow:0 0 26px rgba(196,163,166,0.35)}
-
-  .hero-photo{
-    border-radius:28px;
-    overflow:hidden;
-    border:1px solid rgba(196,163,166,0.3);
-    box-shadow:0 0 0 1px rgba(196,163,166,0.07), 0 20px 60px rgba(0,0,0,0.5), 0 0 34px rgba(196,163,166,0.1);
-  }
-  .hero-photo img{display:block;width:100%;height:auto}
 
   /* ABOUT */
   .about p{max-width:680px;margin:0 auto;font-size:1.05rem;text-align:center;color:var(--text-dim)}
@@ -222,10 +228,8 @@
   footer a{text-decoration:underline;color:var(--lavender)}
 
   @media (max-width:760px){
-    .hero .container{grid-template-columns:1fr;text-align:center}
-    .hero-text{text-align:center}
+    .hero{padding:120px 0 72px}
     .hero p.desc{margin-left:auto;margin-right:auto}
-    .hero-photo{max-width:320px;margin:0 auto}
   }
   @media (max-width:600px){
     .hero h1{font-size:2.1rem}
@@ -252,6 +256,8 @@
 </header>
 
 <section class="hero">
+  <img class="hero-bg" src="assets/photos/artur-i-keti-main.jpg" alt="Артур и Кети, команда KISELEVY CREO">
+  <div class="hero-overlay"></div>
   <div class="container">
     <div class="hero-text">
       <span class="badge-pill">AI продукты · боты · автоматизация</span>
@@ -260,9 +266,6 @@
       <p class="desc">Создаём сайты, нейропомощников и воронки, которые приносят
         клиентов и вызывают доверие: от идеи до готового продукта.</p>
       <a class="btn" href="https://t.me/KISELEVY_CREO" target="_blank" rel="noopener">Обсудить проект</a>
-    </div>
-    <div class="hero-photo">
-      <img src="assets/photos/artur-i-keti-main.jpg" alt="Артур и Кети, команда KISELEVY CREO">
     </div>
   </div>
 </section>
