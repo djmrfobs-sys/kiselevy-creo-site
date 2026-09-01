@@ -153,13 +153,28 @@
 
   /* PORTFOLIO */
   .portfolio{background:var(--panel)}
+  .portfolio-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:28px;max-width:780px;margin:0 auto;
+  }
+  .portfolio-card{
+    background:var(--bg);border-radius:16px;overflow:hidden;
+    border:1px solid var(--panel-border);
+    display:flex;flex-direction:column;
+  }
+  .portfolio-card img{display:block;width:100%;height:200px;object-fit:cover;object-position:top}
+  .portfolio-card-body{padding:24px}
+  .portfolio-card h3{margin-bottom:8px;color:var(--lilac-pale)}
+  .portfolio-card p{font-size:0.92rem;color:var(--text-dim);margin-bottom:16px}
+  .portfolio-card a.link{color:var(--amethyst);font-weight:600;font-size:0.92rem}
+  .portfolio-card a.link:hover{color:var(--lavender)}
   .portfolio-placeholder{
-    max-width:560px;margin:0 auto;text-align:center;
-    background:var(--bg);border-radius:16px;padding:48px 32px;
+    max-width:560px;margin:28px auto 0;text-align:center;
+    background:var(--bg);border-radius:16px;padding:32px 32px;
     border:2px dashed rgba(179,157,216,0.35);
   }
-  .portfolio-placeholder h3{margin-bottom:10px}
-  .portfolio-placeholder p{color:var(--text-dim)}
+  .portfolio-placeholder h3{margin-bottom:10px;font-size:1rem}
+  .portfolio-placeholder p{color:var(--text-dim);font-size:0.92rem}
 
   /* TECH */
   .tech-badges{
@@ -322,8 +337,22 @@
 <section class="portfolio" id="portfolio">
   <div class="container">
     <h2>Портфолио</h2>
+    <div class="portfolio-grid">
+      <div class="portfolio-card">
+        <img src="assets/portfolio/bagovskaia-boho.jpg" alt="Сайт бронирования дома «Баговская Boho»">
+        <div class="portfolio-card-body">
+          <h3>Баговская Boho</h3>
+          <p>Сайт бронирования дома для отдыха с ИИ-помощником: гость общается с
+            ассистентом на сайте, тот сам записывает бронь в календарь и присылает
+            заявку в Telegram — владелец подтверждает или отменяет прямо в чате.
+            Своя админ-панель: посты в Telegram-канал, список заявок и броней,
+            перенос и отмена дат.</p>
+          <a class="link" href="https://bagovskaia-boho.ru" target="_blank" rel="noopener">Смотреть сайт →</a>
+        </div>
+      </div>
+    </div>
     <div class="portfolio-placeholder">
-      <h3>Кейсы скоро появятся здесь</h3>
+      <h3>Ещё кейсы скоро появятся здесь</h3>
       <p>Собираю примеры готовых проектов — загляните позже.</p>
     </div>
   </div>
