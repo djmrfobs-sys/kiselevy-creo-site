@@ -239,6 +239,21 @@
   .portfolio-placeholder h3{margin-bottom:10px;font-size:1rem}
   .portfolio-placeholder p{color:var(--text-dim);font-size:0.92rem}
 
+  /* TESTIMONIALS */
+  .testimonials{background:var(--panel)}
+  .testimonials-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:24px;max-width:1000px;margin:0 auto;
+  }
+  .testimonial-card{
+    background:var(--bg);border:1px solid var(--panel-border);border-radius:16px;
+    padding:28px 24px;
+  }
+  .testimonial-card .stars{color:var(--amethyst);letter-spacing:2px;margin-bottom:14px}
+  .testimonial-card p{font-size:0.92rem;color:var(--text-dim);margin-bottom:18px}
+  .testimonial-name{font-weight:700;color:var(--lilac-pale)}
+  .testimonial-role{font-size:0.85rem;color:var(--text-dim)}
+
   /* CONTACTS */
   .contacts{
     background:var(--panel);
@@ -315,6 +330,7 @@
       <a href="#team">Команда</a>
       <a href="#services">Услуги</a>
       <a href="#portfolio">Портфолио</a>
+      <a href="#testimonials">Отзывы</a>
       <button class="cert-trigger nav-btn" onclick="openCertModal()">Сертификаты</button>
       <a href="#contacts">Контакты</a>
     </nav>
@@ -577,6 +593,43 @@
     </div>
   </div>
 </section>
+
+<section class="testimonials" id="testimonials">
+  <div class="container">
+    <h2>Что говорят <span class="accent">клиенты</span></h2>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p>«Катюша, с твоими познаниями эксперта и продюсера, твоей авторской
+          методикой - всё, что ты сделала, профессионально и качественно. Ты
+          очень грамотная, целеустремлённая и, конечно, эксперт в своей сфере.
+          С твоим подходом я верю в очень хороший результат и подъём в своей
+          работе.»</p>
+        <div class="testimonial-name">Людмила</div>
+        <div class="testimonial-role">косметолог-эстетист</div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p>«Ты как эксперт была рядом со мной всё это время и многому меня
+          научила. Твоя методика и поддержка дали мне уверенность в себе - это
+          самое ценное. Благодаря тебе я поверила в хорошие результаты в своей
+          работе.»</p>
+        <div class="testimonial-name">Эмилия</div>
+        <div class="testimonial-role">мастер-парикмахер</div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p>«Мой запрос ты реализовала на 100%. Ты дала мне уверенность в себе,
+          и я очень тебе благодарна за всё, что ты как эксперт вложила в меня
+          за это время.»</p>
+        <div class="testimonial-name">Екатерина</div>
+        <div class="testimonial-role">мастер-бьюти</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="block-cta"><a class="btn" href="https://t.me/KISELEVY_CREO" target="_blank" rel="noopener">Обсудить проект</a></div>
 
 <section class="contacts" id="contacts">
   <div class="container">
