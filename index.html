@@ -1448,25 +1448,25 @@
     },
   };
 
-  const I18N_ORIGINALS = new Map();
+  const I18N_ORIGINALS = [];
   function initI18n(){
     document.querySelectorAll('[data-i18n]').forEach(function(el){
-      I18N_ORIGINALS.set(el.getAttribute('data-i18n'), {el:el, kind:'text', original: el.textContent});
+      I18N_ORIGINALS.push({el:el, key: el.getAttribute('data-i18n'), kind:'text', original: el.textContent});
     });
     document.querySelectorAll('[data-i18n-html]').forEach(function(el){
-      I18N_ORIGINALS.set(el.getAttribute('data-i18n-html'), {el:el, kind:'html', original: el.innerHTML});
+      I18N_ORIGINALS.push({el:el, key: el.getAttribute('data-i18n-html'), kind:'html', original: el.innerHTML});
     });
     document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el){
-      I18N_ORIGINALS.set(el.getAttribute('data-i18n-placeholder'), {el:el, kind:'placeholder', original: el.getAttribute('placeholder')});
+      I18N_ORIGINALS.push({el:el, key: el.getAttribute('data-i18n-placeholder'), kind:'placeholder', original: el.getAttribute('placeholder')});
     });
   }
   function setLang(lang){
     document.querySelectorAll('.lang-btn').forEach(function(b){
       b.classList.toggle('active', b.dataset.lang === lang);
     });
-    I18N_ORIGINALS.forEach(function(entry, key){
+    I18N_ORIGINALS.forEach(function(entry){
       const dict = translations[lang];
-      const val = (lang === 'ru' || !dict || !dict[key]) ? entry.original : dict[key];
+      const val = (lang === 'ru' || !dict || !dict[entry.key]) ? entry.original : dict[entry.key];
       if(entry.kind === 'text') entry.el.textContent = val;
       else if(entry.kind === 'html') entry.el.innerHTML = val;
       else if(entry.kind === 'placeholder') entry.el.setAttribute('placeholder', val);
