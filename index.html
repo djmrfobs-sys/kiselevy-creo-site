@@ -98,10 +98,6 @@
     border-radius:999px;
     font-size:0.78rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;
   }
-  .hero-badge{
-    position:absolute;z-index:2;
-    top:16%;right:9%;
-  }
   .hero h1{
     font-size:3.2rem;line-height:1.05;margin-bottom:16px;
     color:var(--lilac-pale);
@@ -109,7 +105,12 @@
     letter-spacing:0.01em;
   }
   .hero-mission{
-    font-size:1.15rem;color:var(--text);margin-bottom:32px;
+    font-size:1.15rem;color:var(--text);margin-bottom:14px;font-weight:700;
+    text-shadow:0 1px 6px rgba(0,0,0,0.6);
+  }
+  .hero-sub{
+    font-size:0.98rem;color:var(--text-dim);margin-bottom:32px;max-width:560px;
+    margin-left:auto;margin-right:auto;
     text-shadow:0 1px 6px rgba(0,0,0,0.6);
   }
   .btn{
@@ -188,7 +189,7 @@
   .portfolio{background:var(--panel)}
   .portfolio-grid{
     display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-    gap:28px;max-width:780px;margin:0 auto;
+    gap:28px;max-width:1000px;margin:0 auto;
   }
   .portfolio-card{
     background:var(--bg);border-radius:16px;overflow:hidden;
@@ -209,16 +210,17 @@
     border-radius:12px;padding:14px 16px;font-size:0.85rem;
     margin-bottom:16px;
   }
-  .portfolio-featured{
+  .portfolio-wide{
     grid-column:1 / -1;
+  }
+  .portfolio-wide img{width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;object-position:top}
+  .portfolio-wide .portfolio-card-body{padding:32px}
+  .portfolio-featured{
     border:1px solid var(--amethyst);
     box-shadow:0 0 0 1px rgba(196,163,166,0.15), 0 0 40px rgba(196,163,166,0.12);
-    display:grid;grid-template-columns:minmax(260px,1fr) 1.3fr;
   }
-  .portfolio-featured img{height:100%;min-height:280px}
-  .portfolio-featured .portfolio-card-body{padding:32px}
   .portfolio-featured-badge{margin-bottom:14px}
-  .portfolio-featured h3{font-size:1.6rem}
+  .portfolio-wide h3{font-size:1.6rem}
   .portfolio-referral{
     background:var(--lavender-dim);border:1px solid rgba(196,163,166,0.3);
     border-radius:12px;padding:18px 20px;margin:0 0 16px;
@@ -227,8 +229,7 @@
   .portfolio-referral p:last-child{margin-bottom:0}
   .portfolio-referral .eyebrow{text-align:left;margin-bottom:8px}
   @media (max-width:760px){
-    .portfolio-featured{grid-template-columns:1fr}
-    .portfolio-featured img{height:220px;min-height:0}
+    .portfolio-wide img{aspect-ratio:4/3}
   }
   .portfolio-placeholder{
     max-width:560px;margin:28px auto 0;text-align:center;
@@ -237,19 +238,6 @@
   }
   .portfolio-placeholder h3{margin-bottom:10px;font-size:1rem}
   .portfolio-placeholder p{color:var(--text-dim);font-size:0.92rem}
-
-  /* TECH */
-  .tech-badges{
-    display:flex;flex-wrap:wrap;justify-content:center;gap:12px;max-width:720px;margin:0 auto;
-  }
-  .badge{
-    background:var(--panel);
-    border:1px solid rgba(196,163,166,0.28);
-    color:var(--text);
-    padding:10px 20px;
-    border-radius:24px;
-    font-size:0.92rem;font-weight:600;
-  }
 
   /* CONTACTS */
   .contacts{
@@ -261,8 +249,12 @@
   .contacts p{color:var(--text-dim);max-width:520px;margin:0 auto 32px}
   .contact-buttons{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;margin-bottom:28px}
   .contact-buttons a.btn{background:var(--amethyst);color:var(--ink)}
-  .contact-buttons a.btn.secondary{background:transparent;border:2px solid var(--amethyst);color:var(--lavender)}
-  .contact-buttons a.btn.secondary:hover{background:var(--amethyst);color:var(--ink)}
+
+  /* BLOCK CTA */
+  .block-cta{
+    text-align:center;padding:36px 0;
+    border-top:1px solid var(--panel-border);
+  }
 
   footer{
     background:var(--bg);
@@ -301,7 +293,6 @@
     .hero{aspect-ratio:4/5}
     .hero-bg{object-position:center top}
     .hero .container{padding-bottom:32px}
-    .hero-badge{position:absolute;top:6%;left:50%;right:auto;transform:translateX(-50%)}
   }
   @media (max-width:600px){
     .hero h1{font-size:2.1rem}
@@ -324,7 +315,6 @@
       <a href="#team">Команда</a>
       <a href="#services">Услуги</a>
       <a href="#portfolio">Портфолио</a>
-      <a href="#tech">Технологии</a>
       <button class="cert-trigger nav-btn" onclick="openCertModal()">Сертификаты</button>
       <a href="#contacts">Контакты</a>
     </nav>
@@ -337,12 +327,14 @@
     <img class="hero-bg" src="assets/photos/artur-i-keti-main.jpg" alt="Артур и Кети, команда KISELEVY CREO">
   </picture>
   <div class="hero-overlay"></div>
-  <span class="badge-pill hero-badge">AI продукты · боты · автоматизация</span>
   <div class="container">
     <div class="hero-text">
       <span class="eyebrow">Цифровой бутик KISELEVY CREO</span>
       <h1>KISELEVY CREO</h1>
-      <p class="hero-mission">Время - ваш самый ценный актив</p>
+      <p class="hero-mission">Время - ваш самый ценный актив.</p>
+      <p class="hero-sub">Рутина съедает ваши дни, заявки теряются, а бизнес держится
+        только на вас. Мы строим системы, которые забирают рутину и приводят клиентов,
+        чтобы вы получили главное - вернули себе самый ценный актив. Это ваше время.</p>
       <a class="btn btn-pulse" href="https://t.me/KISELEVY_CREO" target="_blank" rel="noopener">Обсудить проект</a>
     </div>
   </div>
@@ -364,6 +356,8 @@
   </div>
 </section>
 
+<div class="block-cta"><a class="btn" href="https://t.me/KISELEVY_CREO" target="_blank" rel="noopener">Обсудить проект</a></div>
+
 <section class="team" id="team">
   <div class="container">
     <h2>Наша <span class="accent">команда</span></h2>
@@ -383,6 +377,8 @@
     </div>
   </div>
 </section>
+
+<div class="block-cta"><a class="btn" href="https://t.me/KISELEVY_CREO" target="_blank" rel="noopener">Обсудить проект</a></div>
 
 <section class="services" id="services">
   <div class="container">
@@ -430,11 +426,13 @@
   </div>
 </section>
 
+<div class="block-cta"><a class="btn" href="https://t.me/KISELEVY_CREO" target="_blank" rel="noopener">Обсудить проект</a></div>
+
 <section class="portfolio" id="portfolio">
   <div class="container">
     <h2>Наше <span class="accent">портфолио</span></h2>
     <div class="portfolio-grid">
-      <div class="portfolio-card portfolio-featured">
+      <div class="portfolio-card portfolio-wide portfolio-featured">
         <img src="assets/portfolio/bagovskaia-boho.jpg" alt="Сайт бронирования дома «Баговская Boho»">
         <div class="portfolio-card-body">
           <span class="badge-pill portfolio-featured-badge">Флагманский проект · наш личный кейс</span>
@@ -447,8 +445,8 @@
             реально работает.</p>
           <p>Гость заходит на сайт, общается с ассистентом, тот сам показывает
             свободные даты и цену, оформляет бронь в календаре и присылает заявку нам
-            в Telegram — остаётся только подтвердить одним касанием. Инструкции по
-            заселению, ключи, вопросы о доме — ассистент отвечает сам, даже если
+            в Telegram - остаётся только подтвердить одним касанием. Инструкции по
+            заселению, ключи, вопросы о доме - ассистент отвечает сам, даже если
             разница часовых поясов не в нашу пользу. Своя админ-панель даёт полный
             контроль на расстоянии: список заявок и броней, перенос и отмена дат,
             посты в Telegram-канал дома.</p>
@@ -456,21 +454,42 @@
             <span class="eyebrow">Монетизация внутри визитки</span>
             <p><b>Программа «Пригласи друга»:</b> гость получает персональный код и
               делится им с друзьями.</p>
-            <p>Когда друг бронирует отдых по этому коду — гость выбирает награду:
+            <p>Когда друг бронирует отдых по этому коду - гость выбирает награду:
               15% скидка на своё следующее проживание, 10% кэшбэк на карту или 10%
               сертификат для друга. Всё считается и выдаётся автоматически, без
               нашего участия.</p>
           </div>
           <ul class="benefits">
-            <li><b>Выгода:</b> бизнес работает 24/7 из любой точки мира — бронь и заселение не встают на паузу, даже когда мы спим или заняты другими проектами.</li>
+            <li><b>Выгода:</b> бизнес работает 24/7 из любой точки мира - бронь и заселение не встают на паузу, даже когда мы спим или заняты другими проектами.</li>
             <li><b>Пока мы недоступны:</b> ассистент уже ведёт следующего гостя к подтверждённой брони и параллельно начисляет бонусы по реферальной программе.</li>
-            <li><b>Отличие от конкурентов:</b> вместо формы «оставить заявку» и созвона в неудобное время, гость сам доходит до готовой брони в диалоге, а хозяину остаётся только подтвердить — из любой страны.</li>
+            <li><b>Отличие от конкурентов:</b> вместо формы «оставить заявку» и созвона в неудобное время, гость сам доходит до готовой брони в диалоге, а хозяину остаётся только подтвердить - из любой страны.</li>
           </ul>
           <p class="portfolio-note">Это не просто сайт для одного дома. Это шаблон
             цифрового управляющего для любого дистанционного бизнеса в сфере аренды
             и гостеприимства: сам продаёт, сам заселяет, сам приводит новых клиентов
             через действующих.</p>
           <a class="link" href="https://bagovskaia-boho.ru" target="_blank" rel="noopener">Смотреть сайт →</a>
+        </div>
+      </div>
+      <div class="portfolio-card portfolio-wide">
+        <img src="assets/portfolio/ludmila-skinbody-full.jpg" alt="Сайт-визитка косметолога Ludmila SkinBody">
+        <div class="portfolio-card-body">
+          <h3>Ludmila SkinBody</h3>
+          <p>Сайт-визитка мастера-косметолога с записью на свободные даты по
+            календарю. Встроенный ИИ-ассистент ведёт диалог с клиентами 24/7,
+            отвечает на вопросы, подбирает нужную услугу, сам считает время и
+            стоимость процедуры и фиксирует запись, плюс следит за заявками,
+            записями и свободными окошками.</p>
+          <ul class="benefits">
+            <li><b>Выгода:</b> запись идёт даже ночью и в выходной, ни одна заявка не теряется, пока мастер офлайн.</li>
+            <li><b>Пока мастер физически работает руками с клиентом на процедуре:</b> ассистент уже отвечает следующему клиенту, считает стоимость и записывает его на свободное окошко.</li>
+            <li><b>Отличие от конкурентов:</b> обычно нужен отдельный администратор или запись идёт по звонку, здесь ассистент сам ведёт диалог, считает цену и заполняет календарь без администратора.</li>
+          </ul>
+          <p class="portfolio-note">Это не просто сайт. Это цифровая платформа, которая
+            берёт на себя рутинные задачи, отвечает клиентам и записывает их на
+            процедуры, и при этом рассказывает, кто вы и какой вы мастер.
+            Разместить её можно на любой площадке. Это как личная электронная
+            визитка, только обученная именно под вас и ваши задачи.</p>
         </div>
       </div>
       <div class="portfolio-card">
@@ -551,27 +570,6 @@
           </ul>
         </div>
       </div>
-      <div class="portfolio-card">
-        <img src="assets/portfolio/ludmila-skinbody.jpg" alt="Сайт-визитка косметолога Ludmila SkinBody">
-        <div class="portfolio-card-body">
-          <h3>Ludmila SkinBody</h3>
-          <p>Сайт-визитка мастера-косметолога с записью на свободные даты по
-            календарю. Встроенный ИИ-ассистент ведёт диалог с клиентами 24/7,
-            отвечает на вопросы, подбирает нужную услугу, сам считает время и
-            стоимость процедуры и фиксирует запись, плюс следит за заявками,
-            записями и свободными окошками.</p>
-          <ul class="benefits">
-            <li><b>Выгода:</b> запись идёт даже ночью и в выходной, ни одна заявка не теряется, пока мастер офлайн.</li>
-            <li><b>Пока мастер физически работает руками с клиентом на процедуре:</b> ассистент уже отвечает следующему клиенту, считает стоимость и записывает его на свободное окошко.</li>
-            <li><b>Отличие от конкурентов:</b> обычно нужен отдельный администратор или запись идёт по звонку, здесь ассистент сам ведёт диалог, считает цену и заполняет календарь без администратора.</li>
-          </ul>
-          <p class="portfolio-note">Это не просто сайт. Это цифровая платформа, которая
-            берёт на себя рутинные задачи, отвечает клиентам и записывает их на
-            процедуры, и при этом рассказывает, кто вы и какой вы мастер.
-            Разместить её можно на любой площадке. Это как личная электронная
-            визитка, только обученная именно под вас и ваши задачи.</p>
-        </div>
-      </div>
     </div>
     <div class="portfolio-placeholder">
       <h3>Ещё кейсы скоро появятся здесь</h3>
@@ -580,31 +578,12 @@
   </div>
 </section>
 
-<section class="tech" id="tech">
-  <div class="container">
-    <h2>Наши <span class="accent">технологии</span></h2>
-    <div class="tech-badges">
-      <span class="badge">Python / aiogram</span>
-      <span class="badge">JavaScript / Node.js</span>
-      <span class="badge">Supabase / PostgreSQL</span>
-      <span class="badge">DeepSeek</span>
-      <span class="badge">Claude Code</span>
-      <span class="badge">Google Gemini</span>
-      <span class="badge">Telegram Bot API</span>
-      <span class="badge">Vercel</span>
-      <span class="badge">GitHub</span>
-    </div>
-  </div>
-</section>
-
 <section class="contacts" id="contacts">
   <div class="container">
     <h2>Свяжитесь с <span class="accent">нами</span></h2>
-    <p>Пишите напрямую в Telegram, отвечаем лично. Следите за новыми цифровыми
-      продуктами в канале KISELEVY CREO.</p>
+    <p>Пишите напрямую в Telegram, отвечаем лично.</p>
     <div class="contact-buttons">
       <a class="btn" href="https://t.me/KISELEVY_CREO" target="_blank" rel="noopener">Написать в Telegram</a>
-      <a class="btn secondary" href="https://t.me/Kiselevy_Creo_digital" target="_blank" rel="noopener">Канал KISELEVY CREO</a>
     </div>
   </div>
 </section>
@@ -625,11 +604,11 @@
     <div class="cert-grid">
       <div class="cert-card" onclick="openLightbox('assets/certificates/keti-producer-reels.jpg')">
         <img src="assets/certificates/keti-producer-reels.jpg" alt="Сертификат Екатерины Киселёвой «Продюсер Reels»" loading="lazy">
-        <p>Екатерина Киселёва — «Продюсер Reels», заработок на Reels</p>
+        <p>Екатерина Киселёва - «Продюсер Reels», заработок на Reels</p>
       </div>
       <div class="cert-card" onclick="openLightbox('assets/certificates/keti-zarabotok-na-reels-dark.jpg')">
         <img src="assets/certificates/keti-zarabotok-na-reels-dark.jpg" alt="Сертификат Екатерины Киселёвой «Заработок на Reels»" loading="lazy">
-        <p>Екатерина Киселёва — курс «Заработок на Reels», преподаватель Арина Алекс</p>
+        <p>Екатерина Киселёва - курс «Заработок на Reels», преподаватель Арина Алекс</p>
       </div>
     </div>
   </div>
