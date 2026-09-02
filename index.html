@@ -56,6 +56,12 @@
   nav a:hover{opacity:1;color:var(--amethyst)}
   .nav-btn{margin-left:24px;font-size:0.95rem;opacity:0.8;color:inherit;background:none;border:none;padding:0;font-family:inherit;cursor:pointer}
   .nav-btn:hover{opacity:1;color:var(--amethyst)}
+  .lang-switch{margin-left:24px;display:inline-flex;gap:4px;border:1px solid var(--panel-border);border-radius:999px;padding:3px}
+  .lang-btn{
+    background:none;border:none;color:var(--text-dim);font-family:inherit;font-weight:700;
+    font-size:0.72rem;letter-spacing:0.04em;padding:5px 10px;border-radius:999px;cursor:pointer;
+  }
+  .lang-btn.active{background:var(--amethyst);color:var(--ink)}
 
   section{padding:72px 0}
   h1,h2,h3{font-weight:700;font-family:'Space Grotesk', 'Segoe UI', Roboto, Arial, sans-serif}
@@ -395,6 +401,7 @@
     nav{width:100%;display:flex;flex-wrap:wrap;justify-content:center}
     nav a{margin-left:0;margin:4px 10px;font-size:0.85rem}
     .nav-btn{margin-left:0;margin:4px 10px;font-size:0.85rem}
+    .lang-switch{margin-left:0;margin:4px 10px}
     .cert-modal-inner{padding:22px 18px}
   }
 </style>
@@ -405,13 +412,18 @@
   <div class="container">
     <div class="logo">KISELEVY&nbsp;CREO</div>
     <nav>
-      <a href="#about">О нас</a>
-      <a href="#team">Команда</a>
-      <a href="#services">Услуги</a>
-      <a href="#portfolio">Портфолио</a>
-      <a href="#testimonials">Отзывы</a>
-      <button class="cert-trigger nav-btn" onclick="openCertModal()">Сертификаты</button>
-      <a href="#contacts">Контакты</a>
+      <a href="#about" data-i18n="nav.about">О нас</a>
+      <a href="#team" data-i18n="nav.team">Команда</a>
+      <a href="#services" data-i18n="nav.services">Услуги</a>
+      <a href="#portfolio" data-i18n="nav.portfolio">Портфолио</a>
+      <a href="#testimonials" data-i18n="nav.testimonials">Отзывы</a>
+      <button class="cert-trigger nav-btn" onclick="openCertModal()" data-i18n="nav.certs">Сертификаты</button>
+      <a href="#contacts" data-i18n="nav.contacts">Контакты</a>
+      <span class="lang-switch">
+        <button class="lang-btn" data-lang="ru" onclick="setLang('ru')">RU</button>
+        <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" data-lang="sr" onclick="setLang('sr')">SR</button>
+      </span>
     </nav>
   </div>
 </header>
@@ -424,26 +436,26 @@
   <div class="hero-overlay"></div>
   <div class="container">
     <div class="hero-text">
-      <span class="eyebrow">Цифровой бутик</span>
+      <span class="eyebrow" data-i18n="hero.eyebrow">Цифровой бутик</span>
       <h1>KISELEVY CREO</h1>
-      <p class="hero-mission">Время - ваш самый ценный актив.</p>
-      <p class="hero-sub">Рутина съедает ваши дни, заявки теряются, а бизнес держится
+      <p class="hero-mission" data-i18n="hero.mission">Время - ваш самый ценный актив.</p>
+      <p class="hero-sub" data-i18n="hero.sub">Рутина съедает ваши дни, заявки теряются, а бизнес держится
         только на вас. Мы строим системы, которые забирают рутину и приводят клиентов,
         чтобы вы получили главное - вернули себе самый ценный актив. Это ваше время.</p>
-      <a class="btn btn-pulse" href="#" onclick="toggleChat();return false;">Обсудить проект</a>
+      <a class="btn btn-pulse" href="#" onclick="toggleChat();return false;" data-i18n="cta.discuss">Обсудить проект</a>
     </div>
   </div>
 </section>
 
 <section class="about" id="about">
   <div class="container">
-    <span class="eyebrow">Цифровой бутик</span>
-    <h2>О <span class="accent">нас</span></h2>
-    <p class="about-lead">Из директоров офлайн-бизнеса - в создатели цифровых решений</p>
-    <p>Мы - Артур и Кети. За каждым из нас - более 25 лет опыта: от найма до
+    <span class="eyebrow" data-i18n="hero.eyebrow">Цифровой бутик</span>
+    <h2 data-i18n-html="about.h2">О <span class="accent">нас</span></h2>
+    <p class="about-lead" data-i18n="about.lead">Из директоров офлайн-бизнеса - в создатели цифровых решений</p>
+    <p data-i18n="about.p1">Мы - Артур и Кети. За каждым из нас - более 25 лет опыта: от найма до
       руководства собственным бизнесом. Мы были директорами крупного офлайн-магазина
       и хорошо понимаем психологию клиентов и продаж.</p>
-    <p>Сегодня этот опыт мы перенесли в цифровые решения. Прошли обучение в топовых
+    <p data-i18n="about.p2">Сегодня этот опыт мы перенесли в цифровые решения. Прошли обучение в топовых
       онлайн-школах и университетах СНГ №1. Соединили живую психологию продаж с
       автоматизацией, ботами и AI: строим не просто «сайты и ботов», а системные
       решения, которые понимают вашего клиента, растут вместе с вашим бизнесом и
@@ -451,204 +463,204 @@
   </div>
 </section>
 
-<div class="block-cta"><a class="btn" href="#" onclick="toggleChat();return false;">Обсудить проект</a></div>
+<div class="block-cta"><a class="btn" href="#" onclick="toggleChat();return false;" data-i18n="cta.discuss">Обсудить проект</a></div>
 
 <section class="team" id="team">
   <div class="container">
-    <h2>Наша <span class="accent">команда</span></h2>
+    <h2 data-i18n-html="team.h2">Наша <span class="accent">команда</span></h2>
     <div class="team-grid">
       <div class="team-card">
         <div class="team-avatar">АК</div>
         <h3>Артур</h3>
-        <div class="team-role">Разработчик цифровых продуктов, креатор</div>
-        <p class="desc">Боты, сайты, нейропомощники: от идеи до запуска.</p>
+        <div class="team-role" data-i18n="team.artur.role">Разработчик цифровых продуктов, креатор</div>
+        <p class="desc" data-i18n="team.artur.desc">Боты, сайты, нейропомощники: от идеи до запуска.</p>
       </div>
       <div class="team-card">
         <div class="team-avatar"><img src="assets/photos/keti-team-portrait.jpg" alt="Кети"></div>
         <h3>Кети</h3>
-        <div class="team-role">Продюсер · аналитик · маркетолог</div>
-        <p class="desc">Стратегия, позиционирование и продвижение: продукт не только сделан, но и продаётся.</p>
+        <div class="team-role" data-i18n="team.keti.role">Продюсер · аналитик · маркетолог</div>
+        <p class="desc" data-i18n="team.keti.desc">Стратегия, позиционирование и продвижение: продукт не только сделан, но и продаётся.</p>
       </div>
     </div>
   </div>
 </section>
 
-<div class="block-cta"><a class="btn" href="#" onclick="toggleChat();return false;">Обсудить проект</a></div>
+<div class="block-cta"><a class="btn" href="#" onclick="toggleChat();return false;" data-i18n="cta.discuss">Обсудить проект</a></div>
 
 <section class="services" id="services">
   <div class="container">
-    <h2>Наши <span class="accent">услуги</span></h2>
-    <p class="services-intro">Инструменты, которые мы создаём под ваш бизнес.</p>
+    <h2 data-i18n-html="services.h2">Наши <span class="accent">услуги</span></h2>
+    <p class="services-intro" data-i18n="services.intro">Инструменты, которые мы создаём под ваш бизнес.</p>
 
-    <h3 class="services-group-title">Разработка ботов</h3>
+    <h3 class="services-group-title" data-i18n="services.group.bots">Разработка ботов</h3>
     <div class="services-grid">
       <div class="service-card">
-        <h4>Telegram-бот базовый</h4>
+        <h4 data-i18n="svc.bot1.title">Telegram-бот базовый</h4>
         <div class="price">29 000 ₽</div>
-        <p>Меню и кнопки, приём заявок, ответы на частые вопросы, уведомления.</p>
-        <p class="pain">Для вас, если: клиенты задают одни и те же вопросы и теряются, пока вы офлайн.</p>
-        <p>Мы соберём вам личного ассистента в Telegram: встретит клиента, ответит на частые
+        <p data-i18n="svc.bot1.desc">Меню и кнопки, приём заявок, ответы на частые вопросы, уведомления.</p>
+        <p class="pain" data-i18n="svc.bot1.pain">Для вас, если: клиенты задают одни и те же вопросы и теряются, пока вы офлайн.</p>
+        <p data-i18n="svc.bot1.more">Мы соберём вам личного ассистента в Telegram: встретит клиента, ответит на частые
           вопросы (цены, адрес, режим работы), примет заявку и перешлёт вам. Клиент всегда
           может вернуться в чат, даже ночью.</p>
       </div>
       <div class="service-card">
-        <h4>Бот с логикой и базой</h4>
+        <h4 data-i18n="svc.bot2.title">Бот с логикой и базой</h4>
         <div class="price">59 000 ₽</div>
-        <p>Сценарии диалога, хранение данных клиентов, личный кабинет, отчёты.</p>
-        <p class="pain">Для вас, если: информация о клиентах разбросана по перепискам, вы тратите время на ручную обработку заявок.</p>
-        <p>Бот сам ведёт клиента по шагам (выбор услуги, данные, запись) и запоминает
+        <p data-i18n="svc.bot2.desc">Сценарии диалога, хранение данных клиентов, личный кабинет, отчёты.</p>
+        <p class="pain" data-i18n="svc.bot2.pain">Для вас, если: информация о клиентах разбросана по перепискам, вы тратите время на ручную обработку заявок.</p>
+        <p data-i18n="svc.bot2.more">Бот сам ведёт клиента по шагам (выбор услуги, данные, запись) и запоминает
           информацию о нём. Все обращения и история - в одном личном кабинете, а не в сотне
           чатов.</p>
       </div>
       <div class="service-card">
-        <h4>Бот с оплатой и ИИ</h4>
+        <h4 data-i18n="svc.bot3.title">Бот с оплатой и ИИ</h4>
         <div class="price">129 000 ₽</div>
-        <p>Приём оплат, интеграции, искусственный интеллект в диалоге, автопосты.</p>
-        <p class="pain">Для вас, если: клиент готов оплатить и записаться сразу, а вы теряете продажу, пока отвечаете вручную.</p>
-        <p>Бот принимает оплату прямо в чате, подключает нужные сервисы (касса, календарь,
+        <p data-i18n="svc.bot3.desc">Приём оплат, интеграции, искусственный интеллект в диалоге, автопосты.</p>
+        <p class="pain" data-i18n="svc.bot3.pain">Для вас, если: клиент готов оплатить и записаться сразу, а вы теряете продажу, пока отвечаете вручную.</p>
+        <p data-i18n="svc.bot3.more">Бот принимает оплату прямо в чате, подключает нужные сервисы (касса, календарь,
           база клиентов) и сам отвечает на вопросы с помощью ИИ. Дополнительно умеет
           публиковать посты в канал по расписанию.</p>
       </div>
       <div class="service-card">
-        <h4>Фирменный ИИ-бот под ключ</h4>
+        <h4 data-i18n="svc.bot4.title">Фирменный ИИ-бот под ключ</h4>
         <div class="price">от 149 000 ₽</div>
-        <p>Роли, подписка, личный кабинет, полная автоматизация. Стоимость - под проект.</p>
-        <p class="pain">Для вас, если: нужен не просто бот, а полноценный цифровой сотрудник, который ведёт клиента и работает за вас.</p>
-        <p>Разрабатываем бота с нуля под вашу задачу: роли (консультант, менеджер), подписка,
+        <p data-i18n="svc.bot4.desc">Роли, подписка, личный кабинет, полная автоматизация. Стоимость - под проект.</p>
+        <p class="pain" data-i18n="svc.bot4.pain">Для вас, если: нужен не просто бот, а полноценный цифровой сотрудник, который ведёт клиента и работает за вас.</p>
+        <p data-i18n="svc.bot4.more">Разрабатываем бота с нуля под вашу задачу: роли (консультант, менеджер), подписка,
           личный кабинет, полная автоматизация. Точную стоимость считаем после разбора
           проекта.</p>
       </div>
     </div>
 
-    <h3 class="services-group-title">Сайты и лендинги</h3>
+    <h3 class="services-group-title" data-i18n="services.group.sites">Сайты и лендинги</h3>
     <div class="services-grid">
       <div class="service-card">
-        <h4>Лендинг простой</h4>
+        <h4 data-i18n="svc.site1.title">Лендинг простой</h4>
         <div class="price">49 000 ₽</div>
-        <p>Продающая страница, форма заявки, адаптив под телефон и компьютер.</p>
-        <p class="pain">Для вас, если: нет страницы, которая продаёт - клиенты уходят к конкурентам, потому что вас сложно найти и понять.</p>
-        <p>Создадим продающую страницу: понятно, что вы предлагаете, кнопка заявки, удобный
+        <p data-i18n="svc.site1.desc">Продающая страница, форма заявки, адаптив под телефон и компьютер.</p>
+        <p class="pain" data-i18n="svc.site1.pain">Для вас, если: нет страницы, которая продаёт - клиенты уходят к конкурентам, потому что вас сложно найти и понять.</p>
+        <p data-i18n="svc.site1.more">Создадим продающую страницу: понятно, что вы предлагаете, кнопка заявки, удобный
           вид и на телефоне, и на компьютере.</p>
       </div>
       <div class="service-card">
-        <h4>Лендинг с автоматизацией</h4>
+        <h4 data-i18n="svc.site2.title">Лендинг с автоматизацией</h4>
         <div class="price">149 000 ₽</div>
-        <p>Лендинг + CRM, заявки сразу в бот, воронка продаж, рассылки.</p>
-        <p class="pain">Для вас, если: заявки приходят, но теряются - нет связи с базами, воронки и рассылок, продажи зависят от ручной работы.</p>
-        <p>Свяжем страницу с системами: заявки сразу попадают в бот и базу клиентов, дальше
+        <p data-i18n="svc.site2.desc">Лендинг + CRM, заявки сразу в бот, воронка продаж, рассылки.</p>
+        <p class="pain" data-i18n="svc.site2.pain">Для вас, если: заявки приходят, но теряются - нет связи с базами, воронки и рассылок, продажи зависят от ручной работы.</p>
+        <p data-i18n="svc.site2.more">Свяжем страницу с системами: заявки сразу попадают в бот и базу клиентов, дальше
           включается воронка и автоматические рассылки. Ни одна заявка не теряется.</p>
       </div>
     </div>
 
-    <h3 class="services-group-title">Telegram-каналы</h3>
+    <h3 class="services-group-title" data-i18n="services.group.channels">Telegram-каналы</h3>
     <div class="services-grid">
       <div class="service-card">
-        <h4>Настройка канала + позиционирование</h4>
+        <h4 data-i18n="svc.ch1.title">Настройка канала + позиционирование</h4>
         <div class="price">49 000 ₽</div>
-        <p>Оформление, контент, рубрики. Канал, который приводит подписчиков и заявки.</p>
-        <p class="pain">Для вас, если: канал есть, но не приносит подписчиков и заявок - никто не понимает, зачем туда подписываться.</p>
-        <p>Настроим канал так, чтобы он приводил клиентов: оформление, рубрики, контент. Люди
+        <p data-i18n="svc.ch1.desc">Оформление, контент, рубрики. Канал, который приводит подписчиков и заявки.</p>
+        <p class="pain" data-i18n="svc.ch1.pain">Для вас, если: канал есть, но не приносит подписчиков и заявок - никто не понимает, зачем туда подписываться.</p>
+        <p data-i18n="svc.ch1.more">Настроим канал так, чтобы он приводил клиентов: оформление, рубрики, контент. Люди
           видят пользу и подписываются.</p>
       </div>
       <div class="service-card">
-        <h4>Бот автопостов в канал</h4>
+        <h4 data-i18n="svc.ch2.title">Бот автопостов в канал</h4>
         <div class="price">39 000 ₽</div>
-        <p>Посты публикуются сами по графику каждый день, без ручной работы.</p>
-        <p class="pain">Для вас, если: посты нужно выкладывать каждый день, а руки не доходят - канал просто простаивает.</p>
-        <p>Бот публикует посты сам, по расписанию. Вы один раз настраиваете график - дальше
+        <p data-i18n="svc.ch2.desc">Посты публикуются сами по графику каждый день, без ручной работы.</p>
+        <p class="pain" data-i18n="svc.ch2.pain">Для вас, если: посты нужно выкладывать каждый день, а руки не доходят - канал просто простаивает.</p>
+        <p data-i18n="svc.ch2.more">Бот публикует посты сам, по расписанию. Вы один раз настраиваете график - дальше
           всё автоматически.</p>
       </div>
     </div>
 
-    <h3 class="services-group-title">Маркетинг</h3>
+    <h3 class="services-group-title" data-i18n="services.group.marketing">Маркетинг</h3>
     <div class="services-grid">
       <div class="service-card">
-        <h4>Маркетинг-стратегия + диагностика</h4>
+        <h4 data-i18n="svc.mk1.title">Маркетинг-стратегия + диагностика</h4>
         <div class="price">69 000 ₽</div>
-        <p>Анализ рынка, позиционирование, план продвижения, воронка продаж.</p>
-        <p class="pain">Для вас, если: тратите деньги на рекламу, но не понимаете, что работает, а что нет.</p>
-        <p>Разберём рынок и конкурентов, определим позиционирование, составим план и
+        <p data-i18n="svc.mk1.desc">Анализ рынка, позиционирование, план продвижения, воронка продаж.</p>
+        <p class="pain" data-i18n="svc.mk1.pain">Для вас, если: тратите деньги на рекламу, но не понимаете, что работает, а что нет.</p>
+        <p data-i18n="svc.mk1.more">Разберём рынок и конкурентов, определим позиционирование, составим план и
           воронку. Вы поймёте, куда вкладывать и какого результата ждать.</p>
       </div>
       <div class="service-card">
-        <h4>Маркетинг-система через личность</h4>
+        <h4 data-i18n="svc.mk2.title">Маркетинг-система через личность</h4>
         <div class="price">250 000 ₽</div>
-        <p>Личный бренд + система, которая сама приводит и продаёт клиентам.</p>
-        <p class="pain">Для вас, если: от вас уходят к конкурентам, потому что вам не доверяют - нет узнаваемого лица и системы, которая продаёт за вас.</p>
-        <p>Построим личный бренд и свяжем всё в один механизм: контент, канал, бот, воронку.
+        <p data-i18n="svc.mk2.desc">Личный бренд + система, которая сама приводит и продаёт клиентам.</p>
+        <p class="pain" data-i18n="svc.mk2.pain">Для вас, если: от вас уходят к конкурентам, потому что вам не доверяют - нет узнаваемого лица и системы, которая продаёт за вас.</p>
+        <p data-i18n="svc.mk2.more">Построим личный бренд и свяжем всё в один механизм: контент, канал, бот, воронку.
           Система сама приводит клиентов и продаёт - работает без вас круглые сутки.</p>
       </div>
     </div>
 
-    <h3 class="services-group-title">Контент</h3>
+    <h3 class="services-group-title" data-i18n="services.group.content">Контент</h3>
     <div class="services-grid">
       <div class="service-card">
-        <h4>Контент-план на месяц</h4>
+        <h4 data-i18n="svc.ct1.title">Контент-план на месяц</h4>
         <div class="price">29 000 ₽</div>
-        <p>Темы, рубрики, структура постов на 30 дней под вашу нишу.</p>
-        <p class="pain">Для вас, если: не знаете, что публиковать - темы заканчиваются, а канал стоит на месте.</p>
+        <p data-i18n="svc.ct1.desc">Темы, рубрики, структура постов на 30 дней под вашу нишу.</p>
+        <p class="pain" data-i18n="svc.ct1.pain">Для вас, если: не знаете, что публиковать - темы заканчиваются, а канал стоит на месте.</p>
       </div>
       <div class="service-card">
-        <h4>План + тексты + сторис</h4>
+        <h4 data-i18n="svc.ct2.title">План + тексты + сторис</h4>
         <div class="price">59 000 ₽/мес</div>
-        <p>Готовые тексты постов и сторис, можно сразу публиковать.</p>
-        <p class="pain">Для вас, если: одного плана мало - времени писать посты и сторис нет.</p>
+        <p data-i18n="svc.ct2.desc">Готовые тексты постов и сторис, можно сразу публиковать.</p>
+        <p class="pain" data-i18n="svc.ct2.pain">Для вас, если: одного плана мало - времени писать посты и сторис нет.</p>
       </div>
     </div>
 
     <div class="neuro-block">
-      <span class="eyebrow">Нейропомощники</span>
-      <h3 class="neuro-title">Цифровые сотрудники, которые понимают вашего клиента глубже, чем он сам</h3>
-      <p class="neuro-intro">Это не просто бот в Telegram. Это умная экосистема, которая
+      <span class="eyebrow" data-i18n="neuro.eyebrow">Нейропомощники</span>
+      <h3 class="neuro-title" data-i18n="neuro.title">Цифровые сотрудники, которые понимают вашего клиента глубже, чем он сам</h3>
+      <p class="neuro-intro" data-i18n="neuro.intro">Это не просто бот в Telegram. Это умная экосистема, которая
         погружается в вашу нишу и чувствует клиента: его боли, страхи, возражения. Она не
         отвечает по шаблону, а ведёт живой диалог, разбирая любой вопрос до конца.</p>
       <div class="services-grid">
         <div class="service-card">
-          <h4>Нейропродавец</h4>
+          <h4 data-i18n="svc.n1.title">Нейропродавец</h4>
           <div class="price">149 000 ₽</div>
-          <p class="pain">Для вас, если: заявки приходят, а вы не успеваете - клиент остывает и уходит.</p>
-          <p>Встречает клиента первым, чувствует сомнения, снимает возражения и доводит до
+          <p class="pain" data-i18n="svc.n1.pain">Для вас, если: заявки приходят, а вы не успеваете - клиент остывает и уходит.</p>
+          <p data-i18n="svc.n1.more">Встречает клиента первым, чувствует сомнения, снимает возражения и доводит до
             оплаты и записи. Работает без выходных, никогда не опаздывает. Окупается
             быстрее всего - потому и дороже.</p>
         </div>
         <div class="service-card">
-          <h4>Нейрокоуч</h4>
+          <h4 data-i18n="svc.n2.title">Нейрокоуч</h4>
           <div class="price">129 000 ₽</div>
-          <p class="pain">Для вас, если: клиентам нужно сопровождение и наставничество, а времени вести каждого вручную нет.</p>
-          <p>Ведёт клиента к цели, слышит настоящие мотивы, задаёт правильные вопросы,
+          <p class="pain" data-i18n="svc.n2.pain">Для вас, если: клиентам нужно сопровождение и наставничество, а времени вести каждого вручную нет.</p>
+          <p data-i18n="svc.n2.more">Ведёт клиента к цели, слышит настоящие мотивы, задаёт правильные вопросы,
             поддерживает на каждом шаге - как личный наставник.</p>
         </div>
         <div class="service-card">
-          <h4>Нейропсихолог</h4>
+          <h4 data-i18n="svc.n3.title">Нейропсихолог</h4>
           <div class="price">129 000 ₽</div>
-          <p class="pain">Для вас, если: в вашей нише люди приходят с тревогой и сомнениями.</p>
-          <p>Мягко работает со страхами и возражениями, снимает напряжение, помогает
+          <p class="pain" data-i18n="svc.n3.pain">Для вас, если: в вашей нише люди приходят с тревогой и сомнениями.</p>
+          <p data-i18n="svc.n3.more">Мягко работает со страхами и возражениями, снимает напряжение, помогает
             клиенту принять спокойное уверенное решение.</p>
         </div>
         <div class="service-card">
-          <h4>Нейроконсультант</h4>
+          <h4 data-i18n="svc.n4.title">Нейроконсультант</h4>
           <div class="price">99 000 ₽</div>
-          <p class="pain">Для вас, если: продаёте сложный продукт, и клиенту нужна консультация, а не только кнопка.</p>
-          <p>Разбирает ситуацию клиента, объясняет, что подойдёт именно ему, подводит к
+          <p class="pain" data-i18n="svc.n4.pain">Для вас, если: продаёте сложный продукт, и клиенту нужна консультация, а не только кнопка.</p>
+          <p data-i18n="svc.n4.more">Разбирает ситуацию клиента, объясняет, что подойдёт именно ему, подводит к
             правильному выбору.</p>
         </div>
         <div class="service-card">
-          <h4>Нейропомощник под вашу задачу</h4>
+          <h4 data-i18n="svc.n5.title">Нейропомощник под вашу задачу</h4>
           <div class="price">от 99 000 ₽</div>
-          <p class="pain">Для вас, если: нужна роль, которой нет в списке.</p>
-          <p>Соберём под вашу нишу: менеджер, администратор, наставник или кто нужен
+          <p class="pain" data-i18n="svc.n5.pain">Для вас, если: нужна роль, которой нет в списке.</p>
+          <p data-i18n="svc.n5.more">Соберём под вашу нишу: менеджер, администратор, наставник или кто нужен
             вашему бизнесу.</p>
         </div>
         <div class="service-card">
-          <h4>Нейропомощник для личного пользования</h4>
+          <h4 data-i18n="svc.n6.title">Нейропомощник для личного пользования</h4>
           <div class="price">от 49 000 ₽</div>
-          <p class="pain">Для вас, если: нейропомощник нужен не только бизнесу, но и лично вам и вашей семье.</p>
-          <p>Напомнит о важном, поможет с бытовыми задачами, всегда рядом 24/7.</p>
+          <p class="pain" data-i18n="svc.n6.pain">Для вас, если: нейропомощник нужен не только бизнесу, но и лично вам и вашей семье.</p>
+          <p data-i18n="svc.n6.more">Напомнит о важном, поможет с бытовыми задачами, всегда рядом 24/7.</p>
         </div>
       </div>
       <div class="portfolio-referral neuro-pricing-note">
-        <span class="eyebrow">Из чего складывается цена каждого нейропомощника</span>
-        <p>Погружение в вашу нишу: анализ и обучение на ваших материалах. Сценарии под
+        <span class="eyebrow" data-i18n="neuro.pricing.title">Из чего складывается цена каждого нейропомощника</span>
+        <p data-i18n="neuro.pricing.text">Погружение в вашу нишу: анализ и обучение на ваших материалах. Сценарии под
           задачу: диалоги, ответы на возражения. Запуск и подключение, инструкция вам.
           Тестовая поддержка после запуска. Нейропродавец несёт прямые продажи и
           окупается быстрее всего - потому он дороже. Коуч и психолог требуют глубоких
@@ -658,99 +670,99 @@
     </div>
 
     <div class="combo-block">
-      <span class="eyebrow">Готовые решения</span>
-      <h3 class="neuro-title">Комбо-пакеты «под ключ»</h3>
-      <p class="neuro-intro">Готовые решения - когда нужен полный продукт, а не отдельная
+      <span class="eyebrow" data-i18n="combo.eyebrow">Готовые решения</span>
+      <h3 class="neuro-title" data-i18n="combo.title">Комбо-пакеты «под ключ»</h3>
+      <p class="neuro-intro" data-i18n="combo.intro">Готовые решения - когда нужен полный продукт, а не отдельная
         услуга. Выгоднее, чем покупать по отдельности.</p>
       <div class="combo-grid">
         <div class="combo-card">
           <div class="combo-price-row">
             <span class="price-old">108 000 ₽</span>
             <span class="price-new">92 000 ₽</span>
-            <span class="discount-badge">выгода -16 000 ₽</span>
+            <span class="discount-badge" data-i18n="combo.p1.discount">выгода -16 000 ₽</span>
           </div>
-          <span class="badge-pill combo-num">Пакет 1</span>
-          <h4>Бизнес-фундамент</h4>
-          <p class="combo-tagline">Старт бизнеса в сети.</p>
-          <p>Сайт-визитка (5 страниц) + бот-помощник внутри сайта + приём и обработка
+          <span class="badge-pill combo-num" data-i18n="combo.p1.num">Пакет 1</span>
+          <h4 data-i18n="combo.p1.title">Бизнес-фундамент</h4>
+          <p class="combo-tagline" data-i18n="combo.p1.tagline">Старт бизнеса в сети.</p>
+          <p data-i18n="combo.p1.desc">Сайт-визитка (5 страниц) + бот-помощник внутри сайта + приём и обработка
             заявок + базовая автоматизация.</p>
-          <p class="pain">Для вас, если: только выходите в сеть и нужно, чтобы бизнес был заметен и принимал заявки.</p>
+          <p class="pain" data-i18n="combo.p1.pain">Для вас, если: только выходите в сеть и нужно, чтобы бизнес был заметен и принимал заявки.</p>
         </div>
         <div class="combo-card">
           <div class="combo-price-row">
             <span class="price-old">347 000 ₽</span>
             <span class="price-new">295 000 ₽</span>
-            <span class="discount-badge">выгода -52 000 ₽</span>
+            <span class="discount-badge" data-i18n="combo.p2.discount">выгода -52 000 ₽</span>
           </div>
-          <span class="badge-pill combo-num">Пакет 2</span>
-          <h4>Продюсер под ключ</h4>
-          <p class="combo-tagline">Проект от идеи до продаж.</p>
-          <p>Сайт + бот + стратегия и позиционирование + воронка продаж + запуск и
+          <span class="badge-pill combo-num" data-i18n="combo.p2.num">Пакет 2</span>
+          <h4 data-i18n="combo.p2.title">Продюсер под ключ</h4>
+          <p class="combo-tagline" data-i18n="combo.p2.tagline">Проект от идеи до продаж.</p>
+          <p data-i18n="combo.p2.desc">Сайт + бот + стратегия и позиционирование + воронка продаж + запуск и
             продвижение.</p>
-          <p class="pain">Для вас, если: нужен полный проект от идеи до первых продаж - получаете готовый бизнес-процесс под ключ.</p>
+          <p class="pain" data-i18n="combo.p2.pain">Для вас, если: нужен полный проект от идеи до первых продаж - получаете готовый бизнес-процесс под ключ.</p>
         </div>
         <div class="combo-card">
           <div class="combo-price-row">
             <span class="price-old">236 000 ₽</span>
             <span class="price-new">201 000 ₽ + 69 000 ₽/мес</span>
-            <span class="discount-badge">выгода -35 000 ₽</span>
+            <span class="discount-badge" data-i18n="combo.p3.discount">выгода -35 000 ₽</span>
           </div>
-          <span class="badge-pill combo-num">Пакет 3</span>
-          <h4>Цифровой фасад</h4>
-          <p class="combo-tagline">Маркетинг через вашу личность.</p>
-          <p>Позиционирование личного бренда + Telegram-канал + бот + контент-система +
+          <span class="badge-pill combo-num" data-i18n="combo.p3.num">Пакет 3</span>
+          <h4 data-i18n="combo.p3.title">Цифровой фасад</h4>
+          <p class="combo-tagline" data-i18n="combo.p3.tagline">Маркетинг через вашу личность.</p>
+          <p data-i18n="combo.p3.desc">Позиционирование личного бренда + Telegram-канал + бот + контент-система +
             нейропомощник.</p>
-          <p class="pain">Для вас, если: хотите продавать через свою личность и доверие.</p>
+          <p class="pain" data-i18n="combo.p3.pain">Для вас, если: хотите продавать через свою личность и доверие.</p>
         </div>
         <div class="combo-card">
           <div class="combo-price-row">
             <span class="price-old">386 000 ₽</span>
             <span class="price-new">328 000 ₽</span>
-            <span class="discount-badge">выгода -58 000 ₽</span>
+            <span class="discount-badge" data-i18n="combo.p4.discount">выгода -58 000 ₽</span>
           </div>
-          <span class="badge-pill combo-num">Пакет 4</span>
-          <h4>Автоворонка продаж</h4>
-          <p class="combo-tagline">Продукт, который продаёт сам.</p>
-          <p>Лендинг + бот + воронка + канал с автопостами + трафик (захват, нагрев,
+          <span class="badge-pill combo-num" data-i18n="combo.p4.num">Пакет 4</span>
+          <h4 data-i18n="combo.p4.title">Автоворонка продаж</h4>
+          <p class="combo-tagline" data-i18n="combo.p4.tagline">Продукт, который продаёт сам.</p>
+          <p data-i18n="combo.p4.desc">Лендинг + бот + воронка + канал с автопостами + трафик (захват, нагрев,
             продажа).</p>
-          <p class="pain">Для вас, если: хотите, чтобы продукт продавал сам, без постоянного ручного контроля.</p>
+          <p class="pain" data-i18n="combo.p4.pain">Для вас, если: хотите, чтобы продукт продавал сам, без постоянного ручного контроля.</p>
         </div>
         <div class="combo-card">
           <div class="combo-price-row">
             <span class="price-old">646 000 ₽</span>
             <span class="price-new">549 000 ₽</span>
-            <span class="discount-badge">выгода -97 000 ₽</span>
+            <span class="discount-badge" data-i18n="combo.p5.discount">выгода -97 000 ₽</span>
           </div>
-          <span class="badge-pill combo-num">Пакет 5</span>
-          <h4>ИИ-продукт под ключ</h4>
-          <p class="combo-tagline">Серьёзный ИИ-сервис с собственной механикой.</p>
-          <p>Бот с несколькими ролями + ИИ-логика + подписка и оплата + личный кабинет.
+          <span class="badge-pill combo-num" data-i18n="combo.p5.num">Пакет 5</span>
+          <h4 data-i18n="combo.p5.title">ИИ-продукт под ключ</h4>
+          <p class="combo-tagline" data-i18n="combo.p5.tagline">Серьёзный ИИ-сервис с собственной механикой.</p>
+          <p data-i18n="combo.p5.desc">Бот с несколькими ролями + ИИ-логика + подписка и оплата + личный кабинет.
             Стоимость - под проект.</p>
-          <p class="pain">Для вас, если: нужен серьёзный ИИ-сервис с собственной механикой.</p>
+          <p class="pain" data-i18n="combo.p5.pain">Для вас, если: нужен серьёзный ИИ-сервис с собственной механикой.</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<div class="block-cta"><a class="btn" href="#" onclick="toggleChat();return false;">Обсудить проект</a></div>
+<div class="block-cta"><a class="btn" href="#" onclick="toggleChat();return false;" data-i18n="cta.discuss">Обсудить проект</a></div>
 
 <section class="portfolio" id="portfolio">
   <div class="container">
-    <h2>Наше <span class="accent">портфолио</span></h2>
+    <h2 data-i18n-html="portfolio.h2">Наше <span class="accent">портфолио</span></h2>
     <div class="portfolio-grid">
       <div class="portfolio-card portfolio-wide portfolio-featured">
         <img src="assets/portfolio/bagovskaia-boho.jpg" alt="Сайт бронирования дома «Баговская Boho»">
         <div class="portfolio-card-body">
-          <span class="badge-pill portfolio-featured-badge">Флагманский проект · наш личный кейс</span>
+          <span class="badge-pill portfolio-featured-badge" data-i18n="pf.bagov.badge">Флагманский проект · наш личный кейс</span>
           <h3>Баговская Boho</h3>
-          <p>Дом для отдыха в Краснодарском крае, а управляем им мы удалённо, живя в
+          <p data-i18n="pf.bagov.p1">Дом для отдыха в Краснодарском крае, а управляем им мы удалённо, живя в
             другой стране. Раньше это значило: держать телефон под рукой круглыми
             сутками, самим отвечать гостям, вручную сверять даты и надеяться, что
             заселение пройдёт без нас гладко. Сейчас всю эту рутину ведёт сайт-визитка
             с ИИ-ассистентом, которую мы сделали сами и на себе проверили, что она
             реально работает.</p>
-          <p>Гость заходит на сайт, общается с ассистентом, тот сам показывает
+          <p data-i18n="pf.bagov.p2">Гость заходит на сайт, общается с ассистентом, тот сам показывает
             свободные даты и цену, оформляет бронь в календаре и присылает заявку нам
             в Telegram - остаётся только подтвердить одним касанием. Инструкции по
             заселению, ключи, вопросы о доме - ассистент отвечает сам, даже если
@@ -758,41 +770,41 @@
             контроль на расстоянии: список заявок и броней, перенос и отмена дат,
             посты в Telegram-канал дома.</p>
           <div class="portfolio-referral">
-            <span class="eyebrow">Монетизация внутри визитки</span>
-            <p><b>Программа «Пригласи друга»:</b> гость получает персональный код и
+            <span class="eyebrow" data-i18n="pf.bagov.referral.title">Монетизация внутри визитки</span>
+            <p data-i18n-html="pf.bagov.referral.p1"><b>Программа «Пригласи друга»:</b> гость получает персональный код и
               делится им с друзьями.</p>
-            <p>Когда друг бронирует отдых по этому коду - гость выбирает награду:
+            <p data-i18n="pf.bagov.referral.p2">Когда друг бронирует отдых по этому коду - гость выбирает награду:
               15% скидка на своё следующее проживание, 10% кэшбэк на карту или 10%
               сертификат для друга. Всё считается и выдаётся автоматически, без
               нашего участия.</p>
           </div>
           <ul class="benefits">
-            <li><b>Выгода:</b> бизнес работает 24/7 из любой точки мира - бронь и заселение не встают на паузу, даже когда мы спим или заняты другими проектами.</li>
-            <li><b>Пока мы недоступны:</b> ассистент уже ведёт следующего гостя к подтверждённой брони и параллельно начисляет бонусы по реферальной программе.</li>
-            <li><b>Отличие от конкурентов:</b> вместо формы «оставить заявку» и созвона в неудобное время, гость сам доходит до готовой брони в диалоге, а хозяину остаётся только подтвердить - из любой страны.</li>
+            <li data-i18n-html="pf.bagov.b1"><b>Выгода:</b> бизнес работает 24/7 из любой точки мира - бронь и заселение не встают на паузу, даже когда мы спим или заняты другими проектами.</li>
+            <li data-i18n-html="pf.bagov.b2"><b>Пока мы недоступны:</b> ассистент уже ведёт следующего гостя к подтверждённой брони и параллельно начисляет бонусы по реферальной программе.</li>
+            <li data-i18n-html="pf.bagov.b3"><b>Отличие от конкурентов:</b> вместо формы «оставить заявку» и созвона в неудобное время, гость сам доходит до готовой брони в диалоге, а хозяину остаётся только подтвердить - из любой страны.</li>
           </ul>
-          <p class="portfolio-note">Это не просто сайт для одного дома. Это шаблон
+          <p class="portfolio-note" data-i18n="pf.bagov.note">Это не просто сайт для одного дома. Это шаблон
             цифрового управляющего для любого дистанционного бизнеса в сфере аренды
             и гостеприимства: сам продаёт, сам заселяет, сам приводит новых клиентов
             через действующих.</p>
-          <a class="link" href="https://bagovskaia-boho.ru" target="_blank" rel="noopener">Смотреть сайт →</a>
+          <a class="link" href="https://bagovskaia-boho.ru" target="_blank" rel="noopener" data-i18n="pf.viewsite">Смотреть сайт →</a>
         </div>
       </div>
       <div class="portfolio-card portfolio-wide">
         <img src="assets/portfolio/ludmila-skinbody-full.jpg" alt="Сайт-визитка косметолога Ludmila SkinBody">
         <div class="portfolio-card-body">
           <h3>Ludmila SkinBody</h3>
-          <p>Сайт-визитка мастера-косметолога с записью на свободные даты по
+          <p data-i18n="pf.ludmila.p1">Сайт-визитка мастера-косметолога с записью на свободные даты по
             календарю. Встроенный ИИ-ассистент ведёт диалог с клиентами 24/7,
             отвечает на вопросы, подбирает нужную услугу, сам считает время и
             стоимость процедуры и фиксирует запись, плюс следит за заявками,
             записями и свободными окошками.</p>
           <ul class="benefits">
-            <li><b>Выгода:</b> запись идёт даже ночью и в выходной, ни одна заявка не теряется, пока мастер офлайн.</li>
-            <li><b>Пока мастер физически работает руками с клиентом на процедуре:</b> ассистент уже отвечает следующему клиенту, считает стоимость и записывает его на свободное окошко.</li>
-            <li><b>Отличие от конкурентов:</b> обычно нужен отдельный администратор или запись идёт по звонку, здесь ассистент сам ведёт диалог, считает цену и заполняет календарь без администратора.</li>
+            <li data-i18n-html="pf.ludmila.b1"><b>Выгода:</b> запись идёт даже ночью и в выходной, ни одна заявка не теряется, пока мастер офлайн.</li>
+            <li data-i18n-html="pf.ludmila.b2"><b>Пока мастер физически работает руками с клиентом на процедуре:</b> ассистент уже отвечает следующему клиенту, считает стоимость и записывает его на свободное окошко.</li>
+            <li data-i18n-html="pf.ludmila.b3"><b>Отличие от конкурентов:</b> обычно нужен отдельный администратор или запись идёт по звонку, здесь ассистент сам ведёт диалог, считает цену и заполняет календарь без администратора.</li>
           </ul>
-          <p class="portfolio-note">Это не просто сайт. Это цифровая платформа, которая
+          <p class="portfolio-note" data-i18n="pf.ludmila.note">Это не просто сайт. Это цифровая платформа, которая
             берёт на себя рутинные задачи, отвечает клиентам и записывает их на
             процедуры, и при этом рассказывает, кто вы и какой вы мастер.
             Разместить её можно на любой площадке. Это как личная электронная
@@ -802,31 +814,31 @@
       <div class="portfolio-card">
         <img src="assets/portfolio/lid-magnity.jpg" alt="Платформа «Лид-Магниты» для Instagram">
         <div class="portfolio-card-body">
-          <h3>Лид-Магниты</h3>
-          <p>Платформа генерации лид-магнитов для Instagram (продукт компании
+          <h3 data-i18n="pf.leadmagnet.title">Лид-Магниты</h3>
+          <p data-i18n="pf.leadmagnet.p1">Платформа генерации лид-магнитов для Instagram (продукт компании
             Meta, признанной экстремистской организацией, деятельность запрещена
             на территории РФ): ИИ придумывает кодовые слова, сценарии Reels и
             тексты постов под них, а CRM ведёт подписчиков по воронке от
             комментария с кодовым словом до готовой заявки.</p>
           <ul class="benefits">
-            <li><b>Выгода:</b> одно кодовое слово в Reels заменяет ручную рассылку лид-магнитов и сразу превращает комментарии в контакты в CRM.</li>
-            <li><b>Пока вы заняты съёмкой или клиентами:</b> система уже раздаёт материал по кодовому слову и собирает контакты без вашего участия.</li>
-            <li><b>Отличие от конкурентов:</b> обычно лид-магнит рассылают вручную в директ по одному, здесь один Reels с кодовым словом обслуживает любое число комментариев одновременно.</li>
+            <li data-i18n-html="pf.leadmagnet.b1"><b>Выгода:</b> одно кодовое слово в Reels заменяет ручную рассылку лид-магнитов и сразу превращает комментарии в контакты в CRM.</li>
+            <li data-i18n-html="pf.leadmagnet.b2"><b>Пока вы заняты съёмкой или клиентами:</b> система уже раздаёт материал по кодовому слову и собирает контакты без вашего участия.</li>
+            <li data-i18n-html="pf.leadmagnet.b3"><b>Отличие от конкурентов:</b> обычно лид-магнит рассылают вручную в директ по одному, здесь один Reels с кодовым словом обслуживает любое число комментариев одновременно.</li>
           </ul>
         </div>
       </div>
       <div class="portfolio-card">
         <img src="assets/portfolio/keti-ai.jpg" alt="Нейропомощник и нейропродавец Кэти">
         <div class="portfolio-card-body">
-          <h3>Нейропомощник и нейропродавец Кэти</h3>
-          <p>Цифровой сотрудник KISELEVY CREO: общается с клиентами в Telegram как
+          <h3 data-i18n="pf.keti.title">Нейропомощник и нейропродавец Кэти</h3>
+          <p data-i18n="pf.keti.p1">Цифровой сотрудник KISELEVY CREO: общается с клиентами в Telegram как
             человек, помнит каждого (карточка с нишей, целями, болями, этапом
             воронки), сама выявляет потребность, снимает возражения и доводит
             диалог до заявки в CRM.</p>
           <ul class="benefits">
-            <li><b>Выгода:</b> ни один диалог не теряется и не остывает, даже если написали ночью или в выходной.</li>
-            <li><b>Пока вы заняты текущим проектом:</b> Кэти уже общается с новым клиентом, помнит историю переписки и ведёт его к заявке.</li>
-            <li><b>Отличие от конкурентов:</b> типовые чат-боты отвечают по кнопкам и шаблонам, Кэти ведёт живой диалог и помнит контекст клиента, как реальный менеджер.</li>
+            <li data-i18n-html="pf.keti.b1"><b>Выгода:</b> ни один диалог не теряется и не остывает, даже если написали ночью или в выходной.</li>
+            <li data-i18n-html="pf.keti.b2"><b>Пока вы заняты текущим проектом:</b> Кэти уже общается с новым клиентом, помнит историю переписки и ведёт его к заявке.</li>
+            <li data-i18n-html="pf.keti.b3"><b>Отличие от конкурентов:</b> типовые чат-боты отвечают по кнопкам и шаблонам, Кэти ведёт живой диалог и помнит контекст клиента, как реальный менеджер.</li>
           </ul>
         </div>
       </div>
@@ -834,100 +846,100 @@
         <img src="assets/portfolio/vibe-boss.jpg" alt="AI-контент-менеджер Vibe Boss">
         <div class="portfolio-card-body">
           <h3>Vibe Boss</h3>
-          <p>AI-контент-менеджер: следит за трендами и по встроенной логике
+          <p data-i18n="pf.vibeboss.p1">AI-контент-менеджер: следит за трендами и по встроенной логике
             собирает контент-план Reels на недели вперёд, сам публикует посты в
             Telegram и Instagram (продукт компании Meta, признанной экстремистской
             организацией, деятельность запрещена на территории РФ) по расписанию,
             от черновика до статуса «опубликовано», без ручной рутины.</p>
           <ul class="benefits">
-            <li><b>Выгода:</b> канал наполняется регулярно даже без ежедневного участия, подписчики видят стабильный поток контента.</li>
-            <li><b>Пока вы заняты съёмками или клиентами:</b> Vibe Boss уже выбрал тренд, собрал план публикаций и поставил посты в очередь на нужное время.</li>
-            <li><b>Отличие от конкурентов:</b> обычно контент-план и постинг ведёт отдельный человек вручную, здесь один инструмент отслеживает тренды, планирует и публикует сам.</li>
+            <li data-i18n-html="pf.vibeboss.b1"><b>Выгода:</b> канал наполняется регулярно даже без ежедневного участия, подписчики видят стабильный поток контента.</li>
+            <li data-i18n-html="pf.vibeboss.b2"><b>Пока вы заняты съёмками или клиентами:</b> Vibe Boss уже выбрал тренд, собрал план публикаций и поставил посты в очередь на нужное время.</li>
+            <li data-i18n-html="pf.vibeboss.b3"><b>Отличие от конкурентов:</b> обычно контент-план и постинг ведёт отдельный человек вручную, здесь один инструмент отслеживает тренды, планирует и публикует сам.</li>
           </ul>
         </div>
       </div>
       <div class="portfolio-card">
         <img src="assets/portfolio/etno-sampler.jpg" alt="Этно-Сэмплер для APC Mini">
         <div class="portfolio-card-body">
-          <h3>Этно-Сэмплер APC Mini</h3>
-          <p>Программа для живых музыкальных выступлений: 64 пада с этно-инструментами
+          <h3 data-i18n="pf.etno.title">Этно-Сэмплер APC Mini</h3>
+          <p data-i18n="pf.etno.p1">Программа для живых музыкальных выступлений: 64 пада с этно-инструментами
             (варган, шаманский бубен, флейта, глюкофон, губная гармошка, дарбука,
             колокольчики, вокал), лупер и мастер-эффекты, поддержка MIDI-контроллера
             AKAI APC Mini. Можно сыграть трек вживую и сразу записать на устройство.</p>
           <ul class="benefits">
-            <li><b>Выгода:</b> живой сет из этно-звуков собирается за минуты, без студии и постобработки.</li>
-            <li><b>Пока музыкант физически работает руками на паде:</b> программа сама держит лупы и эффекты и пишет партию на устройство, донастраивать в моменте ничего не нужно.</li>
-            <li><b>Отличие от конкурентов:</b> обычные сэмплеры дают универсальные библиотеки звуков, здесь готовый набор именно этно-инструментов под живое выступление и запись в одно касание.</li>
+            <li data-i18n-html="pf.etno.b1"><b>Выгода:</b> живой сет из этно-звуков собирается за минуты, без студии и постобработки.</li>
+            <li data-i18n-html="pf.etno.b2"><b>Пока музыкант физически работает руками на паде:</b> программа сама держит лупы и эффекты и пишет партию на устройство, донастраивать в моменте ничего не нужно.</li>
+            <li data-i18n-html="pf.etno.b3"><b>Отличие от конкурентов:</b> обычные сэмплеры дают универсальные библиотеки звуков, здесь готовый набор именно этно-инструментов под живое выступление и запись в одно касание.</li>
           </ul>
         </div>
       </div>
       <div class="portfolio-card">
         <img src="assets/portfolio/reels-ai.jpg" alt="Reels AI, генератор постов для Telegram">
         <div class="portfolio-card-body">
-          <h3>Reels AI, генератор постов</h3>
-          <p>AI-ассистент сам пишет экспертные посты для Telegram по готовым
+          <h3 data-i18n="pf.reelsai.title">Reels AI, генератор постов</h3>
+          <p data-i18n="pf.reelsai.p1">AI-ассистент сам пишет экспертные посты для Telegram по готовым
             форматам прогрева: мини-история, кейс, лайфхак, вопрос аудитории,
             разворот опыта, бонус, итоги, плюс новости по расписанию
             несколько раз в день. Канал наполняется без ежедневного ручного
             написания текстов.</p>
           <ul class="benefits">
-            <li><b>Выгода:</b> контент-план на месяц вперёд собирается за один запуск, а не сочиняется каждый день заново.</li>
-            <li><b>Пока вы заняты клиентами или проектом:</b> ассистент уже написал пост по расписанию и поставил его в очередь на публикацию.</li>
-            <li><b>Отличие от конкурентов:</b> копирайтер пишет по брифу и по часам, здесь готовые форматы прогрева включаются одним кликом и выходят строго по расписанию.</li>
+            <li data-i18n-html="pf.reelsai.b1"><b>Выгода:</b> контент-план на месяц вперёд собирается за один запуск, а не сочиняется каждый день заново.</li>
+            <li data-i18n-html="pf.reelsai.b2"><b>Пока вы заняты клиентами или проектом:</b> ассистент уже написал пост по расписанию и поставил его в очередь на публикацию.</li>
+            <li data-i18n-html="pf.reelsai.b3"><b>Отличие от конкурентов:</b> копирайтер пишет по брифу и по часам, здесь готовые форматы прогрева включаются одним кликом и выходят строго по расписанию.</li>
           </ul>
         </div>
       </div>
     </div>
     <div class="portfolio-placeholder">
-      <h3>Ещё кейсы скоро появятся здесь</h3>
-      <p>Собираю примеры готовых проектов, загляните позже.</p>
+      <h3 data-i18n="pf.placeholder.title">Ещё кейсы скоро появятся здесь</h3>
+      <p data-i18n="pf.placeholder.text">Собираю примеры готовых проектов, загляните позже.</p>
     </div>
   </div>
 </section>
 
 <section class="testimonials" id="testimonials">
   <div class="container">
-    <h2>Что говорят <span class="accent">клиенты</span></h2>
+    <h2 data-i18n-html="testi.h2">Что говорят <span class="accent">клиенты</span></h2>
     <div class="testimonials-grid">
       <div class="testimonial-card">
         <div class="stars">★★★★★</div>
-        <p>«Катюша, с твоими познаниями эксперта и продюсера, твоей авторской
+        <p data-i18n="testi.1.text">«Катюша, с твоими познаниями эксперта и продюсера, твоей авторской
           методикой - всё, что ты сделала, профессионально и качественно. Ты
           очень грамотная, целеустремлённая и, конечно, эксперт в своей сфере.
           С твоим подходом я верю в очень хороший результат и подъём в своей
           работе.»</p>
         <div class="testimonial-name">Людмила</div>
-        <div class="testimonial-role">косметолог-эстетист</div>
+        <div class="testimonial-role" data-i18n="testi.1.role">косметолог-эстетист</div>
       </div>
       <div class="testimonial-card">
         <div class="stars">★★★★★</div>
-        <p>«Ты как эксперт была рядом со мной всё это время и многому меня
+        <p data-i18n="testi.2.text">«Ты как эксперт была рядом со мной всё это время и многому меня
           научила. Твоя методика и поддержка дали мне уверенность в себе - это
           самое ценное. Благодаря тебе я поверила в хорошие результаты в своей
           работе.»</p>
         <div class="testimonial-name">Эмилия</div>
-        <div class="testimonial-role">мастер-парикмахер</div>
+        <div class="testimonial-role" data-i18n="testi.2.role">мастер-парикмахер</div>
       </div>
       <div class="testimonial-card">
         <div class="stars">★★★★★</div>
-        <p>«Мой запрос ты реализовала на 100%. Ты дала мне уверенность в себе,
+        <p data-i18n="testi.3.text">«Мой запрос ты реализовала на 100%. Ты дала мне уверенность в себе,
           и я очень тебе благодарна за всё, что ты как эксперт вложила в меня
           за это время.»</p>
         <div class="testimonial-name">Екатерина</div>
-        <div class="testimonial-role">мастер-бьюти</div>
+        <div class="testimonial-role" data-i18n="testi.3.role">мастер-бьюти</div>
       </div>
     </div>
   </div>
 </section>
 
-<div class="block-cta"><a class="btn" href="#" onclick="toggleChat();return false;">Обсудить проект</a></div>
+<div class="block-cta"><a class="btn" href="#" onclick="toggleChat();return false;" data-i18n="cta.discuss">Обсудить проект</a></div>
 
 <section class="contacts" id="contacts">
   <div class="container">
-    <h2>Свяжитесь с <span class="accent">нами</span></h2>
-    <p>Пишите напрямую в Telegram, отвечаем лично.</p>
+    <h2 data-i18n-html="contacts.h2">Свяжитесь с <span class="accent">нами</span></h2>
+    <p data-i18n="contacts.text">Пишите напрямую в Telegram, отвечаем лично.</p>
     <div class="contact-buttons">
-      <a class="btn" href="https://t.me/KISELEVY_CREO" target="_blank" rel="noopener">Написать в Telegram</a>
+      <a class="btn" href="https://t.me/KISELEVY_CREO" target="_blank" rel="noopener" data-i18n="contacts.btn">Написать в Telegram</a>
     </div>
   </div>
 </section>
@@ -942,17 +954,17 @@
 <div class="cert-modal" id="certModal">
   <div class="cert-modal-inner">
     <div class="cert-modal-head">
-      <h2>Сертификаты и <span class="accent">дипломы</span></h2>
+      <h2 data-i18n-html="certs.h2">Сертификаты и <span class="accent">дипломы</span></h2>
       <button class="cert-close" onclick="closeCertModal()" aria-label="Закрыть">×</button>
     </div>
     <div class="cert-grid">
       <div class="cert-card" onclick="openLightbox('assets/certificates/keti-producer-reels.jpg')">
         <img src="assets/certificates/keti-producer-reels.jpg" alt="Сертификат Екатерины Киселёвой «Продюсер Reels»" loading="lazy">
-        <p>Екатерина Киселёва - «Продюсер Reels», заработок на Reels</p>
+        <p data-i18n="certs.1">Екатерина Киселёва - «Продюсер Reels», заработок на Reels</p>
       </div>
       <div class="cert-card" onclick="openLightbox('assets/certificates/keti-zarabotok-na-reels-dark.jpg')">
         <img src="assets/certificates/keti-zarabotok-na-reels-dark.jpg" alt="Сертификат Екатерины Киселёвой «Заработок на Reels»" loading="lazy">
-        <p>Екатерина Киселёва - курс «Заработок на Reels», преподаватель Арина Алекс</p>
+        <p data-i18n="certs.2">Екатерина Киселёва - курс «Заработок на Reels», преподаватель Арина Алекс</p>
       </div>
     </div>
   </div>
@@ -994,15 +1006,15 @@
   <div class="chat-panel-head">
     <div>
       <div class="chat-panel-title">CREO</div>
-      <div class="chat-panel-sub">Помощник KISELEVY CREO</div>
+      <div class="chat-panel-sub" data-i18n="chat.sub">Помощник KISELEVY CREO</div>
     </div>
     <button class="cert-close" onclick="toggleChat()" aria-label="Закрыть">×</button>
   </div>
   <div class="chat-messages" id="chatMessages">
-    <div class="chat-msg chat-msg-bot">Привет! Я CREO, помощник KISELEVY CREO. Как вас зовут и чем занимаетесь?</div>
+    <div class="chat-msg chat-msg-bot" id="chatGreeting" data-i18n="chat.greeting">Привет! Я CREO, помощник KISELEVY CREO. Как вас зовут и чем занимаетесь?</div>
   </div>
   <form class="chat-input-row" id="chatForm">
-    <input type="text" id="chatInput" placeholder="Напишите сообщение..." autocomplete="off">
+    <input type="text" id="chatInput" data-i18n-placeholder="chat.placeholder" placeholder="Напишите сообщение..." autocomplete="off">
     <button type="submit" class="btn">→</button>
   </form>
 </div>
@@ -1049,6 +1061,424 @@
       input.disabled = false;
       input.focus();
     }
+  });
+</script>
+
+<script>
+  const translations = {
+    en: {
+      'nav.about': `About`,
+      'nav.team': `Team`,
+      'nav.services': `Services`,
+      'nav.portfolio': `Portfolio`,
+      'nav.testimonials': `Reviews`,
+      'nav.certs': `Certificates`,
+      'nav.contacts': `Contacts`,
+      'cta.discuss': `Discuss a project`,
+      'hero.eyebrow': `Digital Boutique`,
+      'hero.mission': `Time is your most valuable asset.`,
+      'hero.sub': `Routine eats up your days, leads get lost, and the business rests on you alone. We build systems that take over the routine and bring in clients, so you get back what matters most - your time.`,
+      'about.h2': `About <span class="accent">Us</span>`,
+      'about.lead': `From offline business directors to creators of digital solutions`,
+      'about.p1': `We are Artur and Keti. Together we have over 25 years of experience: from hiring staff to running our own business. We were directors of a large offline store and understand customer psychology and sales well.`,
+      'about.p2': `Today we've carried that experience into digital solutions. We trained at top online schools and the CIS's No.1 university. We combined real sales psychology with automation, bots and AI: we don't just build "sites and bots" - we build systemic solutions that understand your customer, grow with your business and deliver results.`,
+      'team.h2': `Our <span class="accent">Team</span>`,
+      'team.artur.role': `Digital product developer, creator`,
+      'team.artur.desc': `Bots, websites, AI assistants: from idea to launch.`,
+      'team.keti.role': `Producer · Analyst · Marketer`,
+      'team.keti.desc': `Strategy, positioning and promotion: the product isn't just built, it sells.`,
+      'services.h2': `Our <span class="accent">Services</span>`,
+      'services.intro': `Tools we build for your business.`,
+      'services.group.bots': `Bot development`,
+      'services.group.sites': `Websites and landing pages`,
+      'services.group.channels': `Telegram channels`,
+      'services.group.marketing': `Marketing`,
+      'services.group.content': `Content`,
+      'svc.bot1.title': `Basic Telegram bot`,
+      'svc.bot1.desc': `Menu and buttons, receiving requests, FAQ answers, notifications.`,
+      'svc.bot1.pain': `For you, if: customers keep asking the same questions and get lost while you're offline.`,
+      'svc.bot1.more': `We'll build you a personal Telegram assistant: it greets clients, answers common questions (prices, address, hours), takes requests and forwards them to you. Clients can always come back to the chat, even at night.`,
+      'svc.bot2.title': `Bot with logic and database`,
+      'svc.bot2.desc': `Dialogue scenarios, customer data storage, personal dashboard, reports.`,
+      'svc.bot2.pain': `For you, if: customer info is scattered across chats and you waste time processing requests manually.`,
+      'svc.bot2.more': `The bot guides the client step by step (service choice, data, booking) and remembers information about them. All inquiries and history live in one dashboard, not a hundred chats.`,
+      'svc.bot3.title': `Bot with payments and AI`,
+      'svc.bot3.desc': `Accepting payments, integrations, AI in the dialogue, auto-posting.`,
+      'svc.bot3.pain': `For you, if: a client is ready to pay and book right away, but you lose the sale while replying manually.`,
+      'svc.bot3.more': `The bot accepts payment right in the chat, connects the tools you need (POS, calendar, customer database) and answers questions with AI. It can also publish posts to your channel on schedule.`,
+      'svc.bot4.title': `Custom AI bot, turnkey`,
+      'svc.bot4.desc': `Roles, subscription, personal dashboard, full automation. Price - per project.`,
+      'svc.bot4.pain': `For you, if: you need more than a bot - a full digital employee who guides clients and works for you.`,
+      'svc.bot4.more': `We build a bot from scratch for your task: roles (consultant, manager), subscription, personal dashboard, full automation. We calculate the exact price after reviewing your project.`,
+      'svc.site1.title': `Simple landing page`,
+      'svc.site1.desc': `Sales page, request form, mobile and desktop friendly.`,
+      'svc.site1.pain': `For you, if: you don't have a page that sells - clients go to competitors because you're hard to find and understand.`,
+      'svc.site1.more': `We'll build a sales page: it's clear what you offer, a request button, and it looks good on both phone and computer.`,
+      'svc.site2.title': `Landing page with automation`,
+      'svc.site2.desc': `Landing page + CRM, requests straight to the bot, sales funnel, newsletters.`,
+      'svc.site2.pain': `For you, if: requests come in but get lost - no link to databases, no funnel or newsletters, sales depend on manual work.`,
+      'svc.site2.more': `We'll connect the page to your systems: requests go straight into the bot and customer database, then the funnel and automatic newsletters kick in. No request gets lost.`,
+      'svc.ch1.title': `Channel setup + positioning`,
+      'svc.ch1.desc': `Design, content, categories. A channel that brings subscribers and requests.`,
+      'svc.ch1.pain': `For you, if: you have a channel, but it brings no subscribers or requests - nobody understands why to subscribe.`,
+      'svc.ch1.more': `We'll set up the channel so it brings clients: design, categories, content. People see the value and subscribe.`,
+      'svc.ch2.title': `Auto-posting bot for a channel`,
+      'svc.ch2.desc': `Posts publish themselves on schedule every day, no manual work.`,
+      'svc.ch2.pain': `For you, if: posts need to go out daily but you never get to it - the channel just stalls.`,
+      'svc.ch2.more': `The bot publishes posts itself, on schedule. You set the schedule once - everything else happens automatically.`,
+      'svc.mk1.title': `Marketing strategy + diagnostics`,
+      'svc.mk1.desc': `Market analysis, positioning, promotion plan, sales funnel.`,
+      'svc.mk1.pain': `For you, if: you spend money on ads but don't understand what works and what doesn't.`,
+      'svc.mk1.more': `We'll analyze the market and competitors, define positioning, and build a plan and funnel. You'll know where to invest and what results to expect.`,
+      'svc.mk2.title': `Marketing system through personal brand`,
+      'svc.mk2.desc': `Personal brand + a system that brings and sells to clients on its own.`,
+      'svc.mk2.pain': `For you, if: clients leave for competitors because they don't trust you - no recognizable face and no system selling for you.`,
+      'svc.mk2.more': `We'll build a personal brand and connect everything into one mechanism: content, channel, bot, funnel. The system brings and sells to clients on its own - working around the clock without you.`,
+      'svc.ct1.title': `Content plan for a month`,
+      'svc.ct1.desc': `Topics, categories, post structure for 30 days tailored to your niche.`,
+      'svc.ct1.pain': `For you, if: you don't know what to post - topics run out and the channel stands still.`,
+      'svc.ct2.title': `Plan + texts + stories`,
+      'svc.ct2.desc': `Ready-made post and story texts, publish right away.`,
+      'svc.ct2.pain': `For you, if: a plan alone isn't enough - you have no time to write posts and stories.`,
+      'neuro.eyebrow': `AI Assistants`,
+      'neuro.title': `Digital employees who understand your customer better than they understand themselves`,
+      'neuro.intro': `This isn't just a Telegram bot. It's a smart ecosystem that immerses itself in your niche and senses the customer: their pains, fears, objections. It doesn't answer by script - it holds a real conversation, working through any question to the end.`,
+      'svc.n1.title': `AI Salesperson`,
+      'svc.n1.pain': `For you, if: requests come in but you can't keep up - the client cools off and leaves.`,
+      'svc.n1.more': `Greets the client first, senses their doubts, handles objections and guides them to payment and booking. Works with no days off, never late. Pays for itself fastest - which is why it costs more.`,
+      'svc.n2.title': `AI Coach`,
+      'svc.n2.pain': `For you, if: clients need guidance and mentoring, but there's no time to walk each one through it manually.`,
+      'svc.n2.more': `Guides the client toward their goal, hears their real motivations, asks the right questions, supports them at every step - like a personal mentor.`,
+      'svc.n3.title': `AI Psychologist`,
+      'svc.n3.pain': `For you, if: in your niche people come with anxiety and doubts.`,
+      'svc.n3.more': `Gently works through fears and objections, relieves tension, and helps the client reach a calm, confident decision.`,
+      'svc.n4.title': `AI Consultant`,
+      'svc.n4.pain': `For you, if: you sell a complex product and the client needs a consultation, not just a button.`,
+      'svc.n4.more': `Breaks down the client's situation, explains what fits them best, and guides them to the right choice.`,
+      'svc.n5.title': `AI Assistant for your task`,
+      'svc.n5.pain': `For you, if: you need a role that's not on the list.`,
+      'svc.n5.more': `We'll build one for your niche: manager, administrator, mentor, or whatever your business needs.`,
+      'svc.n6.title': `Personal AI Assistant`,
+      'svc.n6.pain': `For you, if: you need an AI assistant not just for business, but for yourself and your family too.`,
+      'svc.n6.more': `Reminds you of what matters, helps with everyday tasks, always there 24/7.`,
+      'neuro.pricing.title': `What makes up the price of each AI assistant`,
+      'neuro.pricing.text': `Immersion in your niche: analysis and training on your materials. Scenarios for the task: dialogues, objection handling. Launch and setup, instructions for you. Test support after launch. The AI salesperson drives direct sales and pays for itself fastest - that's why it costs more. The coach and psychologist require deeper scenarios - above the basic level. The consultant and assistant are expert-level but simpler in mechanics. The personal assistant is the simplest, for everyday life.`,
+      'combo.eyebrow': `Ready-made solutions`,
+      'combo.title': `Turnkey combo packages`,
+      'combo.intro': `Ready-made solutions - when you need a full product, not a single service. More cost-effective than buying separately.`,
+      'combo.p1.discount': `savings -16 000 ₽`,
+      'combo.p1.num': `Package 1`,
+      'combo.p1.title': `Business Foundation`,
+      'combo.p1.tagline': `Starting a business online.`,
+      'combo.p1.desc': `Business card website (5 pages) + bot assistant on the site + request handling + basic automation.`,
+      'combo.p1.pain': `For you, if: you're just going online and need your business to be visible and take requests.`,
+      'combo.p2.discount': `savings -52 000 ₽`,
+      'combo.p2.num': `Package 2`,
+      'combo.p2.title': `Producer, turnkey`,
+      'combo.p2.tagline': `A project from idea to sales.`,
+      'combo.p2.desc': `Website + bot + strategy and positioning + sales funnel + launch and promotion.`,
+      'combo.p2.pain': `For you, if: you need a complete project from idea to first sales - you get a ready-made business process, turnkey.`,
+      'combo.p3.discount': `savings -35 000 ₽`,
+      'combo.p3.num': `Package 3`,
+      'combo.p3.title': `Digital Facade`,
+      'combo.p3.tagline': `Marketing through your personal brand.`,
+      'combo.p3.desc': `Personal brand positioning + Telegram channel + bot + content system + AI assistant.`,
+      'combo.p3.pain': `For you, if: you want to sell through your personality and trust.`,
+      'combo.p4.discount': `savings -58 000 ₽`,
+      'combo.p4.num': `Package 4`,
+      'combo.p4.title': `Sales Autofunnel`,
+      'combo.p4.tagline': `A product that sells itself.`,
+      'combo.p4.desc': `Landing page + bot + funnel + channel with auto-posting + traffic (capture, warm-up, sale).`,
+      'combo.p4.pain': `For you, if: you want the product to sell itself, without constant manual control.`,
+      'combo.p5.discount': `savings -97 000 ₽`,
+      'combo.p5.num': `Package 5`,
+      'combo.p5.title': `AI Product, turnkey`,
+      'combo.p5.tagline': `A serious AI service with its own mechanics.`,
+      'combo.p5.desc': `Multi-role bot + AI logic + subscription and payment + personal dashboard. Price - per project.`,
+      'combo.p5.pain': `For you, if: you need a serious AI service with its own mechanics.`,
+      'portfolio.h2': `Our <span class="accent">Portfolio</span>`,
+      'pf.bagov.badge': `Flagship project · our own case`,
+      'pf.bagov.p1': `A vacation home in Krasnodar region, which we manage remotely, living in another country. It used to mean: keeping the phone on hand around the clock, answering guests ourselves, manually checking dates and hoping check-in would go smoothly without us. Now all that routine is handled by a website with an AI assistant, which we built ourselves and tested on ourselves - it really works.`,
+      'pf.bagov.p2': `A guest visits the site, chats with the assistant, who shows available dates and prices, books the stay in the calendar and sends us the request in Telegram - all that's left is to confirm with one tap. Check-in instructions, keys, questions about the house - the assistant answers on its own, even when time zones aren't on our side. Our own admin panel gives full control from a distance: list of requests and bookings, moving and cancelling dates, posts to the house's Telegram channel.`,
+      'pf.bagov.referral.title': `Monetization built into the site`,
+      'pf.bagov.referral.p1': `<b>The "Refer a Friend" program:</b> the guest gets a personal code and shares it with friends.`,
+      'pf.bagov.referral.p2': `When a friend books a stay using that code - the guest chooses a reward: a 15% discount on their next stay, 10% cashback to their card, or a 10% certificate for the friend. Everything is calculated and issued automatically, without our involvement.`,
+      'pf.bagov.b1': `<b>Benefit:</b> the business runs 24/7 from anywhere in the world - bookings and check-ins don't pause even when we're asleep or busy with other projects.`,
+      'pf.bagov.b2': `<b>While we're unavailable:</b> the assistant is already guiding the next guest to a confirmed booking and awarding referral bonuses at the same time.`,
+      'pf.bagov.b3': `<b>Difference from competitors:</b> instead of a "leave a request" form and a call at an inconvenient time, the guest reaches a finished booking themselves in the conversation, and the host only needs to confirm - from any country.`,
+      'pf.bagov.note': `This isn't just a website for one house. It's a template for a digital manager for any remote rental or hospitality business: it sells itself, checks guests in itself, and brings in new clients through existing ones.`,
+      'pf.viewsite': `View website →`,
+      'pf.ludmila.p1': `A business card website for a cosmetology specialist with booking for open dates via calendar. A built-in AI assistant talks with clients 24/7, answers questions, recommends the right service, calculates the procedure's time and cost, and confirms the booking, plus tracks requests, bookings and open slots.`,
+      'pf.ludmila.b1': `<b>Benefit:</b> bookings happen even at night and on weekends, no request is lost while the specialist is offline.`,
+      'pf.ludmila.b2': `<b>While the specialist is physically working with a client on a procedure:</b> the assistant is already answering the next client, calculating the price and booking them into an open slot.`,
+      'pf.ludmila.b3': `<b>Difference from competitors:</b> usually you need a separate administrator or booking by phone call; here the assistant runs the dialogue itself, calculates the price and fills the calendar without an administrator.`,
+      'pf.ludmila.note': `This isn't just a website. It's a digital platform that takes over routine tasks, answers clients and books their procedures, while also telling them who you are and what kind of specialist you are. It can be hosted anywhere - like a personal digital business card, trained specifically for you and your tasks.`,
+      'pf.leadmagnet.title': `Lead Magnets`,
+      'pf.leadmagnet.p1': `A lead magnet generation platform for Instagram (a product of Meta, recognized as an extremist organization, its activity is banned in the Russian Federation): AI comes up with code words, Reels scripts and post texts for them, while a CRM guides followers through a funnel from a code-word comment to a finished request.`,
+      'pf.leadmagnet.b1': `<b>Benefit:</b> one code word in a Reel replaces manual lead-magnet distribution and instantly turns comments into contacts in the CRM.`,
+      'pf.leadmagnet.b2': `<b>While you're busy filming or with clients:</b> the system is already distributing material by code word and collecting contacts without your involvement.`,
+      'pf.leadmagnet.b3': `<b>Difference from competitors:</b> usually a lead magnet is sent manually to direct messages one by one; here a single Reel with a code word serves any number of comments at once.`,
+      'pf.keti.title': `AI Assistant and Salesperson Keti`,
+      'pf.keti.p1': `A digital employee of KISELEVY CREO: talks with clients on Telegram like a human, remembers each one (a card with their niche, goals, pains, funnel stage), identifies the need on its own, handles objections and guides the conversation to a request in the CRM.`,
+      'pf.keti.b1': `<b>Benefit:</b> no conversation is lost or goes cold, even if someone wrote at night or on a weekend.`,
+      'pf.keti.b2': `<b>While you're busy with your current project:</b> Keti is already talking with a new client, remembers the conversation history and guides them to a request.`,
+      'pf.keti.b3': `<b>Difference from competitors:</b> typical chatbots answer with buttons and templates; Keti holds a real conversation and remembers the client's context, like a real manager.`,
+      'pf.vibeboss.p1': `An AI content manager: tracks trends and, using built-in logic, puts together a Reels content plan weeks ahead, publishes posts to Telegram and Instagram (a product of Meta, recognized as an extremist organization, its activity is banned in the Russian Federation) on schedule, from draft to "published" status, without manual routine.`,
+      'pf.vibeboss.b1': `<b>Benefit:</b> the channel fills up regularly even without daily involvement, followers see a steady stream of content.`,
+      'pf.vibeboss.b2': `<b>While you're busy filming or with clients:</b> Vibe Boss has already picked a trend, put together the publishing plan and queued the posts for the right time.`,
+      'pf.vibeboss.b3': `<b>Difference from competitors:</b> usually a content plan and posting are handled manually by a separate person; here one tool tracks trends, plans and publishes on its own.`,
+      'pf.etno.title': `Ethno Sampler APC Mini`,
+      'pf.etno.p1': `A program for live music performances: 64 pads with ethnic instruments (jaw harp, shaman drum, flute, hand pan, harmonica, darbuka, bells, vocals), a looper and master effects, support for the AKAI APC Mini MIDI controller. You can play a track live and record it to a device right away.`,
+      'pf.etno.b1': `<b>Benefit:</b> a live set of ethnic sounds comes together in minutes, without a studio or post-processing.`,
+      'pf.etno.b2': `<b>While the musician is physically working on the pad:</b> the program itself holds the loops and effects and records the part to the device - nothing needs adjusting on the fly.`,
+      'pf.etno.b3': `<b>Difference from competitors:</b> regular samplers give you universal sound libraries; here you get a ready set of exactly ethnic instruments for live performance and one-touch recording.`,
+      'pf.reelsai.title': `Reels AI, post generator`,
+      'pf.reelsai.p1': `An AI assistant writes expert posts for Telegram on its own, using ready-made warm-up formats: mini-story, case study, life hack, audience question, experience twist, bonus, results, plus news on schedule several times a day. The channel fills up without daily manual writing.`,
+      'pf.reelsai.b1': `<b>Benefit:</b> a month's content plan comes together in one run, instead of being written from scratch every day.`,
+      'pf.reelsai.b2': `<b>While you're busy with clients or a project:</b> the assistant has already written a scheduled post and queued it for publishing.`,
+      'pf.reelsai.b3': `<b>Difference from competitors:</b> a copywriter writes on a brief and by the hour; here ready-made warm-up formats switch on with one click and go out strictly on schedule.`,
+      'pf.placeholder.title': `More cases coming soon`,
+      'pf.placeholder.text': `Collecting examples of finished projects, check back later.`,
+      'testi.h2': `What our <span class="accent">clients</span> say`,
+      'testi.1.text': `"Katyusha, with your expertise as an expert and producer, your own methodology - everything you did was professional and high-quality. You are very knowledgeable, driven and, of course, an expert in your field. With your approach I believe in a really good result and growth in my work."`,
+      'testi.1.role': `cosmetologist-aesthetician`,
+      'testi.2.text': `"You were there for me as an expert this whole time and taught me a lot. Your methodology and support gave me confidence in myself - that's the most valuable thing. Thanks to you I believe in good results in my work."`,
+      'testi.2.role': `hairstylist`,
+      'testi.3.text': `"You delivered on my request 100%. You gave me confidence in myself, and I am very grateful to you for everything you invested in me as an expert during this time."`,
+      'testi.3.role': `beauty specialist`,
+      'contacts.h2': `Get in <span class="accent">touch</span>`,
+      'contacts.text': `Write to us directly on Telegram, we reply personally.`,
+      'contacts.btn': `Message on Telegram`,
+      'certs.h2': `Certificates and <span class="accent">Diplomas</span>`,
+      'certs.1': `Ekaterina Kiseleva - "Reels Producer", earning on Reels`,
+      'certs.2': `Ekaterina Kiseleva - "Earning on Reels" course, instructor Arina Alex`,
+      'chat.sub': `KISELEVY CREO Assistant`,
+      'chat.greeting': `Hi! I'm CREO, the KISELEVY CREO assistant. What's your name and what do you do?`,
+      'chat.placeholder': `Type a message...`,
+    },
+    sr: {
+      'nav.about': `O nama`,
+      'nav.team': `Tim`,
+      'nav.services': `Usluge`,
+      'nav.portfolio': `Portfolio`,
+      'nav.testimonials': `Utisci`,
+      'nav.certs': `Sertifikati`,
+      'nav.contacts': `Kontakt`,
+      'cta.discuss': `Razgovarajmo o projektu`,
+      'hero.eyebrow': `Digitalni butik`,
+      'hero.mission': `Vreme je vaša najvrednija imovina.`,
+      'hero.sub': `Rutina vam jede dane, upiti se gube, a biznis se oslanja samo na vas. Mi gradimo sisteme koji preuzimaju rutinu i dovode klijente, da biste vratili ono najvažnije - svoje vreme.`,
+      'about.h2': `O <span class="accent">nama</span>`,
+      'about.lead': `Od direktora offline biznisa do kreatora digitalnih rešenja`,
+      'about.p1': `Mi smo Artur i Keti. Zajedno imamo više od 25 godina iskustva: od zapošljavanja do vođenja sopstvenog biznisa. Bili smo direktori velike offline prodavnice i dobro razumemo psihologiju kupaca i prodaje.`,
+      'about.p2': `Danas smo to iskustvo preneli u digitalna rešenja. Prošli smo obuku u vrhunskim online školama i najboljem univerzitetu u regionu ZND. Spojili smo živu psihologiju prodaje sa automatizacijom, botovima i AI: ne gradimo samo "sajtove i botove", već sistemska rešenja koja razumeju vašeg klijenta, rastu zajedno sa vašim biznisom i donose rezultat.`,
+      'team.h2': `Naš <span class="accent">tim</span>`,
+      'team.artur.role': `Programer digitalnih proizvoda, kreator`,
+      'team.artur.desc': `Botovi, sajtovi, AI pomoćnici: od ideje do lansiranja.`,
+      'team.keti.role': `Producent · analitičar · marketing menadžer`,
+      'team.keti.desc': `Strategija, pozicioniranje i promocija: proizvod nije samo napravljen, već i prodaje.`,
+      'services.h2': `Naše <span class="accent">usluge</span>`,
+      'services.intro': `Alati koje pravimo za vaš biznis.`,
+      'services.group.bots': `Razvoj botova`,
+      'services.group.sites': `Sajtovi i landing stranice`,
+      'services.group.channels': `Telegram kanali`,
+      'services.group.marketing': `Marketing`,
+      'services.group.content': `Sadržaj`,
+      'svc.bot1.title': `Osnovni Telegram bot`,
+      'svc.bot1.desc': `Meni i dugmad, prijem upita, odgovori na česta pitanja, obaveštenja.`,
+      'svc.bot1.pain': `Za vas, ako: klijenti postavljaju ista pitanja i gube se dok ste offline.`,
+      'svc.bot1.more': `Napravićemo vam ličnog asistenta na Telegramu: dočekuje klijenta, odgovara na česta pitanja (cene, adresa, radno vreme), prima upit i prosleđuje ga vama. Klijent se uvek može vratiti u čet, čak i noću.`,
+      'svc.bot2.title': `Bot sa logikom i bazom`,
+      'svc.bot2.desc': `Scenariji dijaloga, čuvanje podataka o klijentima, lični nalog, izveštaji.`,
+      'svc.bot2.pain': `Za vas, ako: informacije o klijentima su razbacane po porukama, gubite vreme na ručnu obradu upita.`,
+      'svc.bot2.more': `Bot sam vodi klijenta kroz korake (izbor usluge, podaci, zakazivanje) i pamti informacije o njemu. Sva obraćanja i istorija su na jednom mestu, a ne u stotinu četova.`,
+      'svc.bot3.title': `Bot sa plaćanjem i AI`,
+      'svc.bot3.desc': `Prijem uplata, integracije, veštačka inteligencija u dijalogu, auto-objave.`,
+      'svc.bot3.pain': `Za vas, ako: klijent je spreman da plati i zakaže odmah, a vi gubite prodaju dok odgovarate ručno.`,
+      'svc.bot3.more': `Bot prima uplatu direktno u četu, povezuje potrebne servise (kasa, kalendar, baza klijenata) i sam odgovara na pitanja uz pomoć AI. Dodatno ume da objavljuje postove na kanalu po rasporedu.`,
+      'svc.bot4.title': `Autorski AI bot, ključ u ruke`,
+      'svc.bot4.desc': `Uloge, pretplata, lični nalog, potpuna automatizacija. Cena - po projektu.`,
+      'svc.bot4.pain': `Za vas, ako: vam treba više od bota - pravi digitalni zaposleni koji vodi klijenta i radi umesto vas.`,
+      'svc.bot4.more': `Pravimo bota od nule za vaš zadatak: uloge (konsultant, menadžer), pretplata, lični nalog, potpuna automatizacija. Tačnu cenu računamo posle analize projekta.`,
+      'svc.site1.title': `Jednostavna landing stranica`,
+      'svc.site1.desc': `Prodajna stranica, forma za upit, prilagođeno telefonu i računaru.`,
+      'svc.site1.pain': `Za vas, ako: nemate stranicu koja prodaje - klijenti odlaze konkurenciji jer vas je teško pronaći i razumeti.`,
+      'svc.site1.more': `Napravićemo prodajnu stranicu: jasno je šta nudite, dugme za upit, udoban prikaz i na telefonu i na računaru.`,
+      'svc.site2.title': `Landing stranica sa automatizacijom`,
+      'svc.site2.desc': `Landing stranica + CRM, upiti direktno u bot, prodajni levak, mejling.`,
+      'svc.site2.pain': `Za vas, ako: upiti stižu ali se gube - nema veze sa bazama, levkom ni mejlingom, prodaja zavisi od ručnog rada.`,
+      'svc.site2.more': `Povezaćemo stranicu sa sistemima: upiti odmah ulaze u bot i bazu klijenata, zatim se pokreće levak i automatski mejling. Nijedan upit se ne gubi.`,
+      'svc.ch1.title': `Podešavanje kanala + pozicioniranje`,
+      'svc.ch1.desc': `Dizajn, sadržaj, rubrike. Kanal koji dovodi pratioce i upite.`,
+      'svc.ch1.pain': `Za vas, ako: imate kanal, ali ne donosi pratioce ni upite - niko ne razume zašto bi se pretplatio.`,
+      'svc.ch1.more': `Podesićemo kanal tako da dovodi klijente: dizajn, rubrike, sadržaj. Ljudi vide vrednost i pretplaćuju se.`,
+      'svc.ch2.title': `Bot za auto-objave na kanalu`,
+      'svc.ch2.desc': `Postovi se objavljuju sami po rasporedu svaki dan, bez ručnog rada.`,
+      'svc.ch2.pain': `Za vas, ako: postove treba objavljivati svakog dana, a ne stižete - kanal jednostavno miruje.`,
+      'svc.ch2.more': `Bot sam objavljuje postove, po rasporedu. Raspored podesite jednom - dalje sve ide automatski.`,
+      'svc.mk1.title': `Marketinška strategija + dijagnostika`,
+      'svc.mk1.desc': `Analiza tržišta, pozicioniranje, plan promocije, prodajni levak.`,
+      'svc.mk1.pain': `Za vas, ako: trošite novac na reklame, a ne razumete šta funkcioniše, a šta ne.`,
+      'svc.mk1.more': `Analiziraćemo tržište i konkurenciju, definisati pozicioniranje, napraviti plan i levak. Znaćete gde da ulažete i kakav rezultat da očekujete.`,
+      'svc.mk2.title': `Marketinški sistem kroz ličnost`,
+      'svc.mk2.desc': `Lični brend + sistem koji sam dovodi i prodaje klijentima.`,
+      'svc.mk2.pain': `Za vas, ako: klijenti odlaze konkurenciji jer vam ne veruju - nemate prepoznatljivo lice i sistem koji prodaje umesto vas.`,
+      'svc.mk2.more': `Izgradićemo lični brend i povezati sve u jedan mehanizam: sadržaj, kanal, bot, levak. Sistem sam dovodi klijente i prodaje - radi 24 sata bez vas.`,
+      'svc.ct1.title': `Plan sadržaja za mesec dana`,
+      'svc.ct1.desc': `Teme, rubrike, struktura postova za 30 dana prilagođena vašoj niši.`,
+      'svc.ct1.pain': `Za vas, ako: ne znate šta da objavite - teme presuše, a kanal stoji u mestu.`,
+      'svc.ct2.title': `Plan + tekstovi + priče`,
+      'svc.ct2.desc': `Gotovi tekstovi za postove i priče, spremni za objavu.`,
+      'svc.ct2.pain': `Za vas, ako: sam plan nije dovoljan - nemate vremena da pišete postove i priče.`,
+      'neuro.eyebrow': `AI pomoćnici`,
+      'neuro.title': `Digitalni zaposleni koji razumeju vašeg klijenta bolje nego on sam sebe`,
+      'neuro.intro': `Ovo nije samo bot na Telegramu. To je pametan ekosistem koji se udubljuje u vašu nišu i oseća klijenta: njegove bolove, strahove, prigovore. Ne odgovara po šablonu, već vodi živ dijalog i do kraja razrađuje svako pitanje.`,
+      'svc.n1.title': `AI prodavac`,
+      'svc.n1.pain': `Za vas, ako: upiti stižu, a vi ne stižete - klijent se ohladi i ode.`,
+      'svc.n1.more': `Prvi dočekuje klijenta, oseća sumnje, otklanja prigovore i vodi ga do uplate i zakazivanja. Radi bez slobodnih dana, nikad ne kasni. Najbrže se isplati - zato i košta više.`,
+      'svc.n2.title': `AI koč`,
+      'svc.n2.pain': `Za vas, ako: klijentima treba podrška i mentorstvo, a nemate vremena da vodite svakog ručno.`,
+      'svc.n2.more': `Vodi klijenta ka cilju, čuje prave motive, postavlja prava pitanja, podržava na svakom koraku - kao lični mentor.`,
+      'svc.n3.title': `AI psiholog`,
+      'svc.n3.pain': `Za vas, ako: u vašoj niši ljudi dolaze sa strepnjom i sumnjama.`,
+      'svc.n3.more': `Nežno radi sa strahovima i prigovorima, oslobađa napetost i pomaže klijentu da donese miran, siguran odluku.`,
+      'svc.n4.title': `AI konsultant`,
+      'svc.n4.pain': `Za vas, ako: prodajete složen proizvod, a klijentu treba konsultacija, a ne samo dugme.`,
+      'svc.n4.more': `Analizira klijentovu situaciju, objašnjava šta mu najviše odgovara i vodi ga ka pravom izboru.`,
+      'svc.n5.title': `AI pomoćnik za vaš zadatak`,
+      'svc.n5.pain': `Za vas, ako: vam treba uloga koje nema na listi.`,
+      'svc.n5.more': `Napravićemo ga za vašu nišu: menadžer, administrator, mentor ili šta god vašem biznisu treba.`,
+      'svc.n6.title': `Lični AI pomoćnik`,
+      'svc.n6.pain': `Za vas, ako: vam AI pomoćnik treba ne samo za biznis, već i lično za vas i vašu porodicu.`,
+      'svc.n6.more': `Podseća vas na važne stvari, pomaže u svakodnevnim zadacima, uvek dostupan 24/7.`,
+      'neuro.pricing.title': `Od čega se sastoji cena svakog AI pomoćnika`,
+      'neuro.pricing.text': `Udubljivanje u vašu nišu: analiza i obuka na vašim materijalima. Scenariji za zadatak: dijalozi, odgovori na prigovore. Pokretanje i podešavanje, uputstvo za vas. Probna podrška posle lansiranja. AI prodavac nosi direktnu prodaju i najbrže se isplati - zato je skuplji. Koč i psiholog zahtevaju dublje scenarije - iznad osnovnog nivoa. Konsultant i pomoćnik su ekspertski, ali jednostavniji po mehanici. Lični pomoćnik je najjednostavniji, za svakodnevicu.`,
+      'combo.eyebrow': `Gotova rešenja`,
+      'combo.title': `Combo paketi "ključ u ruke"`,
+      'combo.intro': `Gotova rešenja - kada vam treba kompletan proizvod, a ne pojedinačna usluga. Isplativije nego kupovina pojedinačno.`,
+      'combo.p1.discount': `ušteda -16.000 ₽`,
+      'combo.p1.num': `Paket 1`,
+      'combo.p1.title': `Poslovni temelj`,
+      'combo.p1.tagline': `Pokretanje biznisa na internetu.`,
+      'combo.p1.desc': `Vizit-sajt (5 stranica) + bot pomoćnik na sajtu + prijem i obrada upita + osnovna automatizacija.`,
+      'combo.p1.pain': `Za vas, ako: tek izlazite na internet i treba da biznis bude vidljiv i prima upite.`,
+      'combo.p2.discount': `ušteda -52.000 ₽`,
+      'combo.p2.num': `Paket 2`,
+      'combo.p2.title': `Producent, ključ u ruke`,
+      'combo.p2.tagline': `Projekat od ideje do prodaje.`,
+      'combo.p2.desc': `Sajt + bot + strategija i pozicioniranje + prodajni levak + lansiranje i promocija.`,
+      'combo.p2.pain': `Za vas, ako: vam treba kompletan projekat od ideje do prvih prodaja - dobijate gotov poslovni proces, ključ u ruke.`,
+      'combo.p3.discount': `ušteda -35.000 ₽`,
+      'combo.p3.num': `Paket 3`,
+      'combo.p3.title': `Digitalna fasada`,
+      'combo.p3.tagline': `Marketing kroz vašu ličnost.`,
+      'combo.p3.desc': `Pozicioniranje ličnog brenda + Telegram kanal + bot + sistem sadržaja + AI pomoćnik.`,
+      'combo.p3.pain': `Za vas, ako: želite da prodajete kroz svoju ličnost i poverenje.`,
+      'combo.p4.discount': `ušteda -58.000 ₽`,
+      'combo.p4.num': `Paket 4`,
+      'combo.p4.title': `Auto-levak prodaje`,
+      'combo.p4.tagline': `Proizvod koji sam sebe prodaje.`,
+      'combo.p4.desc': `Landing stranica + bot + levak + kanal sa auto-objavama + saobraćaj (privlačenje, zagrevanje, prodaja).`,
+      'combo.p4.pain': `Za vas, ako: želite da proizvod sam sebe prodaje, bez stalne ručne kontrole.`,
+      'combo.p5.discount': `ušteda -97.000 ₽`,
+      'combo.p5.num': `Paket 5`,
+      'combo.p5.title': `AI proizvod, ključ u ruke`,
+      'combo.p5.tagline': `Ozbiljan AI servis sa sopstvenom mehanikom.`,
+      'combo.p5.desc': `Bot sa više uloga + AI logika + pretplata i plaćanje + lični nalog. Cena - po projektu.`,
+      'combo.p5.pain': `Za vas, ako: vam treba ozbiljan AI servis sa sopstvenom mehanikom.`,
+      'portfolio.h2': `Naš <span class="accent">portfolio</span>`,
+      'pf.bagov.badge': `Vodeći projekat · naš lični slučaj`,
+      'pf.bagov.p1': `Kuća za odmor u Krasnodarskom kraju, kojom upravljamo na daljinu, živeći u drugoj zemlji. Ranije je to značilo: telefon uvek pri ruci, sami odgovaramo gostima, ručno proveravamo datume i nadamo se da će useljenje proći glatko bez nas. Sada svu tu rutinu vodi vizit-sajt sa AI asistentom, koji smo sami napravili i na sebi proverili da stvarno radi.`,
+      'pf.bagov.p2': `Gost dolazi na sajt, razgovara sa asistentom, koji pokazuje slobodne datume i cenu, rezerviše boravak u kalendaru i šalje nam upit na Telegram - ostaje samo da potvrdimo jednim dodirom. Uputstva za useljenje, ključevi, pitanja o kući - asistent sam odgovara, čak i kad razlika u vremenskim zonama nije u našu korist. Sopstveni admin panel daje potpunu kontrolu na daljinu: spisak upita i rezervacija, pomeranje i otkazivanje datuma, objave na Telegram kanalu kuće.`,
+      'pf.bagov.referral.title': `Monetizacija ugrađena u sajt`,
+      'pf.bagov.referral.p1': `<b>Program "Pozovi prijatelja":</b> gost dobija lični kod i deli ga sa prijateljima.`,
+      'pf.bagov.referral.p2': `Kada prijatelj rezerviše boravak preko tog koda - gost bira nagradu: 15% popusta na sledeći boravak, 10% keš-bek na karticu ili 10% sertifikat za prijatelja. Sve se automatski obračunava i dodeljuje, bez našeg učešća.`,
+      'pf.bagov.b1': `<b>Korist:</b> biznis radi 24/7 iz bilo kog dela sveta - rezervacije i useljenja se ne zaustavljaju čak ni kad spavamo ili smo zauzeti drugim projektima.`,
+      'pf.bagov.b2': `<b>Dok smo nedostupni:</b> asistent već vodi sledećeg gosta ka potvrđenoj rezervaciji i istovremeno dodeljuje bonuse po programu preporuka.`,
+      'pf.bagov.b3': `<b>Razlika od konkurencije:</b> umesto forme "ostavite upit" i poziva u nezgodno vreme, gost sam stiže do gotove rezervacije kroz razgovor, a domaćinu ostaje samo da potvrdi - iz bilo koje zemlje.`,
+      'pf.bagov.note': `Ovo nije samo sajt za jednu kuću. To je šablon digitalnog upravnika za svaki biznis daljinskog izdavanja i ugostiteljstva: sam prodaje, sam useljava goste, sam dovodi nove klijente preko postojećih.`,
+      'pf.viewsite': `Pogledajte sajt →`,
+      'pf.ludmila.p1': `Vizit-sajt za majstora-kozmetičara sa zakazivanjem slobodnih termina preko kalendara. Ugrađeni AI asistent razgovara sa klijentima 24/7, odgovara na pitanja, bira odgovarajuću uslugu, sam računa vreme i cenu procedure i beleži termin, uz praćenje upita, termina i slobodnih mesta.`,
+      'pf.ludmila.b1': `<b>Korist:</b> zakazivanje ide čak i noću i vikendom, nijedan upit se ne gubi dok je majstor offline.`,
+      'pf.ludmila.b2': `<b>Dok majstor fizički radi rukama sa klijentom na proceduri:</b> asistent već odgovara sledećem klijentu, računa cenu i zakazuje ga u slobodan termin.`,
+      'pf.ludmila.b3': `<b>Razlika od konkurencije:</b> obično je potreban poseban administrator ili zakazivanje putem poziva, ovde asistent sam vodi dijalog, računa cenu i popunjava kalendar bez administratora.`,
+      'pf.ludmila.note': `Ovo nije samo sajt. To je digitalna platforma koja preuzima rutinske zadatke, odgovara klijentima i zakazuje im procedure, a pritom priča ko ste vi i kakav ste majstor. Može se postaviti na bilo koju platformu. To je poput lične digitalne vizit-karte, obučene baš za vas i vaše zadatke.`,
+      'pf.leadmagnet.title': `Lid-magneti`,
+      'pf.leadmagnet.p1': `Platforma za generisanje lid-magneta za Instagram (proizvod kompanije Meta, koja je proglašena ekstremističkom organizacijom, njena delatnost je zabranjena na teritoriji Rusije): AI smišlja kodne reči, scenarije za Reels i tekstove postova uz njih, a CRM vodi pratioce kroz levak od komentara sa kodnom reči do gotovog upita.`,
+      'pf.leadmagnet.b1': `<b>Korist:</b> jedna kodna reč u Reelu zamenjuje ručnu distribuciju lid-magneta i odmah pretvara komentare u kontakte u CRM-u.`,
+      'pf.leadmagnet.b2': `<b>Dok ste zauzeti snimanjem ili klijentima:</b> sistem već deli materijal po kodnoj reči i prikuplja kontakte bez vašeg učešća.`,
+      'pf.leadmagnet.b3': `<b>Razlika od konkurencije:</b> obično se lid-magnet šalje ručno u direktne poruke jedan po jedan, ovde jedan Reel sa kodnom reči opslužuje bilo koji broj komentara istovremeno.`,
+      'pf.keti.title': `AI pomoćnik i prodavac Keti`,
+      'pf.keti.p1': `Digitalni zaposleni kompanije KISELEVY CREO: razgovara sa klijentima na Telegramu kao čovek, pamti svakog (kartica sa nišom, ciljevima, bolovima, fazom levka), sama prepoznaje potrebu, otklanja prigovore i vodi razgovor do upita u CRM-u.`,
+      'pf.keti.b1': `<b>Korist:</b> nijedan razgovor se ne gubi niti se ohladi, čak i ako je neko pisao noću ili vikendom.`,
+      'pf.keti.b2': `<b>Dok ste zauzeti trenutnim projektom:</b> Keti već razgovara sa novim klijentom, pamti istoriju prepiske i vodi ga do upita.`,
+      'pf.keti.b3': `<b>Razlika od konkurencije:</b> tipični chat-botovi odgovaraju dugmadima i šablonima, Keti vodi živ razgovor i pamti kontekst klijenta, kao pravi menadžer.`,
+      'pf.vibeboss.p1': `AI menadžer sadržaja: prati trendove i po ugrađenoj logici sastavlja plan sadržaja za Reels nedeljama unapred, sam objavljuje postove na Telegramu i Instagramu (proizvod kompanije Meta, koja je proglašena ekstremističkom organizacijom, njena delatnost je zabranjena na teritoriji Rusije) po rasporedu, od nacrta do statusa "objavljeno", bez ručne rutine.`,
+      'pf.vibeboss.b1': `<b>Korist:</b> kanal se redovno puni čak i bez svakodnevnog učešća, pratioci vide stabilan protok sadržaja.`,
+      'pf.vibeboss.b2': `<b>Dok ste zauzeti snimanjem ili klijentima:</b> Vibe Boss je već izabrao trend, sastavio plan objava i stavio postove u red za pravo vreme.`,
+      'pf.vibeboss.b3': `<b>Razlika od konkurencije:</b> obično plan sadržaja i objavljivanje vodi posebna osoba ručno, ovde jedan alat sam prati trendove, planira i objavljuje.`,
+      'pf.etno.title': `Etno sempler APC Mini`,
+      'pf.etno.p1': `Program za live muzičke nastupe: 64 pada sa etno-instrumentima (drombulja, šamanski bubanj, flauta, glukofon, usna harmonika, darbuka, zvončići, vokal), luper i master efekti, podrška za MIDI kontroler AKAI APC Mini. Numera se može odsvirati uživo i odmah snimiti na uređaj.`,
+      'pf.etno.b1': `<b>Korist:</b> živi set etno-zvukova sastavlja se za nekoliko minuta, bez studija i naknadne obrade.`,
+      'pf.etno.b2': `<b>Dok muzičar fizički radi rukama na padu:</b> program sam drži lupove i efekte i snima deonicu na uređaj, ništa ne treba dodatno podešavati u hodu.`,
+      'pf.etno.b3': `<b>Razlika od konkurencije:</b> obični samplери daju univerzalne biblioteke zvukova, ovde je gotov set baš etno-instrumenata za živi nastup i snimanje jednim dodirom.`,
+      'pf.reelsai.title': `Reels AI, generator postova`,
+      'pf.reelsai.p1': `AI asistent sam piše ekspertske postove za Telegram po gotovim formatima zagrevanja: mini-priča, slučaj, savet, pitanje publici, obrt iskustva, bonus, rezultati, plus vesti po rasporedu nekoliko puta dnevno. Kanal se puni bez svakodnevnog ručnog pisanja tekstova.`,
+      'pf.reelsai.b1': `<b>Korist:</b> plan sadržaja za mesec dana sastavlja se u jednom pokretanju, umesto da se smišlja iznova svaki dan.`,
+      'pf.reelsai.b2': `<b>Dok ste zauzeti klijentima ili projektom:</b> asistent je već napisao post po rasporedu i stavio ga u red za objavu.`,
+      'pf.reelsai.b3': `<b>Razlika od konkurencije:</b> kopirajter piše po brifu i po satnici, ovde se gotovi formati zagrevanja pokreću jednim klikom i izlaze tačno po rasporedu.`,
+      'pf.placeholder.title': `Uskoro još primera`,
+      'pf.placeholder.text': `Prikupljam primere gotovih projekata, svratite kasnije.`,
+      'testi.h2': `Šta kažu <span class="accent">klijenti</span>`,
+      'testi.1.text': `"Katjuša, sa tvojim znanjem eksperta i producenta, tvojom autorskom metodologijom - sve što si uradila bilo je profesionalno i kvalitetno. Veoma si stručna, posvećena i, naravno, ekspert u svojoj oblasti. Sa tvojim pristupom verujem u zaista dobar rezultat i napredak u svom poslu."`,
+      'testi.1.role': `kozmetičar-estetičar`,
+      'testi.2.text': `"Bila si uz mene kao ekspert sve ovo vreme i naučila si me mnogo čemu. Tvoja metodologija i podrška dale su mi samopouzdanje - to je najvrednije. Zahvaljujući tebi verujem u dobre rezultate u svom poslu."`,
+      'testi.2.role': `frizer`,
+      'testi.3.text': `"Ostvarila si moj zahtev 100%. Dala si mi samopouzdanje, i veoma sam ti zahvalna za sve što si kao ekspert uložila u mene tokom ovog vremena."`,
+      'testi.3.role': `beauty majstor`,
+      'contacts.h2': `Kontaktirajte <span class="accent">nas</span>`,
+      'contacts.text': `Pišite nam direktno na Telegram, odgovaramo lično.`,
+      'contacts.btn': `Pišite na Telegram`,
+      'certs.h2': `Sertifikati i <span class="accent">diplome</span>`,
+      'certs.1': `Ekaterina Kiseljova - "Producent Reelsa", zarada na Reelsu`,
+      'certs.2': `Ekaterina Kiseljova - kurs "Zarada na Reelsu", predavač Arina Aleks`,
+      'chat.sub': `Pomoćnik KISELEVY CREO`,
+      'chat.greeting': `Zdravo! Ja sam CREO, pomoćnik KISELEVY CREO. Kako se zovete i čime se bavite?`,
+      'chat.placeholder': `Napišite poruku...`,
+    },
+  };
+
+  const I18N_ORIGINALS = new Map();
+  function initI18n(){
+    document.querySelectorAll('[data-i18n]').forEach(function(el){
+      I18N_ORIGINALS.set(el.getAttribute('data-i18n'), {el:el, kind:'text', original: el.textContent});
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(function(el){
+      I18N_ORIGINALS.set(el.getAttribute('data-i18n-html'), {el:el, kind:'html', original: el.innerHTML});
+    });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el){
+      I18N_ORIGINALS.set(el.getAttribute('data-i18n-placeholder'), {el:el, kind:'placeholder', original: el.getAttribute('placeholder')});
+    });
+  }
+  function setLang(lang){
+    document.querySelectorAll('.lang-btn').forEach(function(b){
+      b.classList.toggle('active', b.dataset.lang === lang);
+    });
+    I18N_ORIGINALS.forEach(function(entry, key){
+      const dict = translations[lang];
+      const val = (lang === 'ru' || !dict || !dict[key]) ? entry.original : dict[key];
+      if(entry.kind === 'text') entry.el.textContent = val;
+      else if(entry.kind === 'html') entry.el.innerHTML = val;
+      else if(entry.kind === 'placeholder') entry.el.setAttribute('placeholder', val);
+    });
+    document.documentElement.lang = lang;
+    try{ localStorage.setItem('site_lang', lang); }catch(e){}
+  }
+  document.addEventListener('DOMContentLoaded', function(){
+    initI18n();
+    let saved = 'ru';
+    try{ saved = localStorage.getItem('site_lang') || 'ru'; }catch(e){}
+    setLang(saved);
   });
 </script>
 
