@@ -168,9 +168,15 @@
   .team-card p.desc{font-size:0.95rem;color:var(--text-dim)}
 
   /* SERVICES */
+  .services-intro{text-align:center;color:var(--text-dim);max-width:560px;margin:-16px auto 40px}
+  .services-group-title{
+    font-size:1.15rem;color:var(--lilac-pale);margin:0 0 20px;
+    padding-top:36px;border-top:1px solid var(--panel-border);
+  }
+  .services-group-title:first-of-type{padding-top:0;border-top:none}
   .services-grid{
     display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-    gap:24px;
+    gap:24px;margin-bottom:8px;
   }
   .service-card{
     background:var(--panel);
@@ -178,15 +184,42 @@
     border-radius:16px;
     padding:28px 24px;
   }
-  .service-card h3{font-size:1.1rem;margin-bottom:8px}
+  .service-card h4{font-size:1.1rem;margin-bottom:8px;color:var(--lilac-pale)}
   .service-card .price{color:var(--violet-deep);font-weight:700;font-size:1rem;margin-bottom:10px}
-  .service-card p{font-size:0.92rem;color:var(--text-dim)}
-  .service-card p.pain{color:var(--text);opacity:0.95;font-size:0.9rem;font-style:italic;margin-top:8px}
-  .combo-note{
-    text-align:center;margin-top:32px;font-size:0.95rem;
-    background:var(--lavender-dim);color:var(--lavender);border-radius:12px;padding:16px 24px;
-    max-width:640px;margin-left:auto;margin-right:auto;
+  .service-card p{font-size:0.92rem;color:var(--text-dim);margin-top:8px}
+  .service-card p:first-of-type{margin-top:0}
+  .service-card p.pain{color:var(--text);opacity:0.95;font-size:0.9rem;font-style:italic}
+
+  /* NEURO + COMBO BLOCKS */
+  .neuro-block,.combo-block{margin-top:56px;padding-top:40px;border-top:1px solid var(--panel-border)}
+  .neuro-block .eyebrow,.combo-block .eyebrow{text-align:center}
+  .neuro-title{
+    text-align:center;font-size:1.4rem;max-width:640px;margin:0 auto 16px;color:var(--lilac-pale);
   }
+  .neuro-intro{text-align:center;color:var(--text-dim);max-width:640px;margin:0 auto 32px;font-size:0.95rem}
+  .neuro-pricing-note{margin-top:28px}
+  .neuro-pricing-note p{color:var(--text)}
+
+  .combo-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:24px;
+  }
+  .combo-card{
+    background:var(--panel);border:1px solid var(--amethyst);border-radius:16px;
+    padding:24px;position:relative;
+  }
+  .combo-price-row{display:flex;align-items:baseline;flex-wrap:wrap;gap:10px;margin-bottom:14px}
+  .price-old{color:var(--text-dim);text-decoration:line-through;font-size:0.9rem}
+  .price-new{color:var(--lilac-pale);font-weight:700;font-size:1.15rem}
+  .discount-badge{
+    background:var(--lavender-dim);color:var(--amethyst);font-weight:700;font-size:0.75rem;
+    padding:4px 10px;border-radius:999px;white-space:nowrap;
+  }
+  .combo-num{margin-bottom:10px}
+  .combo-card h4{font-size:1.15rem;margin-bottom:6px;color:var(--lilac-pale)}
+  .combo-tagline{color:var(--amethyst)!important;font-weight:600;font-style:normal!important}
+  .combo-card p{font-size:0.9rem;color:var(--text-dim);margin-top:8px}
+  .combo-card p.pain{color:var(--text);opacity:0.95;font-style:italic}
 
   /* PORTFOLIO */
   .portfolio{background:var(--panel)}
@@ -402,46 +435,258 @@
 <section class="services" id="services">
   <div class="container">
     <h2>Наши <span class="accent">услуги</span></h2>
+    <p class="services-intro">Инструменты, которые мы создаём под ваш бизнес.</p>
+
+    <h3 class="services-group-title">Разработка ботов</h3>
     <div class="services-grid">
       <div class="service-card">
-        <h3>Telegram-боты</h3>
-        <div class="price">от 29 000 ₽</div>
-        <p>Ассистенты, нейропродавцы, боты с оплатой и ИИ, фирменные боты под ключ.</p>
+        <h4>Telegram-бот базовый</h4>
+        <div class="price">29 000 ₽</div>
+        <p>Меню и кнопки, приём заявок, ответы на частые вопросы, уведомления.</p>
         <p class="pain">Для вас, если: клиенты задают одни и те же вопросы и теряются, пока вы офлайн.</p>
+        <p>Мы соберём вам личного ассистента в Telegram: встретит клиента, ответит на частые
+          вопросы (цены, адрес, режим работы), примет заявку и перешлёт вам. Клиент всегда
+          может вернуться в чат, даже ночью.</p>
       </div>
       <div class="service-card">
-        <h3>Сайты и лендинги</h3>
-        <div class="price">от 49 000 ₽</div>
-        <p>Продающие страницы и лендинги с автоматизацией заявок.</p>
-        <p class="pain">Для вас, если: нет страницы, которая продаёт, клиенты уходят к конкурентам, потому что вас сложно найти и понять.</p>
+        <h4>Бот с логикой и базой</h4>
+        <div class="price">59 000 ₽</div>
+        <p>Сценарии диалога, хранение данных клиентов, личный кабинет, отчёты.</p>
+        <p class="pain">Для вас, если: информация о клиентах разбросана по перепискам, вы тратите время на ручную обработку заявок.</p>
+        <p>Бот сам ведёт клиента по шагам (выбор услуги, данные, запись) и запоминает
+          информацию о нём. Все обращения и история - в одном личном кабинете, а не в сотне
+          чатов.</p>
       </div>
       <div class="service-card">
-        <h3>Telegram-каналы</h3>
-        <div class="price">от 39 000 ₽</div>
-        <p>Позиционирование, оформление и автопостинг.</p>
-        <p class="pain">Для вас, если: канал есть, но не приносит подписчиков и заявок, никто не понимает, зачем туда подписываться.</p>
+        <h4>Бот с оплатой и ИИ</h4>
+        <div class="price">129 000 ₽</div>
+        <p>Приём оплат, интеграции, искусственный интеллект в диалоге, автопосты.</p>
+        <p class="pain">Для вас, если: клиент готов оплатить и записаться сразу, а вы теряете продажу, пока отвечаете вручную.</p>
+        <p>Бот принимает оплату прямо в чате, подключает нужные сервисы (касса, календарь,
+          база клиентов) и сам отвечает на вопросы с помощью ИИ. Дополнительно умеет
+          публиковать посты в канал по расписанию.</p>
       </div>
       <div class="service-card">
-        <h3>Маркетинг</h3>
-        <div class="price">от 69 000 ₽</div>
-        <p>Стратегия, диагностика, продвижение через личный бренд.</p>
-        <p class="pain">Для вас, если: тратите деньги на рекламу, но не понимаете, что работает, а что нет.</p>
-      </div>
-      <div class="service-card">
-        <h3>Контент</h3>
-        <div class="price">от 29 000 ₽</div>
-        <p>Контент-планы, тексты постов и сторис.</p>
-        <p class="pain">Для вас, если: не знаете, что публиковать, темы заканчиваются, а канал стоит на месте.</p>
-      </div>
-      <div class="service-card">
-        <h3>Нейропомощники</h3>
-        <div class="price">от 49 000 ₽</div>
-        <p>Нейропродавец, нейрокоуч, нейропсихолог, нейроконсультант и другие роли под задачу.</p>
-        <p class="pain">Для вас, если: заявки приходят, а вы не успеваете, клиент остывает и уходит.</p>
+        <h4>Фирменный ИИ-бот под ключ</h4>
+        <div class="price">от 149 000 ₽</div>
+        <p>Роли, подписка, личный кабинет, полная автоматизация. Стоимость - под проект.</p>
+        <p class="pain">Для вас, если: нужен не просто бот, а полноценный цифровой сотрудник, который ведёт клиента и работает за вас.</p>
+        <p>Разрабатываем бота с нуля под вашу задачу: роли (консультант, менеджер), подписка,
+          личный кабинет, полная автоматизация. Точную стоимость считаем после разбора
+          проекта.</p>
       </div>
     </div>
-    <p class="combo-note">Есть комбо-пакеты под ключ (сайт + бот + маркетинг + контент)
-      со скидкой 15% за комплекс, от 92 000 ₽.</p>
+
+    <h3 class="services-group-title">Сайты и лендинги</h3>
+    <div class="services-grid">
+      <div class="service-card">
+        <h4>Лендинг простой</h4>
+        <div class="price">49 000 ₽</div>
+        <p>Продающая страница, форма заявки, адаптив под телефон и компьютер.</p>
+        <p class="pain">Для вас, если: нет страницы, которая продаёт - клиенты уходят к конкурентам, потому что вас сложно найти и понять.</p>
+        <p>Создадим продающую страницу: понятно, что вы предлагаете, кнопка заявки, удобный
+          вид и на телефоне, и на компьютере.</p>
+      </div>
+      <div class="service-card">
+        <h4>Лендинг с автоматизацией</h4>
+        <div class="price">149 000 ₽</div>
+        <p>Лендинг + CRM, заявки сразу в бот, воронка продаж, рассылки.</p>
+        <p class="pain">Для вас, если: заявки приходят, но теряются - нет связи с базами, воронки и рассылок, продажи зависят от ручной работы.</p>
+        <p>Свяжем страницу с системами: заявки сразу попадают в бот и базу клиентов, дальше
+          включается воронка и автоматические рассылки. Ни одна заявка не теряется.</p>
+      </div>
+    </div>
+
+    <h3 class="services-group-title">Telegram-каналы</h3>
+    <div class="services-grid">
+      <div class="service-card">
+        <h4>Настройка канала + позиционирование</h4>
+        <div class="price">49 000 ₽</div>
+        <p>Оформление, контент, рубрики. Канал, который приводит подписчиков и заявки.</p>
+        <p class="pain">Для вас, если: канал есть, но не приносит подписчиков и заявок - никто не понимает, зачем туда подписываться.</p>
+        <p>Настроим канал так, чтобы он приводил клиентов: оформление, рубрики, контент. Люди
+          видят пользу и подписываются.</p>
+      </div>
+      <div class="service-card">
+        <h4>Бот автопостов в канал</h4>
+        <div class="price">39 000 ₽</div>
+        <p>Посты публикуются сами по графику каждый день, без ручной работы.</p>
+        <p class="pain">Для вас, если: посты нужно выкладывать каждый день, а руки не доходят - канал просто простаивает.</p>
+        <p>Бот публикует посты сам, по расписанию. Вы один раз настраиваете график - дальше
+          всё автоматически.</p>
+      </div>
+    </div>
+
+    <h3 class="services-group-title">Маркетинг</h3>
+    <div class="services-grid">
+      <div class="service-card">
+        <h4>Маркетинг-стратегия + диагностика</h4>
+        <div class="price">69 000 ₽</div>
+        <p>Анализ рынка, позиционирование, план продвижения, воронка продаж.</p>
+        <p class="pain">Для вас, если: тратите деньги на рекламу, но не понимаете, что работает, а что нет.</p>
+        <p>Разберём рынок и конкурентов, определим позиционирование, составим план и
+          воронку. Вы поймёте, куда вкладывать и какого результата ждать.</p>
+      </div>
+      <div class="service-card">
+        <h4>Маркетинг-система через личность</h4>
+        <div class="price">250 000 ₽</div>
+        <p>Личный бренд + система, которая сама приводит и продаёт клиентам.</p>
+        <p class="pain">Для вас, если: от вас уходят к конкурентам, потому что вам не доверяют - нет узнаваемого лица и системы, которая продаёт за вас.</p>
+        <p>Построим личный бренд и свяжем всё в один механизм: контент, канал, бот, воронку.
+          Система сама приводит клиентов и продаёт - работает без вас круглые сутки.</p>
+      </div>
+    </div>
+
+    <h3 class="services-group-title">Контент</h3>
+    <div class="services-grid">
+      <div class="service-card">
+        <h4>Контент-план на месяц</h4>
+        <div class="price">29 000 ₽</div>
+        <p>Темы, рубрики, структура постов на 30 дней под вашу нишу.</p>
+        <p class="pain">Для вас, если: не знаете, что публиковать - темы заканчиваются, а канал стоит на месте.</p>
+      </div>
+      <div class="service-card">
+        <h4>План + тексты + сторис</h4>
+        <div class="price">59 000 ₽/мес</div>
+        <p>Готовые тексты постов и сторис, можно сразу публиковать.</p>
+        <p class="pain">Для вас, если: одного плана мало - времени писать посты и сторис нет.</p>
+      </div>
+    </div>
+
+    <div class="neuro-block">
+      <span class="eyebrow">Нейропомощники</span>
+      <h3 class="neuro-title">Цифровые сотрудники, которые понимают вашего клиента глубже, чем он сам</h3>
+      <p class="neuro-intro">Это не просто бот в Telegram. Это умная экосистема, которая
+        погружается в вашу нишу и чувствует клиента: его боли, страхи, возражения. Она не
+        отвечает по шаблону, а ведёт живой диалог, разбирая любой вопрос до конца.</p>
+      <div class="services-grid">
+        <div class="service-card">
+          <h4>Нейропродавец</h4>
+          <div class="price">149 000 ₽</div>
+          <p class="pain">Для вас, если: заявки приходят, а вы не успеваете - клиент остывает и уходит.</p>
+          <p>Встречает клиента первым, чувствует сомнения, снимает возражения и доводит до
+            оплаты и записи. Работает без выходных, никогда не опаздывает. Окупается
+            быстрее всего - потому и дороже.</p>
+        </div>
+        <div class="service-card">
+          <h4>Нейрокоуч</h4>
+          <div class="price">129 000 ₽</div>
+          <p class="pain">Для вас, если: клиентам нужно сопровождение и наставничество, а времени вести каждого вручную нет.</p>
+          <p>Ведёт клиента к цели, слышит настоящие мотивы, задаёт правильные вопросы,
+            поддерживает на каждом шаге - как личный наставник.</p>
+        </div>
+        <div class="service-card">
+          <h4>Нейропсихолог</h4>
+          <div class="price">129 000 ₽</div>
+          <p class="pain">Для вас, если: в вашей нише люди приходят с тревогой и сомнениями.</p>
+          <p>Мягко работает со страхами и возражениями, снимает напряжение, помогает
+            клиенту принять спокойное уверенное решение.</p>
+        </div>
+        <div class="service-card">
+          <h4>Нейроконсультант</h4>
+          <div class="price">99 000 ₽</div>
+          <p class="pain">Для вас, если: продаёте сложный продукт, и клиенту нужна консультация, а не только кнопка.</p>
+          <p>Разбирает ситуацию клиента, объясняет, что подойдёт именно ему, подводит к
+            правильному выбору.</p>
+        </div>
+        <div class="service-card">
+          <h4>Нейропомощник под вашу задачу</h4>
+          <div class="price">от 99 000 ₽</div>
+          <p class="pain">Для вас, если: нужна роль, которой нет в списке.</p>
+          <p>Соберём под вашу нишу: менеджер, администратор, наставник или кто нужен
+            вашему бизнесу.</p>
+        </div>
+        <div class="service-card">
+          <h4>Нейропомощник для личного пользования</h4>
+          <div class="price">от 49 000 ₽</div>
+          <p class="pain">Для вас, если: нейропомощник нужен не только бизнесу, но и лично вам и вашей семье.</p>
+          <p>Напомнит о важном, поможет с бытовыми задачами, всегда рядом 24/7.</p>
+        </div>
+      </div>
+      <div class="portfolio-referral neuro-pricing-note">
+        <span class="eyebrow">Из чего складывается цена каждого нейропомощника</span>
+        <p>Погружение в вашу нишу: анализ и обучение на ваших материалах. Сценарии под
+          задачу: диалоги, ответы на возражения. Запуск и подключение, инструкция вам.
+          Тестовая поддержка после запуска. Нейропродавец несёт прямые продажи и
+          окупается быстрее всего - потому он дороже. Коуч и психолог требуют глубоких
+          сценариев - выше базового уровня. Консультант и помощник - экспертные, но проще
+          по механике. Личный помощник - самый простой, для быта.</p>
+      </div>
+    </div>
+
+    <div class="combo-block">
+      <span class="eyebrow">Готовые решения</span>
+      <h3 class="neuro-title">Комбо-пакеты «под ключ»</h3>
+      <p class="neuro-intro">Готовые решения - когда нужен полный продукт, а не отдельная
+        услуга. Выгоднее, чем покупать по отдельности.</p>
+      <div class="combo-grid">
+        <div class="combo-card">
+          <div class="combo-price-row">
+            <span class="price-old">108 000 ₽</span>
+            <span class="price-new">92 000 ₽</span>
+            <span class="discount-badge">выгода -16 000 ₽</span>
+          </div>
+          <span class="badge-pill combo-num">Пакет 1</span>
+          <h4>Бизнес-фундамент</h4>
+          <p class="combo-tagline">Старт бизнеса в сети.</p>
+          <p>Сайт-визитка (5 страниц) + бот-помощник внутри сайта + приём и обработка
+            заявок + базовая автоматизация.</p>
+          <p class="pain">Для вас, если: только выходите в сеть и нужно, чтобы бизнес был заметен и принимал заявки.</p>
+        </div>
+        <div class="combo-card">
+          <div class="combo-price-row">
+            <span class="price-old">347 000 ₽</span>
+            <span class="price-new">295 000 ₽</span>
+            <span class="discount-badge">выгода -52 000 ₽</span>
+          </div>
+          <span class="badge-pill combo-num">Пакет 2</span>
+          <h4>Продюсер под ключ</h4>
+          <p class="combo-tagline">Проект от идеи до продаж.</p>
+          <p>Сайт + бот + стратегия и позиционирование + воронка продаж + запуск и
+            продвижение.</p>
+          <p class="pain">Для вас, если: нужен полный проект от идеи до первых продаж - получаете готовый бизнес-процесс под ключ.</p>
+        </div>
+        <div class="combo-card">
+          <div class="combo-price-row">
+            <span class="price-old">236 000 ₽</span>
+            <span class="price-new">201 000 ₽ + 69 000 ₽/мес</span>
+            <span class="discount-badge">выгода -35 000 ₽</span>
+          </div>
+          <span class="badge-pill combo-num">Пакет 3</span>
+          <h4>Цифровой фасад</h4>
+          <p class="combo-tagline">Маркетинг через вашу личность.</p>
+          <p>Позиционирование личного бренда + Telegram-канал + бот + контент-система +
+            нейропомощник.</p>
+          <p class="pain">Для вас, если: хотите продавать через свою личность и доверие.</p>
+        </div>
+        <div class="combo-card">
+          <div class="combo-price-row">
+            <span class="price-old">386 000 ₽</span>
+            <span class="price-new">328 000 ₽</span>
+            <span class="discount-badge">выгода -58 000 ₽</span>
+          </div>
+          <span class="badge-pill combo-num">Пакет 4</span>
+          <h4>Автоворонка продаж</h4>
+          <p class="combo-tagline">Продукт, который продаёт сам.</p>
+          <p>Лендинг + бот + воронка + канал с автопостами + трафик (захват, нагрев,
+            продажа).</p>
+          <p class="pain">Для вас, если: хотите, чтобы продукт продавал сам, без постоянного ручного контроля.</p>
+        </div>
+        <div class="combo-card">
+          <div class="combo-price-row">
+            <span class="price-old">646 000 ₽</span>
+            <span class="price-new">549 000 ₽</span>
+            <span class="discount-badge">выгода -97 000 ₽</span>
+          </div>
+          <span class="badge-pill combo-num">Пакет 5</span>
+          <h4>ИИ-продукт под ключ</h4>
+          <p class="combo-tagline">Серьёзный ИИ-сервис с собственной механикой.</p>
+          <p>Бот с несколькими ролями + ИИ-логика + подписка и оплата + личный кабинет.
+            Стоимость - под проект.</p>
+          <p class="pain">Для вас, если: нужен серьёзный ИИ-сервис с собственной механикой.</p>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
