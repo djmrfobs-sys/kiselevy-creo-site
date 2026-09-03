@@ -34,7 +34,17 @@ function parseCookies(req) {
   return out;
 }
 
+function isBotAuthenticated(req) {
+  const expected = process.env.PORTFOLIO_BOT_TOKEN || '';
+  if (!expected) return false;
+  const header = req.headers.authorization || '';
+  const provided = header.startsWith('Bearer ') ? header.slice(7) : '';
+  if (!provided || provided.length !== expected.length) return false;
+  return crypto.timingSafeEqual(Buffer.from(provided), Buffer.from(expected));
+}
+
 function isAuthenticated(req) {
+  if (isBotAuthenticated(req)) return true;
   const cookies = parseCookies(req);
   const token = cookies[COOKIE_NAME];
   if (!token || !token.includes('.')) return false;
