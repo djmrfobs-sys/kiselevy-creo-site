@@ -1151,13 +1151,17 @@
     const isOpen = panel.classList.toggle('open');
     document.body.style.overflow = isOpen ? 'hidden' : '';
   }
-  function addMsg(text, who){
+  function addMsg(text, who, alignTop){
     const wrap = document.getElementById('chatMessages');
     const div = document.createElement('div');
     div.className = 'chat-msg chat-msg-' + who;
     div.textContent = text;
     wrap.appendChild(div);
-    wrap.scrollTop = wrap.scrollHeight;
+    if(alignTop){
+      wrap.scrollTop = div.offsetTop - 8;
+    } else {
+      wrap.scrollTop = wrap.scrollHeight;
+    }
   }
   document.getElementById('chatForm').addEventListener('submit', async function(e){
     e.preventDefault();
@@ -1179,11 +1183,11 @@
       const data = await resp.json();
       wrap.removeChild(wrap.lastChild);
       const reply = data.reply || 'Не получилось ответить, напишите нам в Telegram - @KISELEVY_CREO.';
-      addMsg(reply, 'bot');
+      addMsg(reply, 'bot', true);
       chatHistory.push({role:'assistant', content:reply});
     }catch(err){
       wrap.removeChild(wrap.lastChild);
-      addMsg('Технический сбой. Напишите нам напрямую в Telegram - @KISELEVY_CREO.', 'bot');
+      addMsg('Технический сбой. Напишите нам напрямую в Telegram - @KISELEVY_CREO.', 'bot', true);
     }finally{
       input.disabled = false;
       input.focus();
