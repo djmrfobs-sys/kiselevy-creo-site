@@ -1,19 +1,21 @@
 const crypto = require('crypto');
 
 const COOKIE_NAME = 'creo_admin_session';
-const SESSION_TTL_MS = 12 * 60 * 60 * 1000; // 12 часов
+const SESSION_TTL_MS = 12 * 60 * 60 * 1000; // 12 часов - обычная сессия
+const REMEMBER_TTL_MS = 90 * 24 * 60 * 60 * 1000; // 90 дней - "запомнить меня"
 
 function sign(payloadB64) {
   const secret = process.env.ADMIN_SESSION_SECRET || '';
   return crypto.createHmac('sha256', secret).update(payloadB64).digest('hex');
 }
 
-function createSessionCookie() {
-  const payload = JSON.stringify({ exp: Date.now() + SESSION_TTL_MS });
+function createSessionCookie(remember) {
+  const ttl = remember ? REMEMBER_TTL_MS : SESSION_TTL_MS;
+  const payload = JSON.stringify({ exp: Date.now() + ttl });
   const payloadB64 = Buffer.from(payload).toString('base64url');
   const sig = sign(payloadB64);
   const token = `${payloadB64}.${sig}`;
-  const maxAge = Math.floor(SESSION_TTL_MS / 1000);
+  const maxAge = Math.floor(ttl / 1000);
   return `${COOKIE_NAME}=${token}; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=${maxAge}`;
 }
 
