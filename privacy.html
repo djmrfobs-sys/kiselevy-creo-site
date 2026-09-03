@@ -62,6 +62,21 @@
   .toc li{margin-bottom:6px}
   .toc a{color:var(--text-dim);text-decoration:none;font-size:0.9rem}
   .toc a:hover{color:var(--lilac-pale)}
+  .scroll-top-btn{
+    position:fixed;top:24px;right:24px;z-index:130;
+    width:46px;height:46px;border-radius:50%;
+    background:var(--amethyst);color:var(--bg);border:none;
+    font-size:1.3rem;line-height:1;cursor:pointer;
+    box-shadow:0 6px 20px rgba(0,0,0,0.35);
+    display:flex;align-items:center;justify-content:center;
+    opacity:0;visibility:hidden;transform:translateY(-8px);
+    transition:opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+  }
+  .scroll-top-btn.visible{opacity:1;visibility:visible;transform:translateY(0)}
+  .scroll-top-btn:hover{transform:scale(1.06)}
+  @media (max-width:600px){
+    .scroll-top-btn{top:16px;right:16px;width:40px;height:40px;font-size:1.1rem}
+  }
 </style>
 </head>
 <body>
@@ -223,5 +238,20 @@
 
   <a class="back" href="index.html">← Вернуться на сайт</a>
 </div>
+
+<button class="scroll-top-btn" id="scrollTopBtn" onclick="scrollToTop()" aria-label="Наверх">↑</button>
+<script>
+  function scrollToTop(){
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+  (function(){
+    const btn = document.getElementById('scrollTopBtn');
+    function toggleScrollBtn(){
+      btn.classList.toggle('visible', window.scrollY > 400);
+    }
+    window.addEventListener('scroll', toggleScrollBtn, {passive:true});
+    toggleScrollBtn();
+  })();
+</script>
 </body>
 </html>

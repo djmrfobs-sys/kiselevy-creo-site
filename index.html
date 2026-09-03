@@ -383,6 +383,23 @@
     .chat-panel{right:16px;bottom:88px}
   }
 
+  /* SCROLL TO TOP */
+  .scroll-top-btn{
+    position:fixed;top:88px;right:24px;z-index:130;
+    width:46px;height:46px;border-radius:50%;
+    background:var(--amethyst);color:var(--ink);border:none;
+    font-size:1.3rem;line-height:1;cursor:pointer;
+    box-shadow:0 6px 20px rgba(0,0,0,0.35);
+    display:flex;align-items:center;justify-content:center;
+    opacity:0;visibility:hidden;transform:translateY(-8px);
+    transition:opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+  }
+  .scroll-top-btn.visible{opacity:1;visibility:visible;transform:translateY(0)}
+  .scroll-top-btn:hover{transform:scale(1.06)}
+  @media (max-width:600px){
+    .scroll-top-btn{top:74px;right:16px;width:40px;height:40px;font-size:1.1rem}
+  }
+
   @media (max-width:760px){
     .hero{aspect-ratio:4/5}
     .hero-bg{object-position:center top}
@@ -1028,6 +1045,21 @@
 <button class="chat-fab" id="chatFab" onclick="toggleChat()" aria-label="Открыть чат с помощником">
   <span id="chatFabIcon">💬</span>
 </button>
+
+<button class="scroll-top-btn" id="scrollTopBtn" onclick="scrollToTop()" aria-label="Наверх">↑</button>
+<script>
+  function scrollToTop(){
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+  (function(){
+    const btn = document.getElementById('scrollTopBtn');
+    function toggleScrollBtn(){
+      btn.classList.toggle('visible', window.scrollY > 400);
+    }
+    window.addEventListener('scroll', toggleScrollBtn, {passive:true});
+    toggleScrollBtn();
+  })();
+</script>
 
 <div class="chat-panel" id="chatPanel">
   <div class="chat-panel-head">
