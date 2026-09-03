@@ -2,6 +2,8 @@ const { put, list } = require('@vercel/blob');
 
 const TESTIMONIALS_PATH = 'data/testimonials.json';
 const PORTFOLIO_PATH = 'data/portfolio.json';
+const LEADS_PATH = 'data/leads.json';
+const VISITS_PATH = 'data/visits.json';
 
 async function readJson(pathname) {
   try {
@@ -42,10 +44,51 @@ async function uploadImage(base64DataUrl, filenameHint) {
   return blob.url;
 }
 
+async function readObject(pathname) {
+  try {
+    const { blobs } = await list({ prefix: pathname, limit: 1 });
+    const match = blobs.find((b) => b.pathname === pathname);
+    if (!match) return {};
+    const resp = await fetch(match.url, { cache: 'no-store' });
+    if (!resp.ok) return {};
+    return await resp.json();
+  } catch (e) {
+    console.error('readObject failed', pathname, e);
+    return {};
+  }
+}
+
+async function addLead(lead) {
+  const leads = await readJson(LEADS_PATH);
+  leads.unshift({
+    id: Date.now().toString(36) + Math.random().toString(36).slice(2, 7),
+    ...lead,
+    createdAt: Date.now(),
+  });
+  await writeJson(LEADS_PATH, leads.slice(0, 500));
+}
+
+async function recordVisit() {
+  const day = new Date().toISOString().slice(0, 10);
+  const visits = await readObject(VISITS_PATH);
+  visits[day] = (visits[day] || 0) + 1;
+  await put(VISITS_PATH, JSON.stringify(visits, null, 2), {
+    access: 'public',
+    contentType: 'application/json',
+    addRandomSuffix: false,
+    allowOverwrite: true,
+  });
+}
+
 module.exports = {
   TESTIMONIALS_PATH,
   PORTFOLIO_PATH,
+  LEADS_PATH,
+  VISITS_PATH,
   readJson,
   writeJson,
+  readObject,
   uploadImage,
+  addLead,
+  recordVisit,
 };

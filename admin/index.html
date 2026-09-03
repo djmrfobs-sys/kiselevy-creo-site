@@ -83,6 +83,19 @@
   .delete-btn:hover{border-color:#e29b9b}
   .empty{color:var(--text-dim);font-size:0.88rem;text-align:center;padding:24px}
   .stars{color:var(--amethyst);font-size:0.85rem}
+  .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;margin-bottom:24px}
+  .stat-card{background:var(--panel);border:1px solid var(--panel-border);border-radius:12px;padding:20px;text-align:center}
+  .stat-value{font-family:'Space Grotesk', sans-serif;font-size:2rem;font-weight:700;color:var(--amethyst)}
+  .stat-label{font-size:0.82rem;color:var(--text-dim);margin-top:4px}
+  .visits-chart{display:flex;align-items:flex-end;gap:3px;height:120px;padding-top:10px}
+  .visits-bar{flex:1;background:var(--amethyst);border-radius:3px 3px 0 0;min-height:2px;position:relative}
+  .visits-bar:hover::after{
+    content:attr(data-tip);position:absolute;bottom:100%;left:50%;transform:translateX(-50%);
+    background:var(--bg);border:1px solid var(--panel-border);border-radius:6px;padding:4px 8px;
+    font-size:0.72rem;white-space:nowrap;color:var(--text);margin-bottom:4px;
+  }
+  .lead-contact{font-size:0.85rem;color:var(--amethyst);margin-bottom:4px}
+  .lead-sphere{font-size:0.82rem;color:var(--text-dim);margin-bottom:4px}
 </style>
 </head>
 <body>
@@ -93,8 +106,35 @@
 
 <div class="container">
   <div class="tabs">
-    <button class="tab-btn active" data-tab="testimonials">Отзывы</button>
+    <button class="tab-btn active" data-tab="stats">Статистика</button>
+    <button class="tab-btn" data-tab="leads">Заявки</button>
+    <button class="tab-btn" data-tab="testimonials">Отзывы</button>
     <button class="tab-btn" data-tab="portfolio">Портфолио</button>
+  </div>
+
+  <div class="tab-panel active" id="tab-stats">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-value" id="statVisits30">-</div>
+        <div class="stat-label">посещений за 30 дней</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="statVisitsAll">-</div>
+        <div class="stat-label">посещений всего</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="statLeads">-</div>
+        <div class="stat-label">заявок всего</div>
+      </div>
+    </div>
+    <div class="form-card">
+      <h2>Посещения по дням (последние 30)</h2>
+      <div id="visitsChart" class="visits-chart"></div>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="tab-leads">
+    <div class="list" id="leadsList"></div>
   </div>
 
   <div class="tab-panel active" id="tab-testimonials">
@@ -364,8 +404,69 @@
     }
   });
 
+  async function loadStats(){
+    const resp = await fetch('/api/admin/stats');
+    if(resp.status === 401){ window.location.href = '/admin/login.html'; return; }
+    const data = await resp.json();
+    document.getElementById('statVisits30').textContent = data.totalVisits30d;
+    document.getElementById('statVisitsAll').textContent = data.totalVisitsAll;
+    document.getElementById('statLeads').textContent = data.totalLeads;
+    const chart = document.getElementById('visitsChart');
+    chart.innerHTML = '';
+    const max = Math.max.apply(null, data.visitsDaily.map(function(d){ return d.count; }).concat([1]));
+    data.visitsDaily.forEach(function(d){
+      const bar = document.createElement('div');
+      bar.className = 'visits-bar';
+      bar.style.height = Math.max(2, Math.round(d.count / max * 100)) + '%';
+      bar.setAttribute('data-tip', d.day + ': ' + d.count);
+      chart.appendChild(bar);
+    });
+  }
+
+  async function loadLeads(){
+    const resp = await fetch('/api/admin/leads');
+    if(resp.status === 401){ window.location.href = '/admin/login.html'; return; }
+    const data = await resp.json();
+    const wrap = document.getElementById('leadsList');
+    wrap.innerHTML = '';
+    if(!data.items || !data.items.length){
+      wrap.innerHTML = '<p class="empty">Заявок пока нет</p>';
+      return;
+    }
+    data.items.forEach(function(item){
+      const card = document.createElement('div');
+      card.className = 'item-card';
+      const date = new Date(item.createdAt).toLocaleString('ru-RU');
+      card.innerHTML =
+        '<div class="item-body">' +
+          '<div class="item-title"></div>' +
+          '<div class="lead-contact"></div>' +
+          '<div class="lead-sphere"></div>' +
+          '<div class="item-text"></div>' +
+          '<div class="item-sub"></div>' +
+        '</div>' +
+        '<button class="delete-btn">Удалить</button>';
+      card.querySelector('.item-title').textContent = item.name || 'Без имени';
+      card.querySelector('.lead-contact').textContent = item.contact || '';
+      card.querySelector('.lead-sphere').textContent = item.sphere ? 'Сфера: ' + item.sphere : '';
+      card.querySelector('.item-text').textContent = item.request || '';
+      card.querySelector('.item-sub').textContent = date;
+      card.querySelector('.delete-btn').addEventListener('click', async function(){
+        if(!confirm('Удалить заявку от «' + (item.name || 'без имени') + '»?')) return;
+        await fetch('/api/admin/leads', {
+          method:'DELETE', headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({id: item.id})
+        });
+        loadLeads();
+      });
+      wrap.appendChild(card);
+    });
+  }
+
   requireAuthOrRedirect().then(function(ok){
     if(!ok) return;
+    loadStats();
+    loadLeads();
     loadTestimonials();
     loadPortfolio();
   });

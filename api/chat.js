@@ -1,3 +1,5 @@
+const { addLead } = require('./_lib/store');
+
 const SYSTEM_PROMPT = `Тебя зовут CREO. Ты - помощник компании KISELEVY CREO (сайт
 kiselevycreositecurrent.vercel.app). Если спросят как тебя зовут или кто ты - отвечай прямо:
 "Я CREO, помощник KISELEVY CREO".
@@ -194,7 +196,9 @@ module.exports = async function handler(req, res) {
     const { clean, lead } = extractLead(rawReply);
 
     if (lead) {
-      await sendLeadToTelegram(mergeLeadWithForm(lead, formLead));
+      const finalLead = mergeLeadWithForm(lead, formLead);
+      await sendLeadToTelegram(finalLead);
+      await addLead(finalLead).catch((e) => console.error('addLead failed', e));
     }
 
     res.status(200).json({ reply: clean || 'Извините, не понял вопрос - расскажите подробнее?' });

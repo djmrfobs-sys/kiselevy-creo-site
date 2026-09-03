@@ -1704,6 +1704,7 @@
 
   document.addEventListener('DOMContentLoaded', function(){
     loadDynamicTestimonials();
+    fetch('/api/track-visit', {method:'POST'}).catch(function(){});
   });
 </script>
 
