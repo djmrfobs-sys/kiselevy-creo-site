@@ -1,5 +1,5 @@
 const { requireAuth } = require('../_lib/auth');
-const { readObject, readJson, VISITS_PATH, LEADS_PATH } = require('../_lib/store');
+const { readVisits, readLeads } = require('../_lib/store');
 
 function lastNDays(n) {
   const out = [];
@@ -19,7 +19,7 @@ module.exports = async function handler(req, res) {
     return;
   }
 
-  const [visits, leads] = await Promise.all([readObject(VISITS_PATH), readJson(LEADS_PATH)]);
+  const [visits, leads] = await Promise.all([readVisits(), readLeads()]);
   const days = lastNDays(30);
   const daily = days.map((day) => ({ day, count: visits[day] || 0 }));
   const totalVisits30d = daily.reduce((sum, d) => sum + d.count, 0);

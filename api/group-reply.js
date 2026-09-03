@@ -97,6 +97,13 @@ module.exports = async function handler(req, res) {
     return;
   }
 
+  const expectedSecret = process.env.TELEGRAM_WEBHOOK_SECRET;
+  const providedSecret = req.headers['x-telegram-bot-api-secret-token'];
+  if (!expectedSecret || providedSecret !== expectedSecret) {
+    res.status(401).json({ ok: false });
+    return;
+  }
+
   const token = process.env.SITE_BOT_TOKEN;
   const groupChatId = process.env.LEAD_TELEGRAM_CHAT_ID;
   const apiKey = process.env.DEEPSEEK_API_KEY;

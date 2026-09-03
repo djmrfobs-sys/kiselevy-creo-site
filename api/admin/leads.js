@@ -1,11 +1,11 @@
 const { requireAuth } = require('../_lib/auth');
-const { LEADS_PATH, readJson, writeJson } = require('../_lib/store');
+const { readLeads, writeLeads } = require('../_lib/store');
 
 module.exports = async function handler(req, res) {
   if (!requireAuth(req, res)) return;
 
   if (req.method === 'GET') {
-    const items = await readJson(LEADS_PATH);
+    const items = await readLeads();
     res.status(200).json({ items });
     return;
   }
@@ -16,9 +16,9 @@ module.exports = async function handler(req, res) {
       res.status(400).json({ error: 'id required' });
       return;
     }
-    const items = await readJson(LEADS_PATH);
+    const items = await readLeads();
     const next = items.filter((it) => it.id !== id);
-    await writeJson(LEADS_PATH, next);
+    await writeLeads(next);
     res.status(200).json({ ok: true });
     return;
   }

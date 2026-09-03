@@ -5,12 +5,20 @@ const PORTFOLIO_PATH = 'data/portfolio.json';
 const LEADS_PATH = 'data/leads.json';
 const VISITS_PATH = 'data/visits.json';
 
-async function readJson(pathname) {
+function privateToken() {
+  return process.env.PRIVATE_READ_WRITE_TOKEN;
+}
+
+async function readJson(pathname, opts) {
+  const token = opts && opts.private ? privateToken() : undefined;
   try {
-    const { blobs } = await list({ prefix: pathname, limit: 1 });
+    const { blobs } = await list({ prefix: pathname, limit: 1, token });
     const match = blobs.find((b) => b.pathname === pathname);
     if (!match) return [];
-    const resp = await fetch(match.url, { cache: 'no-store' });
+    const resp = await fetch(match.url, {
+      cache: 'no-store',
+      headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+    });
     if (!resp.ok) return [];
     return await resp.json();
   } catch (e) {
@@ -19,12 +27,14 @@ async function readJson(pathname) {
   }
 }
 
-async function writeJson(pathname, data) {
+async function writeJson(pathname, data, opts) {
+  const isPrivate = !!(opts && opts.private);
   await put(pathname, JSON.stringify(data, null, 2), {
-    access: 'public',
+    access: isPrivate ? 'private' : 'public',
     contentType: 'application/json',
     addRandomSuffix: false,
     allowOverwrite: true,
+    token: isPrivate ? privateToken() : undefined,
   });
 }
 
@@ -44,12 +54,16 @@ async function uploadImage(base64DataUrl, filenameHint) {
   return blob.url;
 }
 
-async function readObject(pathname) {
+async function readObject(pathname, opts) {
+  const token = opts && opts.private ? privateToken() : undefined;
   try {
-    const { blobs } = await list({ prefix: pathname, limit: 1 });
+    const { blobs } = await list({ prefix: pathname, limit: 1, token });
     const match = blobs.find((b) => b.pathname === pathname);
     if (!match) return {};
-    const resp = await fetch(match.url, { cache: 'no-store' });
+    const resp = await fetch(match.url, {
+      cache: 'no-store',
+      headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+    });
     if (!resp.ok) return {};
     return await resp.json();
   } catch (e) {
@@ -59,25 +73,38 @@ async function readObject(pathname) {
 }
 
 async function addLead(lead) {
-  const leads = await readJson(LEADS_PATH);
+  const leads = await readJson(LEADS_PATH, { private: true });
   leads.unshift({
     id: Date.now().toString(36) + Math.random().toString(36).slice(2, 7),
     ...lead,
     createdAt: Date.now(),
   });
-  await writeJson(LEADS_PATH, leads.slice(0, 500));
+  await writeJson(LEADS_PATH, leads.slice(0, 500), { private: true });
+}
+
+async function readLeads() {
+  return readJson(LEADS_PATH, { private: true });
+}
+
+async function writeLeads(leads) {
+  return writeJson(LEADS_PATH, leads, { private: true });
 }
 
 async function recordVisit() {
   const day = new Date().toISOString().slice(0, 10);
-  const visits = await readObject(VISITS_PATH);
+  const visits = await readObject(VISITS_PATH, { private: true });
   visits[day] = (visits[day] || 0) + 1;
   await put(VISITS_PATH, JSON.stringify(visits, null, 2), {
-    access: 'public',
+    access: 'private',
     contentType: 'application/json',
     addRandomSuffix: false,
     allowOverwrite: true,
+    token: privateToken(),
   });
+}
+
+async function readVisits() {
+  return readObject(VISITS_PATH, { private: true });
 }
 
 module.exports = {
@@ -90,5 +117,8 @@ module.exports = {
   readObject,
   uploadImage,
   addLead,
+  readLeads,
+  writeLeads,
   recordVisit,
+  readVisits,
 };

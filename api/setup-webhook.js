@@ -1,7 +1,17 @@
+const { requireAuth } = require('./_lib/auth');
+
 module.exports = async function handler(req, res) {
+  if (!requireAuth(req, res)) return;
+
   const token = process.env.SITE_BOT_TOKEN;
   if (!token) {
     res.status(200).json({ ok: false, error: 'SITE_BOT_TOKEN not set' });
+    return;
+  }
+
+  const secret = process.env.TELEGRAM_WEBHOOK_SECRET;
+  if (!secret) {
+    res.status(200).json({ ok: false, error: 'TELEGRAM_WEBHOOK_SECRET not set' });
     return;
   }
 
@@ -12,7 +22,7 @@ module.exports = async function handler(req, res) {
     const setResp = await fetch(`https://api.telegram.org/bot${token}/setWebhook`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ url, allowed_updates: ['message'] }),
+      body: JSON.stringify({ url, allowed_updates: ['message'], secret_token: secret }),
     });
     const setData = await setResp.json();
 
