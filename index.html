@@ -367,6 +367,17 @@
   }
   .chat-input-row input:focus{outline:none;border-color:var(--amethyst)}
   .chat-input-row .btn{padding:10px 18px;font-size:1rem}
+  .chat-gate{flex:1;display:flex;flex-direction:column;justify-content:center;gap:18px;padding:24px}
+  .chat-gate-text{font-size:0.86rem;line-height:1.5;color:var(--text-dim)}
+  .chat-gate-text a{color:var(--lilac-pale);text-decoration:underline}
+  .chat-gate-btn{width:100%}
+  .chat-lead-form{flex:1;display:flex;flex-direction:column;gap:10px;padding:20px;overflow-y:auto}
+  .chat-lead-form input{
+    background:var(--bg);border:1px solid var(--panel-border);border-radius:24px;
+    padding:10px 16px;color:var(--text);font-family:inherit;font-size:0.9rem;width:100%;
+  }
+  .chat-lead-form input:focus{outline:none;border-color:var(--amethyst)}
+  .chat-lead-form .btn{margin-top:6px;width:100%}
   @media (max-width:600px){
     .chat-fab{right:16px;bottom:16px}
     .chat-panel{right:16px;bottom:88px}
@@ -1026,10 +1037,25 @@
     </div>
     <button class="cert-close" onclick="toggleChat()" aria-label="Закрыть">×</button>
   </div>
-  <div class="chat-messages" id="chatMessages">
+
+  <div class="chat-gate" id="chatGate">
+    <p class="chat-gate-text" data-i18n-html="chat.gateText">Нажимая «Продолжить», вы соглашаетесь с <a href="privacy.html" target="_blank" rel="noopener">политикой обработки персональных данных</a>.</p>
+    <button type="button" class="btn chat-gate-btn" id="chatGateBtn" data-i18n="chat.gateBtn">Продолжить</button>
+  </div>
+
+  <form class="chat-lead-form" id="chatLeadForm" style="display:none">
+    <input type="text" id="leadFirstName" data-i18n-placeholder="chat.leadFirstName" placeholder="Имя" autocomplete="given-name" required>
+    <input type="text" id="leadLastName" data-i18n-placeholder="chat.leadLastName" placeholder="Фамилия" autocomplete="family-name" required>
+    <input type="tel" id="leadPhone" data-i18n-placeholder="chat.leadPhone" placeholder="Телефон" autocomplete="tel" required>
+    <input type="email" id="leadEmail" data-i18n-placeholder="chat.leadEmail" placeholder="Email" autocomplete="email" required>
+    <input type="text" id="leadTelegram" data-i18n-placeholder="chat.leadTelegram" placeholder="Ник в Telegram" autocomplete="off" required>
+    <button type="submit" class="btn" data-i18n="chat.leadSubmit">Начать чат</button>
+  </form>
+
+  <div class="chat-messages" id="chatMessages" style="display:none">
     <div class="chat-msg chat-msg-bot" id="chatGreeting" data-i18n="chat.greeting">Привет! Я CREO, помощник KISELEVY CREO. Как вас зовут и чем занимаетесь?</div>
   </div>
-  <form class="chat-input-row" id="chatForm">
+  <form class="chat-input-row" id="chatForm" style="display:none">
     <input type="text" id="chatInput" data-i18n-placeholder="chat.placeholder" placeholder="Напишите сообщение..." autocomplete="off">
     <button type="submit" class="btn">→</button>
   </form>
@@ -1037,6 +1063,60 @@
 
 <script>
   const chatHistory = [];
+
+  function showChatStage(stage){
+    document.getElementById('chatGate').style.display = stage === 'gate' ? 'flex' : 'none';
+    document.getElementById('chatLeadForm').style.display = stage === 'lead' ? 'flex' : 'none';
+    document.getElementById('chatMessages').style.display = stage === 'chat' ? 'flex' : 'none';
+    document.getElementById('chatForm').style.display = stage === 'chat' ? 'flex' : 'none';
+  }
+
+  (function initChatStage(){
+    try{
+      if(sessionStorage.getItem('creo_lead_submitted') === '1'){
+        showChatStage('chat');
+      }
+    }catch(e){}
+  })();
+
+  document.getElementById('chatGateBtn').addEventListener('click', function(){
+    showChatStage('lead');
+  });
+
+  document.getElementById('chatLeadForm').addEventListener('submit', async function(e){
+    e.preventDefault();
+    const firstName = document.getElementById('leadFirstName').value.trim();
+    const lastName = document.getElementById('leadLastName').value.trim();
+    const phone = document.getElementById('leadPhone').value.trim();
+    const email = document.getElementById('leadEmail').value.trim();
+    const telegram = document.getElementById('leadTelegram').value.trim();
+    if(!firstName || !lastName || !phone || !email || !telegram) return;
+
+    const submitBtn = this.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+
+    const lead = {firstName, lastName, phone, email, telegram};
+    try{
+      await fetch('/api/lead', {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify(lead)
+      });
+    }catch(err){}
+
+    try{ sessionStorage.setItem('creo_lead_submitted', '1'); }catch(err){}
+
+    chatHistory.push({role:'user', content: `Меня зовут ${firstName} ${lastName}. Контакты: телефон ${phone}, email ${email}, Telegram ${telegram}.`});
+
+    const greeting = document.getElementById('chatGreeting');
+    greeting.textContent = greeting.textContent.replace(/Как вас зовут и чем занимаетесь\?|What's your name and what do you do\?|Kako se zovete i čime se bavite\?/, '') || greeting.textContent;
+    greeting.textContent = greeting.textContent.trim();
+
+    submitBtn.disabled = false;
+    showChatStage('chat');
+    document.getElementById('chatInput').focus();
+  });
+
   function toggleChat(){
     const panel = document.getElementById('chatPanel');
     const isOpen = panel.classList.toggle('open');
@@ -1286,6 +1366,14 @@
       'certs.2': `Ekaterina Kiseleva - "Earning on Reels" course, instructor Arina Alex`,
       'certs.3': `Artur - participant of the "First Russian AI Employees Fair", March 24-26, 2026`,
       'chat.sub': `KISELEVY CREO Assistant`,
+      'chat.gateText': `By clicking "Continue" you agree to the <a href="privacy.html" target="_blank" rel="noopener">personal data processing policy</a>.`,
+      'chat.gateBtn': `Continue`,
+      'chat.leadFirstName': `First name`,
+      'chat.leadLastName': `Last name`,
+      'chat.leadPhone': `Phone`,
+      'chat.leadEmail': `Email`,
+      'chat.leadTelegram': `Telegram username`,
+      'chat.leadSubmit': `Start chat`,
       'chat.greeting': `Hi! I'm CREO, the KISELEVY CREO assistant. What's your name and what do you do?`,
       'chat.placeholder': `Type a message...`,
     },
@@ -1491,6 +1579,14 @@
       'certs.2': `Ekaterina Kiseljova - kurs "Zarada na Reelsu", predavač Arina Aleks`,
       'certs.3': `Artur - učesnik "Prvog sajma AI zaposlenih u Rusiji", 24-26. mart 2026.`,
       'chat.sub': `Pomoćnik KISELEVY CREO`,
+      'chat.gateText': `Klikom na "Nastavi" slažete se sa <a href="privacy.html" target="_blank" rel="noopener">politikom obrade ličnih podataka</a>.`,
+      'chat.gateBtn': `Nastavi`,
+      'chat.leadFirstName': `Ime`,
+      'chat.leadLastName': `Prezime`,
+      'chat.leadPhone': `Telefon`,
+      'chat.leadEmail': `Email`,
+      'chat.leadTelegram': `Telegram nalog`,
+      'chat.leadSubmit': `Započni ćaskanje`,
       'chat.greeting': `Zdravo! Ja sam CREO, pomoćnik KISELEVY CREO. Kako se zovete i čime se bavite?`,
       'chat.placeholder': `Napišite poruku...`,
     },
