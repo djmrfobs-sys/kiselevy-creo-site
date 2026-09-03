@@ -317,6 +317,8 @@
   footer a{text-decoration:underline;color:var(--lavender)}
   .footer-link{font-weight:700}
   .footer-link:hover{color:var(--lilac-pale)}
+  .footer-admin-link{font-weight:400;font-size:0.72rem;opacity:0.35;text-decoration:none}
+  .footer-admin-link:hover{opacity:0.7;color:var(--text-dim)}
 
   /* CERTIFICATES INLINE */
   .certs-inline{background:var(--panel)}
@@ -778,7 +780,7 @@
 <section class="portfolio" id="portfolio">
   <div class="container">
     <h2 data-i18n-html="portfolio.h2">Наше <span class="accent">портфолио</span></h2>
-    <div class="portfolio-grid">
+    <div class="portfolio-grid" id="portfolioGrid">
       <div class="portfolio-card portfolio-wide portfolio-featured">
         <img src="assets/portfolio/bagovskaia-boho.jpg" alt="Сайт бронирования дома «Баговская Boho»">
         <div class="portfolio-card-body">
@@ -974,7 +976,7 @@
 <section class="testimonials" id="testimonials">
   <div class="container">
     <h2 data-i18n-html="testi.h2">Что говорят <span class="accent">клиенты</span></h2>
-    <div class="testimonials-grid">
+    <div class="testimonials-grid" id="testimonialsGrid">
       <div class="testimonial-card">
         <div class="stars">★★★★★</div>
         <p data-i18n="testi.1.text">«Катюша, с твоими познаниями эксперта и продюсера, твоей авторской
@@ -1022,6 +1024,7 @@
   <div class="container">
     <p><a class="footer-link" href="privacy.html" data-i18n="footer.privacy">Политика обработки персональных данных</a></p>
     <p>© KISELEVY CREO, 2026</p>
+    <p><a class="footer-admin-link" href="/admin/login.html">admin</a></p>
   </div>
 </footer>
 
@@ -1663,6 +1666,60 @@
     let saved = 'ru';
     try{ saved = localStorage.getItem('site_lang') || 'ru'; }catch(e){}
     setLang(saved);
+  });
+</script>
+
+<script>
+  function escapeHtml(str){
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  async function loadDynamicTestimonials(){
+    try{
+      const resp = await fetch('/api/data/testimonials');
+      if(!resp.ok) return;
+      const data = await resp.json();
+      const grid = document.getElementById('testimonialsGrid');
+      if(!grid || !data.items || !data.items.length) return;
+      data.items.forEach(function(item){
+        const card = document.createElement('div');
+        card.className = 'testimonial-card';
+        card.innerHTML =
+          '<div class="stars">' + '★'.repeat(item.rating || 5) + '☆'.repeat(5 - (item.rating || 5)) + '</div>' +
+          '<p>«' + escapeHtml(item.text) + '»</p>' +
+          '<div class="testimonial-name">' + escapeHtml(item.name) + '</div>' +
+          (item.role ? '<div class="testimonial-role">' + escapeHtml(item.role) + '</div>' : '');
+        grid.appendChild(card);
+      });
+    }catch(e){}
+  }
+
+  async function loadDynamicPortfolio(){
+    try{
+      const resp = await fetch('/api/data/portfolio');
+      if(!resp.ok) return;
+      const data = await resp.json();
+      const grid = document.getElementById('portfolioGrid');
+      if(!grid || !data.items || !data.items.length) return;
+      data.items.forEach(function(item){
+        const card = document.createElement('div');
+        card.className = 'portfolio-card';
+        card.innerHTML =
+          '<img src="' + item.image + '" alt="' + escapeHtml(item.title) + '">' +
+          '<div class="portfolio-card-body">' +
+            '<h3>' + escapeHtml(item.title) + '</h3>' +
+            '<p>' + escapeHtml(item.description) + '</p>' +
+          '</div>';
+        grid.appendChild(card);
+      });
+    }catch(e){}
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    loadDynamicTestimonials();
+    loadDynamicPortfolio();
   });
 </script>
 

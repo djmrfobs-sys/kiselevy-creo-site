@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Вход в админ-панель | KISELEVY CREO</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0a0b;
+    --panel:#151210;
+    --panel-border:#2e2521;
+    --lilac-pale:#f0e9dc;
+    --amethyst:#c4a3a6;
+    --text:#ede7dd;
+    --text-dim:#b7a99b;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
+    background:var(--bg);color:var(--text);
+    min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;
+  }
+  .card{
+    width:100%;max-width:360px;background:var(--panel);border:1px solid var(--panel-border);
+    border-radius:16px;padding:32px 28px;
+  }
+  .logo{
+    font-family:'Space Grotesk', sans-serif;font-weight:700;color:var(--amethyst);
+    letter-spacing:0.5px;margin-bottom:24px;display:block;text-align:center;font-size:1.05rem;
+  }
+  h1{font-family:'Space Grotesk', sans-serif;font-size:1.2rem;color:var(--lilac-pale);margin-bottom:20px;text-align:center}
+  input{
+    width:100%;background:var(--bg);border:1px solid var(--panel-border);border-radius:10px;
+    padding:12px 14px;color:var(--text);font-family:inherit;font-size:0.95rem;margin-bottom:14px;
+  }
+  input:focus{outline:none;border-color:var(--amethyst)}
+  button{
+    width:100%;background:var(--amethyst);color:var(--bg);border:none;border-radius:10px;
+    padding:12px;font-family:inherit;font-size:0.95rem;font-weight:600;cursor:pointer;
+  }
+  button:hover{opacity:0.9}
+  button:disabled{opacity:0.5;cursor:default}
+  .error{color:#e29b9b;font-size:0.85rem;margin-bottom:12px;display:none}
+</style>
+</head>
+<body>
+<div class="card">
+  <span class="logo">KISELEVY&nbsp;CREO</span>
+  <h1>Вход в админ-панель</h1>
+  <p class="error" id="err">Неверный пароль</p>
+  <form id="loginForm">
+    <input type="password" id="password" placeholder="Пароль" autocomplete="current-password" required>
+    <button type="submit" id="submitBtn">Войти</button>
+  </form>
+</div>
+<script>
+  document.getElementById('loginForm').addEventListener('submit', async function(e){
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    const err = document.getElementById('err');
+    err.style.display = 'none';
+    btn.disabled = true;
+    btn.textContent = 'Вхожу...';
+    try{
+      const resp = await fetch('/api/admin/login', {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({password: document.getElementById('password').value})
+      });
+      if(resp.ok){
+        window.location.href = '/admin/index.html';
+      } else {
+        err.style.display = 'block';
+      }
+    }catch(e){
+      err.textContent = 'Технический сбой, попробуйте ещё раз';
+      err.style.display = 'block';
+    }finally{
+      btn.disabled = false;
+      btn.textContent = 'Войти';
+    }
+  });
+</script>
+</body>
+</html>
