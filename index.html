@@ -1095,6 +1095,7 @@
 
 <script>
   const chatHistory = [];
+  let leadData = null;
 
   function showChatStage(stage){
     document.getElementById('chatGate').style.display = stage === 'gate' ? 'flex' : 'none';
@@ -1107,6 +1108,8 @@
     try{
       if(sessionStorage.getItem('creo_lead_submitted') === '1'){
         showChatStage('chat');
+        const saved = sessionStorage.getItem('creo_lead_data');
+        if(saved) leadData = JSON.parse(saved);
       }
     }catch(e){}
   })();
@@ -1127,16 +1130,10 @@
     const submitBtn = this.querySelector('button[type="submit"]');
     submitBtn.disabled = true;
 
-    const lead = {firstName, lastName, phone, email, telegram};
-    try{
-      await fetch('/api/lead', {
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body: JSON.stringify(lead)
-      });
-    }catch(err){}
+    leadData = {firstName, lastName, phone, email, telegram};
 
     try{ sessionStorage.setItem('creo_lead_submitted', '1'); }catch(err){}
+    try{ sessionStorage.setItem('creo_lead_data', JSON.stringify(leadData)); }catch(err){}
 
     chatHistory.push({role:'user', content: `Меня зовут ${firstName} ${lastName}. Контакты: телефон ${phone}, email ${email}, Telegram ${telegram}.`});
 
@@ -1177,7 +1174,7 @@
       const resp = await fetch('/api/chat', {
         method:'POST',
         headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({messages: chatHistory})
+        body: JSON.stringify({messages: chatHistory, lead: leadData})
       });
       const data = await resp.json();
       wrap.removeChild(wrap.lastChild);

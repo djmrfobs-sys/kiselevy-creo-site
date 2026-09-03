@@ -80,12 +80,15 @@ Telegram-каналы:
 эту тему, предложи продолжить с контактными данными.
 
 СБОР ЗАЯВКИ:
-Когда узнал имя, сферу деятельности, суть запроса и контакт (телефон или Telegram) -
-поблагодари и сообщи, что передал заявку команде. В ЭТОТ момент и только в этот момент
-добавь в самый конец своего ответа отдельной строкой служебный блок ровно в таком формате
-(посетитель его не увидит, это для системы):
+Имя и контакт (телефон, email, Telegram) посетитель уже указал в форме перед началом
+чата - их не нужно спрашивать второй раз, они уже есть в начале переписки. Твоя задача в
+диалоге - узнать сферу деятельности и суть запроса. Когда узнал это - поблагодари и
+сообщи, что передал заявку команде. В ЭТОТ момент и только в этот момент добавь в самый
+конец своего ответа отдельной строкой служебный блок ровно в таком формате (посетитель
+его не увидит, это для системы):
 <<<LEAD>>>{"name":"...","sphere":"...","contact":"...","request":"..."}<<<END>>>
-Не добавляй этот блок, если данных ещё не хватает.`;
+Заявка в Telegram-группу команды уходит только в этот момент, после завершения диалога -
+не раньше. Не добавляй этот блок, если сферы или сути запроса ещё не хватает.`;
 
 function extractLead(text) {
   const match = text.match(/<<<LEAD>>>([\s\S]*?)<<<END>>>/);
@@ -99,11 +102,26 @@ function extractLead(text) {
   }
 }
 
+function mergeLeadWithForm(aiLead, formLead) {
+  if (!formLead) return aiLead;
+  const name = [formLead.firstName, formLead.lastName].filter(Boolean).join(' ').trim();
+  const contactParts = [];
+  if (formLead.phone) contactParts.push(formLead.phone);
+  if (formLead.email) contactParts.push(formLead.email);
+  if (formLead.telegram) contactParts.push(`Telegram: ${formLead.telegram}`);
+  return {
+    name: name || aiLead.name,
+    sphere: aiLead.sphere,
+    contact: contactParts.length ? contactParts.join(', ') : aiLead.contact,
+    request: aiLead.request,
+  };
+}
+
 async function sendLeadToTelegram(lead) {
   const token = process.env.SITE_BOT_TOKEN;
   const chatId = process.env.LEAD_TELEGRAM_CHAT_ID;
   if (!token || !chatId) return;
-  const text = `Новая заявка с сайта (от CREO)\n\nИмя: ${lead.name || '-'}\nСфера: ${lead.sphere || '-'}\nКонтакт: ${lead.contact || '-'}\nЗапрос: ${lead.request || '-'}`;
+  const text = `Новая заявка с сайта (от CREO, после диалога)\n\nИмя: ${lead.name || '-'}\nСфера: ${lead.sphere || '-'}\nКонтакт: ${lead.contact || '-'}\nЗапрос: ${lead.request || '-'}`;
   try {
     await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
       method: 'POST',
@@ -129,7 +147,7 @@ module.exports = async function handler(req, res) {
     return;
   }
 
-  const { messages } = req.body || {};
+  const { messages, lead: formLead } = req.body || {};
   if (!Array.isArray(messages) || messages.length === 0) {
     res.status(400).json({ error: 'messages required' });
     return;
@@ -169,7 +187,7 @@ module.exports = async function handler(req, res) {
     const { clean, lead } = extractLead(rawReply);
 
     if (lead) {
-      await sendLeadToTelegram(lead);
+      await sendLeadToTelegram(mergeLeadWithForm(lead, formLead));
     }
 
     res.status(200).json({ reply: clean || 'Извините, не понял вопрос - расскажите подробнее?' });
