@@ -270,6 +270,7 @@
   .portfolio-referral p{margin-bottom:8px;color:var(--text)}
   .portfolio-referral p:last-child{margin-bottom:0}
   .portfolio-referral .eyebrow{text-align:left;margin-bottom:8px}
+  .portfolio-more{text-align:center;margin-top:32px}
   @media (max-width:760px){
     .portfolio-wide img{aspect-ratio:4/3}
   }
@@ -426,7 +427,7 @@
       <a href="#about" data-i18n="nav.about">О нас</a>
       <a href="#team" data-i18n="nav.team">Команда</a>
       <a href="#services" data-i18n="nav.services">Услуги</a>
-      <a href="#portfolio" data-i18n="nav.portfolio">Портфолио</a>
+      <a href="portfolio.html" data-i18n="nav.portfolio">Портфолио</a>
       <a href="#testimonials" data-i18n="nav.testimonials">Отзывы</a>
       <a href="#contacts" data-i18n="nav.contacts">Контакты</a>
       <span class="lang-switch">
@@ -970,6 +971,9 @@
         </div>
       </div>
     </div>
+    <div class="portfolio-more">
+      <a class="btn" href="portfolio.html" data-i18n="portfolio.more">Смотреть все работы →</a>
+    </div>
   </div>
 </section>
 
@@ -1332,6 +1336,7 @@
       'combo.p5.desc': `Multi-role bot + AI logic + subscription and payment + personal dashboard. Price - per project.`,
       'combo.p5.pain': `For you, if: you need a serious AI service with its own mechanics.`,
       'portfolio.h2': `Our <span class="accent">Portfolio</span>`,
+      'portfolio.more': `See all work →`,
       'pf.bagov.badge': `Flagship project · our own case`,
       'pf.bagov.p1': `A vacation home in Krasnodar region, which we manage remotely, living in another country. It used to mean: keeping the phone on hand around the clock, answering guests ourselves, manually checking dates and hoping check-in would go smoothly without us. Now all that routine is handled by a website with an AI assistant, which we built ourselves and tested on ourselves - it really works.`,
       'pf.bagov.p2': `A guest visits the site, chats with the assistant, who shows available dates and prices, books the stay in the calendar and sends us the request in Telegram - all that's left is to confirm with one tap. Check-in instructions, keys, questions about the house - the assistant answers on its own, even when time zones aren't on our side. Our own admin panel gives full control from a distance: list of requests and bookings, moving and cancelling dates, posts to the house's Telegram channel.`,
@@ -1546,6 +1551,7 @@
       'combo.p5.desc': `Bot sa više uloga + AI logika + pretplata i plaćanje + lični nalog. Cena - po projektu.`,
       'combo.p5.pain': `Za vas, ako: vam treba ozbiljan AI servis sa sopstvenom mehanikom.`,
       'portfolio.h2': `Naš <span class="accent">portfolio</span>`,
+      'portfolio.more': `Pogledaj sve radove →`,
       'pf.bagov.badge': `Vodeći projekat · naš lični slučaj`,
       'pf.bagov.p1': `Kuća za odmor u Krasnodarskom kraju, kojom upravljamo na daljinu, živeći u drugoj zemlji. Ranije je to značilo: telefon uvek pri ruci, sami odgovaramo gostima, ručno proveravamo datume i nadamo se da će useljenje proći glatko bez nas. Sada svu tu rutinu vodi vizit-sajt sa AI asistentom, koji smo sami napravili i na sebi proverili da stvarno radi.`,
       'pf.bagov.p2': `Gost dolazi na sajt, razgovara sa asistentom, koji pokazuje slobodne datume i cenu, rezerviše boravak u kalendaru i šalje nam upit na Telegram - ostaje samo da potvrdimo jednim dodirom. Uputstva za useljenje, ključevi, pitanja o kući - asistent sam odgovara, čak i kad razlika u vremenskim zonama nije u našu korist. Sopstveni admin panel daje potpunu kontrolu na daljinu: spisak upita i rezervacija, pomeranje i otkazivanje datuma, objave na Telegram kanalu kuće.`,
@@ -1696,30 +1702,8 @@
     }catch(e){}
   }
 
-  async function loadDynamicPortfolio(){
-    try{
-      const resp = await fetch('/api/data/portfolio');
-      if(!resp.ok) return;
-      const data = await resp.json();
-      const grid = document.getElementById('portfolioGrid');
-      if(!grid || !data.items || !data.items.length) return;
-      data.items.forEach(function(item){
-        const card = document.createElement('div');
-        card.className = 'portfolio-card';
-        card.innerHTML =
-          '<img src="' + item.image + '" alt="' + escapeHtml(item.title) + '">' +
-          '<div class="portfolio-card-body">' +
-            '<h3>' + escapeHtml(item.title) + '</h3>' +
-            '<p>' + escapeHtml(item.description) + '</p>' +
-          '</div>';
-        grid.appendChild(card);
-      });
-    }catch(e){}
-  }
-
   document.addEventListener('DOMContentLoaded', function(){
     loadDynamicTestimonials();
-    loadDynamicPortfolio();
   });
 </script>
 
