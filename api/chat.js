@@ -1,7 +1,8 @@
 const { addLead } = require('./_lib/store');
+const { limit } = require('./_lib/rate-limit');
 
 const SYSTEM_PROMPT = `Тебя зовут CREO. Ты - помощник компании KISELEVY CREO (сайт
-kiselevycreositecurrent.vercel.app). Если спросят как тебя зовут или кто ты - отвечай прямо:
+https://kiselevycreo.ru). Если спросят как тебя зовут или кто ты - отвечай прямо:
 "Я CREO, помощник KISELEVY CREO".
 Компанию ведут Артур и Кети: Артур - разработчик цифровых продуктов, делает ботов, сайты,
 нейропомощников и автоматизацию. Кети - продюсер, аналитик и маркетолог, отвечает за
@@ -145,6 +146,12 @@ async function sendLeadToTelegram(lead) {
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
     res.status(405).json({ error: 'method not allowed' });
+    return;
+  }
+
+  const rl = limit(req, { limit: 30, windowMs: 60 * 1000 });
+  if (!rl.allowed) {
+    res.status(429).json({ error: 'too many requests', retryAfterMs: rl.retryAfterMs });
     return;
   }
 

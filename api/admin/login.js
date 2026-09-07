@@ -1,5 +1,6 @@
 const crypto = require('crypto');
 const { createSessionCookie } = require('../_lib/auth');
+const { limit } = require('../_lib/rate-limit');
 
 function safeEqual(provided, expected) {
   const maxLen = Math.max(expected.length, provided.length, 1);
@@ -11,6 +12,13 @@ function safeEqual(provided, expected) {
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
     res.status(405).json({ error: 'method not allowed' });
+    return;
+  }
+
+  // Ограничение попыток входа по IP: не более 6 неудач за 10 минут - против перебора.
+  const rl = limit(req, { limit: 6, windowMs: 10 * 60 * 1000 });
+  if (!rl.allowed) {
+    res.status(429).json({ error: 'too many attempts, try again later', retryAfterMs: rl.retryAfterMs });
     return;
   }
 

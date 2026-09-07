@@ -4,8 +4,19 @@ const COOKIE_NAME = 'creo_admin_session';
 const SESSION_TTL_MS = 12 * 60 * 60 * 1000; // 12 часов - обычная сессия
 const REMEMBER_TTL_MS = 90 * 24 * 60 * 60 * 1000; // 90 дней - "запомнить меня"
 
+function getAuthSecret() {
+  const secret = process.env.ADMIN_SESSION_SECRET;
+  if (!secret || secret.length < 16) {
+    return null;
+  }
+  return secret;
+}
+
 function sign(payloadB64) {
-  const secret = process.env.ADMIN_SESSION_SECRET || '';
+  const secret = getAuthSecret();
+  if (!secret) {
+    throw new Error('ADMIN_SESSION_SECRET is not set');
+  }
   return crypto.createHmac('sha256', secret).update(payloadB64).digest('hex');
 }
 
@@ -13,7 +24,12 @@ function createSessionCookie(remember) {
   const ttl = remember ? REMEMBER_TTL_MS : SESSION_TTL_MS;
   const payload = JSON.stringify({ exp: Date.now() + ttl });
   const payloadB64 = Buffer.from(payload).toString('base64url');
-  const sig = sign(payloadB64);
+  let sig;
+  try {
+    sig = sign(payloadB64);
+  } catch (e) {
+    return null;
+  }
   const token = `${payloadB64}.${sig}`;
   const maxAge = Math.floor(ttl / 1000);
   return `${COOKIE_NAME}=${token}; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=${maxAge}`;
@@ -47,11 +63,18 @@ function isBotAuthenticated(req) {
 
 function isAuthenticated(req) {
   if (isBotAuthenticated(req)) return true;
+  const secret = getAuthSecret();
+  if (!secret) return false;
   const cookies = parseCookies(req);
   const token = cookies[COOKIE_NAME];
   if (!token || !token.includes('.')) return false;
   const [payloadB64, sig] = token.split('.');
-  const expectedSig = sign(payloadB64);
+  let expectedSig;
+  try {
+    expectedSig = sign(payloadB64);
+  } catch (e) {
+    return false;
+  }
   const sigBuf = Buffer.from(sig || '', 'hex');
   const expectedBuf = Buffer.from(expectedSig, 'hex');
   if (sigBuf.length !== expectedBuf.length) return false;
