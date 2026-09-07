@@ -33,6 +33,12 @@
     border-radius:8px;padding:8px 14px;font-family:inherit;font-size:0.85rem;cursor:pointer;
   }
   .logout-btn:hover{color:var(--text);border-color:var(--amethyst)}
+  .header-actions{display:flex;align-items:center;gap:10px}
+  .back-link{
+    color:var(--text-dim);text-decoration:none;font-size:0.85rem;
+    border:1px solid var(--panel-border);border-radius:8px;padding:8px 14px;
+  }
+  .back-link:hover{color:var(--text);border-color:var(--amethyst)}
   .container{max-width:900px;margin:0 auto;padding:24px}
   .tabs{display:flex;gap:8px;margin-bottom:24px}
   .tab-btn{
@@ -101,7 +107,10 @@
 <body>
 <header>
   <span class="logo">KISELEVY&nbsp;CREO · Админ-панель</span>
-  <button class="logout-btn" id="logoutBtn">Выйти</button>
+  <span class="header-actions">
+    <a class="back-link" href="/">← На сайт</a>
+    <button class="logout-btn" id="logoutBtn">Выйти</button>
+  </span>
 </header>
 
 <div class="container">
