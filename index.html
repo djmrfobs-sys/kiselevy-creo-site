@@ -438,9 +438,34 @@
     .scroll-top-btn{top:74px;right:16px;width:40px;height:40px;font-size:1.1rem}
   }
 
+  /* MUSIC TOGGLE */
+  .music-btn{
+    position:fixed;left:24px;bottom:24px;z-index:125;
+    width:52px;height:52px;border-radius:50%;
+    background:var(--panel);
+    border:1px solid var(--panel-border);
+    color:var(--lilac-pale);
+    cursor:pointer;
+    box-shadow:0 6px 20px rgba(0,0,0,0.35);
+    display:flex;align-items:center;justify-content:center;
+    transition:transform 0.15s ease, background 0.2s ease, color 0.2s ease;
+    -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  }
+  .music-btn:hover{transform:scale(1.06);color:var(--lilac)}
+  .music-btn.playing{
+    background:linear-gradient(135deg, var(--amethyst), var(--lilac-pale));
+    border-color:transparent;
+    color:var(--ink);
+  }
+  .music-btn.playing:hover{color:var(--ink)}
+  .music-btn svg{pointer-events:none}
+  @media (max-width:600px){
+    .music-btn{left:16px;bottom:16px;width:48px;height:48px}
+  }
+
   @media (max-width:760px){
     .hero{aspect-ratio:4/5}
-    .hero-bg{object-position:center top}
+    .hero-bg{object-position:center center;object-fit:cover}
     .hero .container{padding-bottom:32px}
   }
   @media (max-width:600px){
@@ -475,10 +500,9 @@
 </header>
 
 <section class="hero">
-  <picture>
-    <source media="(min-width:761px)" srcset="assets/photos/artur-i-keti-wide.jpg">
-    <img class="hero-bg" src="assets/photos/artur-i-keti-main.jpg" alt="Артур и Кети, команда KISELEVY CREO">
-  </picture>
+  <video class="hero-bg" autoplay muted loop playsinline preload="auto" poster="assets/photos/artur-i-keti-main.jpg" aria-label="Артур и Кети, команда KISELEVY CREO">
+    <source src="assets/video/hero-keti-wind-artur-wave.mp4" type="video/mp4">
+  </video>
   <div class="hero-overlay"></div>
   <div class="container">
     <div class="hero-text">
@@ -1102,6 +1126,49 @@
 </button>
 
 <button class="scroll-top-btn" id="scrollTopBtn" onclick="scrollToTop()" aria-label="Наверх">↑</button>
+
+<button class="music-btn" id="musicBtn" onclick="toggleMusic()" aria-label="Включить фоновую музыку" title="Музыка: выключена">
+  <svg class="music-off" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M9 18V5l12-2v13"/>
+    <circle cx="6" cy="18" r="3"/>
+    <circle cx="18" cy="16" r="3"/>
+    <line x1="16" y1="3" x2="9" y2="5"/>
+    <line x1="1" y1="1" x2="23" y2="23"/>
+  </svg>
+  <svg class="music-on" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none">
+    <path d="M9 18V5l12-2v13"/>
+    <circle cx="6" cy="18" r="3"/>
+    <circle cx="18" cy="16" r="3"/>
+    <line x1="16" y1="3" x2="9" y2="5"/>
+  </svg>
+</button>
+<audio id="bgMusic" src="assets/audio/kiselevy-creo-bg.mp3" loop preload="none"></audio>
+<script>
+  var bgMusic = document.getElementById('bgMusic');
+  var musicBtn = document.getElementById('musicBtn');
+  var musicOn = false;
+  function toggleMusic(){
+    if(!bgMusic) return;
+    if(musicOn){
+      bgMusic.pause();
+      setMusicState(false);
+    } else {
+      bgMusic.volume = 0.5;
+      bgMusic.play().then(function(){
+        setMusicState(true);
+      }).catch(function(){
+        setMusicState(false);
+      });
+    }
+    musicOn = !musicOn;
+  }
+  function setMusicState(on){
+    var onIc = musicBtn.querySelector('.music-on');
+    var offIc = musicBtn.querySelector('.music-off');
+    if(on){ onIc.style.display='block'; offIc.style.display='none'; musicBtn.classList.add('playing'); musicBtn.setAttribute('aria-label','Выключить фоновую музыку'); musicBtn.setAttribute('title','Музыка: включена'); }
+    else { onIc.style.display='none'; offIc.style.display='block'; musicBtn.classList.remove('playing'); musicBtn.setAttribute('aria-label','Включить фоновую музыку'); musicBtn.setAttribute('title','Музыка: выключена'); }
+  }
+</script>
 <script>
   function scrollToTop(){
     window.scrollTo({top:0, behavior:'smooth'});
