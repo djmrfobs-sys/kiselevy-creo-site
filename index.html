@@ -327,6 +327,9 @@
   .cert-card{border:1px solid var(--panel-border);border-radius:14px;overflow:hidden;background:var(--bg);cursor:pointer}
   .cert-card img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}
   .cert-card p{padding:12px 14px;font-size:0.85rem;color:var(--text-dim)}
+  @media (max-width:600px){
+    .cert-card img{aspect-ratio:auto;height:auto;object-fit:contain;background:var(--bg)}
+  }
   .cert-lightbox{
     display:none;position:fixed;inset:0;z-index:110;
     background:rgba(0,0,0,0.92);align-items:center;justify-content:center;padding:24px;cursor:zoom-out;
