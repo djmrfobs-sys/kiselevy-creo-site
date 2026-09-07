@@ -149,6 +149,11 @@
   }
   .btn-pulse{animation:btn-pulse 2.6s ease-in-out infinite}
   .btn-pulse:hover{animation-play-state:paused}
+  .btn-outline{
+    background:transparent;color:var(--lilac-pale);
+    border:1px solid var(--panel-border);
+  }
+  .btn-outline:hover{border-color:var(--amethyst)}
 
   /* ABOUT */
   .about p{max-width:680px;margin:0 auto 18px;font-size:1.05rem;text-align:center;color:var(--text-dim)}
@@ -1149,12 +1154,14 @@
     <p data-i18n="contacts.text">Пишите напрямую в Telegram, отвечаем лично.</p>
     <div class="contact-buttons">
       <a class="btn" href="https://t.me/KISELEVY_CREO" target="_blank" rel="noopener" data-i18n="contacts.btn">Написать в Telegram</a>
+      <a class="btn btn-outline" href="https://t.me/Kiselevy_Creo_digital" target="_blank" rel="noopener" data-i18n="contacts.channel">Подписаться на канал</a>
     </div>
   </div>
 </section>
 
 <footer>
   <div class="container">
+    <p><a class="footer-link" href="https://t.me/Kiselevy_Creo_digital" target="_blank" rel="noopener" data-i18n="footer.channel">Наш канал в Telegram</a></p>
     <p><a class="footer-link" href="privacy.html" data-i18n="footer.privacy">Политика обработки персональных данных</a></p>
     <p>© KISELEVY CREO, 2026</p>
     <p><a class="footer-admin-link" href="/admin/login.html">admin</a></p>
@@ -1554,6 +1561,8 @@
       'contacts.h2': `Get in <span class="accent">touch</span>`,
       'contacts.text': `Write to us directly on Telegram, we reply personally.`,
       'contacts.btn': `Message on Telegram`,
+      'contacts.channel': `Subscribe to our channel`,
+      'footer.channel': `Our Telegram channel`,
       'footer.privacy': `Privacy Policy`,
       'certs.h2': `Certificates and <span class="accent">Diplomas</span>`,
       'certs.1': `Ekaterina Kiseleva - "Reels Producer", earning on Reels`,
@@ -1795,6 +1804,8 @@
       'contacts.h2': `Kontaktirajte <span class="accent">nas</span>`,
       'contacts.text': `Pišite nam direktno na Telegram, odgovaramo lično.`,
       'contacts.btn': `Pišite na Telegram`,
+      'contacts.channel': `Pretplatite se na naš kanal`,
+      'footer.channel': `Naš Telegram kanal`,
       'footer.privacy': `Politika privatnosti`,
       'certs.h2': `Sertifikati i <span class="accent">diplome</span>`,
       'certs.1': `Ekaterina Kiseljova - "Producent Reelsa", zarada na Reelsu`,
