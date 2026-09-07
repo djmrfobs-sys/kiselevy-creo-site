@@ -301,6 +301,27 @@
   .testimonial-name{font-weight:700;color:var(--lilac-pale)}
   .testimonial-role{font-size:0.85rem;color:var(--text-dim)}
 
+  /* FAQ */
+  .faq-list{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+  .faq-item{
+    background:var(--panel);border:1px solid var(--panel-border);border-radius:14px;
+    overflow:hidden;
+  }
+  .faq-item summary{
+    list-style:none;cursor:pointer;padding:20px 24px;
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
+    font-weight:700;color:var(--lilac-pale);font-size:1rem;
+  }
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::after{
+    content:'+';flex-shrink:0;font-size:1.3rem;color:var(--amethyst);
+    transition:transform 0.2s ease;line-height:1;
+  }
+  .faq-item[open] summary::after{transform:rotate(45deg)}
+  .faq-item .faq-answer{
+    padding:0 24px 20px;color:var(--text-dim);font-size:0.92rem;line-height:1.6;
+  }
+
   /* CONTACTS */
   .contacts{
     background:var(--panel);
@@ -443,6 +464,7 @@
       <a href="#services" data-i18n="nav.services">Услуги</a>
       <a href="portfolio.html" data-i18n="nav.portfolio">Портфолио</a>
       <a href="#testimonials" data-i18n="nav.testimonials">Отзывы</a>
+      <a href="#faq" data-i18n="nav.faq">Вопросы</a>
       <a href="#contacts" data-i18n="nav.contacts">Контакты</a>
       <span class="lang-switch">
         <button class="lang-btn" data-lang="ru" onclick="setLang('ru')">RU</button>
@@ -1039,6 +1061,38 @@
   </div>
 </section>
 
+<section class="faq" id="faq">
+  <div class="container">
+    <h2 data-i18n-html="faq.h2">Частые <span class="accent">вопросы</span></h2>
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary data-i18n="faq.1.q">Сколько занимает разработка?</summary>
+        <p class="faq-answer" data-i18n="faq.1.a">От нескольких дней для простого бота или лендинга до трёх-четырёх недель для комплексного проекта с ИИ и автоматизацией. Точный срок называем после того, как разберём вашу задачу.</p>
+      </details>
+      <details class="faq-item">
+        <summary data-i18n="faq.2.q">Что если результат не понравится?</summary>
+        <p class="faq-answer" data-i18n="faq.2.a">Перед началом работы согласовываем задачу и результат, чтобы не было сюрпризов. Правки по сути задачи на этапе разработки включены, обсуждаем это до старта.</p>
+      </details>
+      <details class="faq-item">
+        <summary data-i18n="faq.3.q">Есть поддержка после запуска?</summary>
+        <p class="faq-answer" data-i18n="faq.3.a">Да, после запуска остаёмся на связи: помогаем с вопросами, донастройкой и небольшими правками. Формат поддержки обсуждаем под ваш проект.</p>
+      </details>
+      <details class="faq-item">
+        <summary data-i18n="faq.4.q">Как происходит оплата?</summary>
+        <p class="faq-answer" data-i18n="faq.4.a">Обычно частями: предоплата на старте и остаток после сдачи результата. Для крупных проектов возможна оплата по этапам.</p>
+      </details>
+      <details class="faq-item">
+        <summary data-i18n="faq.5.q">Мне нужно разбираться в технологиях?</summary>
+        <p class="faq-answer" data-i18n="faq.5.a">Нет. Вы рассказываете, что нужно бизнесу, мы предлагаем решение и берём техническую часть на себя. Объясняем простым языком, без терминов.</p>
+      </details>
+      <details class="faq-item">
+        <summary data-i18n="faq.6.q">А если у меня нестандартная задача или ниша?</summary>
+        <p class="faq-answer" data-i18n="faq.6.a">Разбираем индивидуально. Если задача выходит за рамки типовых пакетов, считаем её отдельно и предлагаем решение под вашу нишу.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
 <div class="block-cta"><a class="btn" href="#" onclick="toggleChat();return false;" data-i18n="cta.discuss">Обсудить проект</a></div>
 
 <section class="contacts" id="contacts">
@@ -1239,6 +1293,7 @@
       'nav.services': `Services`,
       'nav.portfolio': `Portfolio`,
       'nav.testimonials': `Reviews`,
+      'nav.faq': `FAQ`,
       'nav.contacts': `Contacts`,
       'cta.discuss': `Discuss a project`,
       'hero.eyebrow': `Digital Boutique`,
@@ -1426,6 +1481,19 @@
       'testi.2.role': `hairstylist`,
       'testi.3.text': `"You delivered on my request 100%. You gave me confidence in myself, and I am very grateful to you for everything you invested in me as an expert during this time."`,
       'testi.3.role': `beauty specialist`,
+      'faq.h2': `Frequently asked <span class="accent">questions</span>`,
+      'faq.1.q': `How long does development take?`,
+      'faq.1.a': `From a few days for a simple bot or landing page to three or four weeks for a complex project with AI and automation. We give you an exact timeline after going through your task.`,
+      'faq.2.q': `What if I don't like the result?`,
+      'faq.2.a': `Before starting, we agree on the task and the expected result, so there are no surprises. Revisions within the scope of the task are included during development, we agree on this before we start.`,
+      'faq.3.q': `Is there support after launch?`,
+      'faq.3.a': `Yes, we stay in touch after launch: we help with questions, fine-tuning and small fixes. We agree on the support format for your project.`,
+      'faq.4.q': `How does payment work?`,
+      'faq.4.a': `Usually in parts: a deposit at the start and the rest after delivery. For larger projects, payment by stages is possible.`,
+      'faq.5.q': `Do I need to understand the technology?`,
+      'faq.5.a': `No. You tell us what your business needs, we propose the solution and take care of the technical side. We explain everything in plain language, no jargon.`,
+      'faq.6.q': `What if my task or niche is non-standard?`,
+      'faq.6.a': `We look at it individually. If the task goes beyond the standard packages, we price it separately and propose a solution for your niche.`,
       'contacts.h2': `Get in <span class="accent">touch</span>`,
       'contacts.text': `Write to us directly on Telegram, we reply personally.`,
       'contacts.btn': `Message on Telegram`,
@@ -1457,6 +1525,7 @@
       'nav.services': `Usluge`,
       'nav.portfolio': `Portfolio`,
       'nav.testimonials': `Utisci`,
+      'nav.faq': `Pitanja`,
       'nav.contacts': `Kontakt`,
       'cta.discuss': `Razgovarajmo o projektu`,
       'hero.eyebrow': `Digitalni butik`,
@@ -1644,6 +1713,19 @@
       'testi.2.role': `frizer`,
       'testi.3.text': `"Ostvarila si moj zahtev 100%. Dala si mi samopouzdanje, i veoma sam ti zahvalna za sve što si kao ekspert uložila u mene tokom ovog vremena."`,
       'testi.3.role': `beauty majstor`,
+      'faq.h2': `Česta <span class="accent">pitanja</span>`,
+      'faq.1.q': `Koliko traje razvoj?`,
+      'faq.1.a': `Od nekoliko dana za jednostavan bot ili landing stranicu do tri do četiri nedelje za kompleksan projekat sa AI i automatizacijom. Tačan rok kažemo nakon što razjasnimo vaš zadatak.`,
+      'faq.2.q': `Šta ako mi se rezultat ne dopadne?`,
+      'faq.2.a': `Pre početka rada usaglašavamo zadatak i očekivani rezultat, da ne bude iznenađenja. Izmene u okviru zadatka su uključene tokom razvoja, to dogovaramo pre starta.`,
+      'faq.3.q': `Da li postoji podrška posle lansiranja?`,
+      'faq.3.a': `Da, posle lansiranja ostajemo u kontaktu: pomažemo sa pitanjima, doradama i malim izmenama. Format podrške dogovaramo za vaš projekat.`,
+      'faq.4.q': `Kako funkcioniše plaćanje?`,
+      'faq.4.a': `Obično u delovima: avans na početku i ostatak posle isporuke. Za veće projekte moguće je plaćanje po fazama.`,
+      'faq.5.q': `Da li treba da razumem tehnologiju?`,
+      'faq.5.a': `Ne. Vi kažete šta je potrebno vašem biznisu, mi predlažemo rešenje i preuzimamo tehnički deo. Objašnjavamo jednostavnim jezikom, bez stručnih termina.`,
+      'faq.6.q': `A ako imam nestandardan zadatak ili nišu?`,
+      'faq.6.a': `Razmatramo individualno. Ako zadatak izlazi iz okvira standardnih paketa, računamo ga posebno i predlažemo rešenje za vašu nišu.`,
       'contacts.h2': `Kontaktirajte <span class="accent">nas</span>`,
       'contacts.text': `Pišite nam direktno na Telegram, odgovaramo lično.`,
       'contacts.btn': `Pišite na Telegram`,
