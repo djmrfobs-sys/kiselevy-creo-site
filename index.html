@@ -286,6 +286,26 @@
     .portfolio-wide img{aspect-ratio:4/3}
   }
 
+  /* PROCESS */
+  .process{background:var(--panel)}
+  .process-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:24px;margin-top:32px;
+  }
+  .process-step{
+    background:var(--bg);border:1px solid var(--panel-border);border-radius:16px;
+    padding:28px 24px;position:relative;
+  }
+  .process-step .process-num{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:40px;height:40px;border-radius:50%;
+    background:var(--lavender-dim);color:var(--amethyst);
+    font-family:'Space Grotesk','Segoe UI',Roboto,Arial,sans-serif;font-weight:700;font-size:1.1rem;
+    margin-bottom:16px;
+  }
+  .process-step h3{font-size:1.05rem;color:var(--lilac-pale);margin-bottom:8px}
+  .process-step p{font-size:0.9rem;color:var(--text-dim);line-height:1.55}
+
   /* TESTIMONIALS */
   .testimonials{background:var(--panel)}
   .testimonials-grid{
@@ -825,6 +845,34 @@
 </section>
 
 <div class="block-cta"><a class="btn" href="#" onclick="toggleChat();return false;" data-i18n="cta.discuss">Обсудить проект</a></div>
+
+<section class="process" id="process">
+  <div class="container">
+    <h2 data-i18n-html="process.h2">Как мы <span class="accent">работаем</span></h2>
+    <div class="process-grid">
+      <div class="process-step">
+        <div class="process-num">1</div>
+        <h3 data-i18n="process.1.title">Заявка и бриф</h3>
+        <p data-i18n="process.1.desc">Пишете нам в Telegram или через ассистента на сайте. Разбираем задачу, бизнес и цель, отвечаем на вопросы.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-num">2</div>
+        <h3 data-i18n="process.2.title">Предложение и договорённость</h3>
+        <p data-i18n="process.2.desc">Предлагаем решение и точную цену, согласовываем результат и сроки. Начинаем с предоплаты.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-num">3</div>
+        <h3 data-i18n="process.3.title">Разработка</h3>
+        <p data-i18n="process.3.desc">Собираем бота, сайт или автоматизацию, держим вас в курсе на ключевых этапах, без пропажи на недели.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-num">4</div>
+        <h3 data-i18n="process.4.title">Запуск и поддержка</h3>
+        <p data-i18n="process.4.desc">Сдаём результат, закрываем остаток оплаты, остаёмся на связи после запуска: вопросы, донастройка, правки.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
 <section class="portfolio" id="portfolio">
   <div class="container">
@@ -1417,6 +1465,15 @@
       'combo.p5.tagline': `A serious AI service with its own mechanics.`,
       'combo.p5.desc': `Multi-role bot + AI logic + subscription and payment + personal dashboard. Price - per project.`,
       'combo.p5.pain': `For you, if: you need a serious AI service with its own mechanics.`,
+      'process.h2': `How we <span class="accent">work</span>`,
+      'process.1.title': `Request and brief`,
+      'process.1.desc': `You message us on Telegram or through the assistant on the site. We go through your task, business and goal, and answer your questions.`,
+      'process.2.title': `Proposal and agreement`,
+      'process.2.desc': `We propose a solution and an exact price, agree on the result and timeline. We start with a deposit.`,
+      'process.3.title': `Development`,
+      'process.3.desc': `We build the bot, site or automation, keeping you updated at key stages, no disappearing for weeks.`,
+      'process.4.title': `Launch and support`,
+      'process.4.desc': `We deliver the result, close the remaining payment, and stay in touch after launch: questions, fine-tuning, fixes.`,
       'portfolio.h2': `Our <span class="accent">Portfolio</span>`,
       'portfolio.more': `See all work →`,
       'pf.bagov.badge': `Flagship project · our own case`,
@@ -1649,6 +1706,15 @@
       'combo.p5.tagline': `Ozbiljan AI servis sa sopstvenom mehanikom.`,
       'combo.p5.desc': `Bot sa više uloga + AI logika + pretplata i plaćanje + lični nalog. Cena - po projektu.`,
       'combo.p5.pain': `Za vas, ako: vam treba ozbiljan AI servis sa sopstvenom mehanikom.`,
+      'process.h2': `Kako <span class="accent">radimo</span>`,
+      'process.1.title': `Zahtev i brif`,
+      'process.1.desc': `Pišete nam na Telegramu ili preko asistenta na sajtu. Razjasnimo zadatak, biznis i cilj, odgovaramo na pitanja.`,
+      'process.2.title': `Predlog i dogovor`,
+      'process.2.desc': `Predlažemo rešenje i tačnu cenu, usaglašavamo rezultat i rokove. Počinjemo sa avansom.`,
+      'process.3.title': `Razvoj`,
+      'process.3.desc': `Pravimo bota, sajt ili automatizaciju, javljamo vam se u ključnim fazama, bez nestajanja na nedelje.`,
+      'process.4.title': `Lansiranje i podrška`,
+      'process.4.desc': `Isporučujemo rezultat, zatvaramo ostatak plaćanja, ostajemo u kontaktu posle lansiranja: pitanja, dorade, izmene.`,
       'portfolio.h2': `Naš <span class="accent">portfolio</span>`,
       'portfolio.more': `Pogledaj sve radove →`,
       'pf.bagov.badge': `Vodeći projekat · naš lični slučaj`,
