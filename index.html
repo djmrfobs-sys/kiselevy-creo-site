@@ -84,13 +84,22 @@
     width:100%;height:100%;
     object-fit:contain;object-position:center center;
     z-index:0;
+    transform-origin:50% 30%;
+    animation:hero-breathe 14s ease-in-out infinite;
+  }
+  @keyframes hero-breathe{
+    0%{transform:scale(1) translateY(0)}
+    50%{transform:scale(1.035) translateY(-6px)}
+    100%{transform:scale(1) translateY(0)}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .hero-bg{animation:none}
   }
   .hero-overlay{
     position:absolute;inset:0;
     background:
       radial-gradient(ellipse 900px 500px at 50% 78%, rgba(23,19,16,0.55) 0%, rgba(23,19,16,0.15) 60%, transparent 100%),
       linear-gradient(180deg, rgba(10,10,11,0.55) 0%, rgba(10,10,11,0.18) 28%, rgba(10,10,11,0.38) 55%, rgba(10,10,11,0.92) 100%);
-    backdrop-filter:blur(1.5px);
     z-index:1;
   }
   .hero .container{position:absolute;left:0;right:0;bottom:0;z-index:2;padding-bottom:56px}
