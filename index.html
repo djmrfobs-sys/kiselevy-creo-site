@@ -173,6 +173,11 @@
   }
   .btn-pulse{animation:btn-pulse 2.6s ease-in-out infinite}
   .btn-pulse:hover{animation-play-state:paused}
+  .btn-outline{
+    background:transparent;color:var(--lilac-pale);
+    border:1px solid var(--panel-border);
+  }
+  .btn-outline:hover{border-color:var(--amethyst)}
 
   /* ABOUT */
   .about p{max-width:680px;margin:0 auto 18px;font-size:1.05rem;text-align:center;color:var(--text-dim)}
@@ -310,6 +315,26 @@
     .portfolio-wide img{aspect-ratio:4/3}
   }
 
+  /* PROCESS */
+  .process{background:var(--panel)}
+  .process-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:24px;margin-top:32px;
+  }
+  .process-step{
+    background:var(--bg);border:1px solid var(--panel-border);border-radius:16px;
+    padding:28px 24px;position:relative;
+  }
+  .process-step .process-num{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:40px;height:40px;border-radius:50%;
+    background:var(--lavender-dim);color:var(--amethyst);
+    font-family:'Space Grotesk','Segoe UI',Roboto,Arial,sans-serif;font-weight:700;font-size:1.1rem;
+    margin-bottom:16px;
+  }
+  .process-step h3{font-size:1.05rem;color:var(--lilac-pale);margin-bottom:8px}
+  .process-step p{font-size:0.9rem;color:var(--text-dim);line-height:1.55}
+
   /* TESTIMONIALS */
   .testimonials{background:var(--panel)}
   .testimonials-grid{
@@ -324,6 +349,27 @@
   .testimonial-card p{font-size:0.92rem;color:var(--text-dim);margin-bottom:18px}
   .testimonial-name{font-weight:700;color:var(--lilac-pale)}
   .testimonial-role{font-size:0.85rem;color:var(--text-dim)}
+
+  /* FAQ */
+  .faq-list{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+  .faq-item{
+    background:var(--panel);border:1px solid var(--panel-border);border-radius:14px;
+    overflow:hidden;
+  }
+  .faq-item summary{
+    list-style:none;cursor:pointer;padding:20px 24px;
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
+    font-weight:700;color:var(--lilac-pale);font-size:1rem;
+  }
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::after{
+    content:'+';flex-shrink:0;font-size:1.3rem;color:var(--amethyst);
+    transition:transform 0.2s ease;line-height:1;
+  }
+  .faq-item[open] summary::after{transform:rotate(45deg)}
+  .faq-item .faq-answer{
+    padding:0 24px 20px;color:var(--text-dim);font-size:0.92rem;line-height:1.6;
+  }
 
   /* CONTACTS */
   .contacts{
@@ -489,6 +535,7 @@
       <a href="#services" data-i18n="nav.services">Услуги</a>
       <a href="portfolio.html" data-i18n="nav.portfolio">Портфолио</a>
       <a href="#testimonials" data-i18n="nav.testimonials">Отзывы</a>
+      <a href="#faq" data-i18n="nav.faq">Вопросы</a>
       <a href="#contacts" data-i18n="nav.contacts">Контакты</a>
       <span class="lang-switch">
         <button class="lang-btn" data-lang="ru" onclick="setLang('ru')">RU</button>
@@ -849,6 +896,34 @@
 
 <div class="block-cta"><a class="btn" href="#" onclick="toggleChat();return false;" data-i18n="cta.discuss">Обсудить проект</a></div>
 
+<section class="process" id="process">
+  <div class="container">
+    <h2 data-i18n-html="process.h2">Как мы <span class="accent">работаем</span></h2>
+    <div class="process-grid">
+      <div class="process-step">
+        <div class="process-num">1</div>
+        <h3 data-i18n="process.1.title">Заявка и бриф</h3>
+        <p data-i18n="process.1.desc">Пишете нам в Telegram или через ассистента на сайте. Разбираем задачу, бизнес и цель, отвечаем на вопросы.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-num">2</div>
+        <h3 data-i18n="process.2.title">Предложение и договорённость</h3>
+        <p data-i18n="process.2.desc">Предлагаем решение и точную цену, согласовываем результат и сроки. Начинаем с предоплаты.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-num">3</div>
+        <h3 data-i18n="process.3.title">Разработка</h3>
+        <p data-i18n="process.3.desc">Собираем бота, сайт или автоматизацию, держим вас в курсе на ключевых этапах, без пропажи на недели.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-num">4</div>
+        <h3 data-i18n="process.4.title">Запуск и поддержка</h3>
+        <p data-i18n="process.4.desc">Сдаём результат, закрываем остаток оплаты, остаёмся на связи после запуска: вопросы, донастройка, правки.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="portfolio" id="portfolio">
   <div class="container">
     <h2 data-i18n-html="portfolio.h2">Наше <span class="accent">портфолио</span></h2>
@@ -1084,6 +1159,38 @@
   </div>
 </section>
 
+<section class="faq" id="faq">
+  <div class="container">
+    <h2 data-i18n-html="faq.h2">Частые <span class="accent">вопросы</span></h2>
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary data-i18n="faq.1.q">Сколько занимает разработка?</summary>
+        <p class="faq-answer" data-i18n="faq.1.a">От нескольких дней для простого бота или лендинга до трёх-четырёх недель для комплексного проекта с ИИ и автоматизацией. Точный срок называем после того, как разберём вашу задачу.</p>
+      </details>
+      <details class="faq-item">
+        <summary data-i18n="faq.2.q">Что если результат не понравится?</summary>
+        <p class="faq-answer" data-i18n="faq.2.a">Перед началом работы согласовываем задачу и результат, чтобы не было сюрпризов. Правки по сути задачи на этапе разработки включены, обсуждаем это до старта.</p>
+      </details>
+      <details class="faq-item">
+        <summary data-i18n="faq.3.q">Есть поддержка после запуска?</summary>
+        <p class="faq-answer" data-i18n="faq.3.a">Да, после запуска остаёмся на связи: помогаем с вопросами, донастройкой и небольшими правками. Формат поддержки обсуждаем под ваш проект.</p>
+      </details>
+      <details class="faq-item">
+        <summary data-i18n="faq.4.q">Как происходит оплата?</summary>
+        <p class="faq-answer" data-i18n="faq.4.a">Обычно частями: предоплата на старте и остаток после сдачи результата. Для крупных проектов возможна оплата по этапам.</p>
+      </details>
+      <details class="faq-item">
+        <summary data-i18n="faq.5.q">Мне нужно разбираться в технологиях?</summary>
+        <p class="faq-answer" data-i18n="faq.5.a">Нет. Вы рассказываете, что нужно бизнесу, мы предлагаем решение и берём техническую часть на себя. Объясняем простым языком, без терминов.</p>
+      </details>
+      <details class="faq-item">
+        <summary data-i18n="faq.6.q">А если у меня нестандартная задача или ниша?</summary>
+        <p class="faq-answer" data-i18n="faq.6.a">Разбираем индивидуально. Если задача выходит за рамки типовых пакетов, считаем её отдельно и предлагаем решение под вашу нишу.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
 <div class="block-cta"><a class="btn" href="#" onclick="toggleChat();return false;" data-i18n="cta.discuss">Обсудить проект</a></div>
 
 <section class="contacts" id="contacts">
@@ -1092,12 +1199,14 @@
     <p data-i18n="contacts.text">Пишите напрямую в Telegram, отвечаем лично.</p>
     <div class="contact-buttons">
       <a class="btn" href="https://t.me/KISELEVY_CREO" target="_blank" rel="noopener" data-i18n="contacts.btn">Написать в Telegram</a>
+      <a class="btn btn-outline" href="https://t.me/Kiselevy_Creo_digital" target="_blank" rel="noopener" data-i18n="contacts.channel">Подписаться на канал</a>
     </div>
   </div>
 </section>
 
 <footer>
   <div class="container">
+    <p><a class="footer-link" href="https://t.me/Kiselevy_Creo_digital" target="_blank" rel="noopener" data-i18n="footer.channel">Наш канал в Telegram</a></p>
     <p><a class="footer-link" href="privacy.html" data-i18n="footer.privacy">Политика обработки персональных данных</a></p>
     <p>© KISELEVY CREO, 2026</p>
     <p><a class="footer-admin-link" href="/admin/login.html">admin</a></p>
@@ -1327,6 +1436,7 @@
       'nav.services': `Services`,
       'nav.portfolio': `Portfolio`,
       'nav.testimonials': `Reviews`,
+      'nav.faq': `FAQ`,
       'nav.contacts': `Contacts`,
       'cta.discuss': `Discuss a project`,
       'hero.eyebrow': `Digital Boutique`,
@@ -1450,6 +1560,15 @@
       'combo.p5.tagline': `A serious AI service with its own mechanics.`,
       'combo.p5.desc': `Multi-role bot + AI logic + subscription and payment + personal dashboard. Price - per project.`,
       'combo.p5.pain': `For you, if: you need a serious AI service with its own mechanics.`,
+      'process.h2': `How we <span class="accent">work</span>`,
+      'process.1.title': `Request and brief`,
+      'process.1.desc': `You message us on Telegram or through the assistant on the site. We go through your task, business and goal, and answer your questions.`,
+      'process.2.title': `Proposal and agreement`,
+      'process.2.desc': `We propose a solution and an exact price, agree on the result and timeline. We start with a deposit.`,
+      'process.3.title': `Development`,
+      'process.3.desc': `We build the bot, site or automation, keeping you updated at key stages, no disappearing for weeks.`,
+      'process.4.title': `Launch and support`,
+      'process.4.desc': `We deliver the result, close the remaining payment, and stay in touch after launch: questions, fine-tuning, fixes.`,
       'portfolio.h2': `Our <span class="accent">Portfolio</span>`,
       'portfolio.more': `See all work →`,
       'pf.bagov.badge': `Flagship project · our own case`,
@@ -1514,9 +1633,24 @@
       'testi.2.role': `hairstylist`,
       'testi.3.text': `"You delivered on my request 100%. You gave me confidence in myself, and I am very grateful to you for everything you invested in me as an expert during this time."`,
       'testi.3.role': `beauty specialist`,
+      'faq.h2': `Frequently asked <span class="accent">questions</span>`,
+      'faq.1.q': `How long does development take?`,
+      'faq.1.a': `From a few days for a simple bot or landing page to three or four weeks for a complex project with AI and automation. We give you an exact timeline after going through your task.`,
+      'faq.2.q': `What if I don't like the result?`,
+      'faq.2.a': `Before starting, we agree on the task and the expected result, so there are no surprises. Revisions within the scope of the task are included during development, we agree on this before we start.`,
+      'faq.3.q': `Is there support after launch?`,
+      'faq.3.a': `Yes, we stay in touch after launch: we help with questions, fine-tuning and small fixes. We agree on the support format for your project.`,
+      'faq.4.q': `How does payment work?`,
+      'faq.4.a': `Usually in parts: a deposit at the start and the rest after delivery. For larger projects, payment by stages is possible.`,
+      'faq.5.q': `Do I need to understand the technology?`,
+      'faq.5.a': `No. You tell us what your business needs, we propose the solution and take care of the technical side. We explain everything in plain language, no jargon.`,
+      'faq.6.q': `What if my task or niche is non-standard?`,
+      'faq.6.a': `We look at it individually. If the task goes beyond the standard packages, we price it separately and propose a solution for your niche.`,
       'contacts.h2': `Get in <span class="accent">touch</span>`,
       'contacts.text': `Write to us directly on Telegram, we reply personally.`,
       'contacts.btn': `Message on Telegram`,
+      'contacts.channel': `Subscribe to our channel`,
+      'footer.channel': `Our Telegram channel`,
       'footer.privacy': `Privacy Policy`,
       'certs.h2': `Certificates and <span class="accent">Diplomas</span>`,
       'certs.1': `Ekaterina Kiseleva - "Reels Producer", earning on Reels`,
@@ -1545,6 +1679,7 @@
       'nav.services': `Usluge`,
       'nav.portfolio': `Portfolio`,
       'nav.testimonials': `Utisci`,
+      'nav.faq': `Pitanja`,
       'nav.contacts': `Kontakt`,
       'cta.discuss': `Razgovarajmo o projektu`,
       'hero.eyebrow': `Digitalni butik`,
@@ -1668,6 +1803,15 @@
       'combo.p5.tagline': `Ozbiljan AI servis sa sopstvenom mehanikom.`,
       'combo.p5.desc': `Bot sa više uloga + AI logika + pretplata i plaćanje + lični nalog. Cena - po projektu.`,
       'combo.p5.pain': `Za vas, ako: vam treba ozbiljan AI servis sa sopstvenom mehanikom.`,
+      'process.h2': `Kako <span class="accent">radimo</span>`,
+      'process.1.title': `Zahtev i brif`,
+      'process.1.desc': `Pišete nam na Telegramu ili preko asistenta na sajtu. Razjasnimo zadatak, biznis i cilj, odgovaramo na pitanja.`,
+      'process.2.title': `Predlog i dogovor`,
+      'process.2.desc': `Predlažemo rešenje i tačnu cenu, usaglašavamo rezultat i rokove. Počinjemo sa avansom.`,
+      'process.3.title': `Razvoj`,
+      'process.3.desc': `Pravimo bota, sajt ili automatizaciju, javljamo vam se u ključnim fazama, bez nestajanja na nedelje.`,
+      'process.4.title': `Lansiranje i podrška`,
+      'process.4.desc': `Isporučujemo rezultat, zatvaramo ostatak plaćanja, ostajemo u kontaktu posle lansiranja: pitanja, dorade, izmene.`,
       'portfolio.h2': `Naš <span class="accent">portfolio</span>`,
       'portfolio.more': `Pogledaj sve radove →`,
       'pf.bagov.badge': `Vodeći projekat · naš lični slučaj`,
@@ -1732,9 +1876,24 @@
       'testi.2.role': `frizer`,
       'testi.3.text': `"Ostvarila si moj zahtev 100%. Dala si mi samopouzdanje, i veoma sam ti zahvalna za sve što si kao ekspert uložila u mene tokom ovog vremena."`,
       'testi.3.role': `beauty majstor`,
+      'faq.h2': `Česta <span class="accent">pitanja</span>`,
+      'faq.1.q': `Koliko traje razvoj?`,
+      'faq.1.a': `Od nekoliko dana za jednostavan bot ili landing stranicu do tri do četiri nedelje za kompleksan projekat sa AI i automatizacijom. Tačan rok kažemo nakon što razjasnimo vaš zadatak.`,
+      'faq.2.q': `Šta ako mi se rezultat ne dopadne?`,
+      'faq.2.a': `Pre početka rada usaglašavamo zadatak i očekivani rezultat, da ne bude iznenađenja. Izmene u okviru zadatka su uključene tokom razvoja, to dogovaramo pre starta.`,
+      'faq.3.q': `Da li postoji podrška posle lansiranja?`,
+      'faq.3.a': `Da, posle lansiranja ostajemo u kontaktu: pomažemo sa pitanjima, doradama i malim izmenama. Format podrške dogovaramo za vaš projekat.`,
+      'faq.4.q': `Kako funkcioniše plaćanje?`,
+      'faq.4.a': `Obično u delovima: avans na početku i ostatak posle isporuke. Za veće projekte moguće je plaćanje po fazama.`,
+      'faq.5.q': `Da li treba da razumem tehnologiju?`,
+      'faq.5.a': `Ne. Vi kažete šta je potrebno vašem biznisu, mi predlažemo rešenje i preuzimamo tehnički deo. Objašnjavamo jednostavnim jezikom, bez stručnih termina.`,
+      'faq.6.q': `A ako imam nestandardan zadatak ili nišu?`,
+      'faq.6.a': `Razmatramo individualno. Ako zadatak izlazi iz okvira standardnih paketa, računamo ga posebno i predlažemo rešenje za vašu nišu.`,
       'contacts.h2': `Kontaktirajte <span class="accent">nas</span>`,
       'contacts.text': `Pišite nam direktno na Telegram, odgovaramo lično.`,
       'contacts.btn': `Pišite na Telegram`,
+      'contacts.channel': `Pretplatite se na naš kanal`,
+      'footer.channel': `Naš Telegram kanal`,
       'footer.privacy': `Politika privatnosti`,
       'certs.h2': `Sertifikati i <span class="accent">diplome</span>`,
       'certs.1': `Ekaterina Kiseljova - "Producent Reelsa", zarada na Reelsu`,
