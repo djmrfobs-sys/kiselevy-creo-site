@@ -1,0 +1,5 @@
+Contact: mailto:dj.mr.fobs@gmail.com
+Expires: 2027-09-13T00:00:00.000Z
+Preferred-Languages: ru, en
+Canonical: https://kiselevycreo.ru/.well-known/security.txt
+Policy: https://kiselevycreo.ru/privacy.html
