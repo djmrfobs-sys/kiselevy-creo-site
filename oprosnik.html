@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Опросник | KISELEVY CREO</title>
+<meta name="description" content="Живой опросник KISELEVY CREO: расскажите о себе и своей задаче - подберём решение (бот, сайт, нейропомощник, автоматизация).">
+<link rel="canonical" href="https://kiselevycreo.ru/oprosnik.html">
+<meta property="og:title" content="Опросник | KISELEVY CREO">
+<meta property="og:description" content="Живой разговор, а не анкета: разберём вашу задачу и подберём решение.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<style>
+  :root{
+    --bg:#0a0a0b;
+    --panel:#151210;
+    --panel-border:#2e2521;
+    --lavender:#e8ddcb;
+    --amethyst:#c4a3a6;
+    --violet-deep:#b89a9c;
+    --text:#ede7dd;
+    --text-dim:#b7a99b;
+    --ink:#171310;
+    --ok:#6f9f7c;
+    --err:#c4705f;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'Inter','Segoe UI',Roboto,Arial,sans-serif;
+    background:
+      radial-gradient(ellipse 1400px 900px at 50% -8%, rgba(184,154,156,0.06) 0%, transparent 65%),
+      var(--bg);
+    color:var(--text);line-height:1.6;min-height:100vh;
+  }
+  a{color:inherit;text-decoration:none}
+  .container{max-width:760px;margin:0 auto;padding:0 20px}
+  header{position:sticky;top:0;z-index:10;background:rgba(10,10,12,0.88);backdrop-filter:blur(6px);border-bottom:1px solid var(--panel-border)}
+  header .container{display:flex;align-items:center;justify-content:space-between;padding-top:14px;padding-bottom:14px;max-width:1000px}
+  .logo{font-family:'Space Grotesk',Roboto,Arial,sans-serif;font-weight:700;font-size:1.05rem;letter-spacing:.5px;color:var(--amethyst)}
+  nav{display:flex;align-items:center;flex-wrap:wrap;gap:6px}
+  nav a{margin-left:14px;font-size:.92rem;opacity:.82}
+  nav a:hover{opacity:1;color:var(--amethyst)}
+  nav .sep{opacity:.35;margin-left:14px;font-size:.9rem}
+  .lang-switch{margin-left:14px;display:inline-flex;gap:4px;border:1px solid var(--panel-border);border-radius:999px;padding:3px}
+  .lang-btn{background:none;border:none;color:var(--text-dim);font-family:inherit;font-weight:700;font-size:.72rem;padding:4px 9px;border-radius:999px;cursor:pointer}
+  .lang-btn.active{background:var(--amethyst);color:var(--ink)}
+
+  main{padding:44px 0 90px}
+  .page-head{margin-bottom:26px}
+  .page-head .kicker{color:var(--amethyst);font-weight:700;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase}
+  .page-head h1{font-family:'Space Grotesk',Roboto,Arial,sans-serif;font-size:1.9rem;line-height:1.2;margin:8px 0 10px}
+  .page-head p{color:var(--text-dim);font-size:1rem;max-width:640px}
+
+  .lead-card,.block,.done-card{background:var(--panel);border:1px solid var(--panel-border);border-radius:18px}
+  .lead-card{padding:18px 18px;margin-bottom:22px}
+  .lead-card .field{margin-bottom:12px}
+  .lead-card .field:last-child{margin-bottom:0}
+  .lead-card label{display:block;font-weight:700;font-size:.86rem;color:var(--lavender);margin-bottom:6px}
+  .lead-card input{width:100%;background:var(--bg);border:1px solid var(--panel-border);border-radius:10px;padding:11px 13px;color:var(--text);font-family:inherit;font-size:.95rem}
+  .lead-card input:focus{outline:none;border-color:var(--amethyst)}
+
+  .block{margin-bottom:18px;overflow:hidden}
+  .block-head{background:linear-gradient(90deg,rgba(196,163,166,.08),transparent);padding:13px 18px;font-family:'Space Grotesk',Roboto,Arial,sans-serif;font-weight:700;font-size:1.02rem;color:var(--amethyst);border-bottom:1px solid var(--panel-border)}
+  .card{padding:4px 18px 12px}
+  .q{padding:12px 0;border-bottom:1px solid rgba(46,37,33,.55)}
+  .q:last-child{border-bottom:none}
+  .qlabel{font-size:.94rem;margin-bottom:8px;color:var(--text)}
+  .qlabel .num{color:var(--amethyst);font-family:'Space Grotesk',Roboto,Arial,sans-serif;font-weight:700;margin-right:6px}
+  .q textarea{width:100%;background:var(--bg);border:1px solid var(--panel-border);border-radius:10px;padding:10px 12px;color:var(--text);font-family:inherit;font-size:.92rem;resize:vertical;min-height:52px}
+  .q textarea:focus{outline:none;border-color:var(--amethyst)}
+  .q textarea::placeholder{color:var(--text-dim);opacity:.6}
+
+  .prog{position:sticky;top:62px;z-index:9;background:rgba(10,10,12,.6);backdrop-filter:blur(4px);padding:10px 0;margin-bottom:18px}
+  .prog-row{display:flex;justify-content:space-between;align-items:center;font-size:.8rem;color:var(--text-dim)}
+  .progbar-wrap{height:6px;background:var(--panel-border);border-radius:99px;overflow:hidden;margin-top:7px}
+  .progbar{height:100%;width:0;background:linear-gradient(90deg,var(--amethyst),var(--violet-deep));border-radius:99px;transition:width .25s}
+
+  .sendbar{position:sticky;bottom:0;background:linear-gradient(0deg,rgba(10,10,12,.97) 78%,transparent);padding:16px 0 24px}
+  .sendbtn{width:100%;border:none;cursor:pointer;border-radius:14px;padding:16px;font-family:'Space Grotesk',Roboto,Arial,sans-serif;font-weight:700;font-size:1.05rem;background:var(--amethyst);color:var(--ink)}
+  .sendbtn:disabled{opacity:.55;cursor:default}
+  .msg{margin-top:12px;border-radius:12px;padding:12px 14px;font-size:.92rem;display:none}
+  .msg.err{display:block;background:rgba(196,112,95,.12);border:1px solid rgba(196,112,95,.4);color:#e8b0a5}
+  .msg.ok{display:block;background:rgba(111,159,124,.12);border:1px solid rgba(111,159,124,.4);color:#bfe0c6}
+
+  .done-card{display:none;padding:30px 24px;text-align:left}
+  .done-card.show{display:block}
+  .done-card .lead{font-family:'Space Grotesk',Roboto,Arial,sans-serif;font-size:1.3rem;margin-bottom:14px;color:var(--lavender)}
+  .done-card .reply{color:var(--text);font-size:1rem;margin-bottom:20px}
+  .tgbtn{width:100%;text-align:center;background:var(--ok);border:none;cursor:pointer;border-radius:14px;padding:16px;font-family:'Space Grotesk',Roboto,Arial,sans-serif;font-weight:700;font-size:1.05rem;color:#081310;display:flex;align-items:center;justify-content:center;gap:10px}
+
+  @media(max-width:560px){
+    .page-head h1{font-size:1.55rem}
+    nav a{margin-left:8px;font-size:.88rem}
+    nav .sep{margin-left:4px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <a class="logo" href="/">KISELEVY&nbsp;CREO</a>
+    <nav>
+      <a href="/uslugi.html" data-i18n="nav.services">Услуги</a>
+      <a href="/" data-i18n="nav.portfolio">Портфолио</a>
+      <span class="lang-switch">
+        <button class="lang-btn" data-lang="ru" onclick="setLang('ru')">RU</button>
+        <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" data-lang="sr" onclick="setLang('sr')">SR</button>
+      </span>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="container">
+    <div class="page-head">
+      <div class="kicker" data-i18n="head.kicker">KISELEVY CREO</div>
+      <h1 data-i18n="head.title">Опросник</h1>
+      <p data-i18n="head.intro">Живой разговор, а не анкета. Расскажи о себе и своём деле открыто - так мы точнее поймём, как быть полезными. Внизу жми «Отправить» - ответы сразу уйдут к нам, и продолжим в Telegram.</p>
+    </div>
+
+    <div id="formView">
+      <div class="lead-card">
+        <div class="field">
+          <label for="fname" data-i18n="lead.name.label">Твоё имя и фамилия</label>
+          <input type="text" id="fname" autocomplete="name" data-i18n-placeholder="lead.name.placeholder" placeholder="Как тебя зовут?">
+        </div>
+        <div class="field">
+          <label for="fcontact" data-i18n="lead.contact.label">Как с тобой связаться</label>
+          <input type="text" id="fcontact" autocomplete="on" data-i18n-placeholder="lead.contact.placeholder" placeholder="Телефон, email или @telegram">
+        </div>
+      </div>
+
+      <div class="prog">
+        <div class="prog-row"><span data-i18n="prog.label">Отвечено</span><span id="prognum">0 / 0</span></div>
+        <div class="progbar-wrap"><div class="progbar" id="progbar"></div></div>
+      </div>
+
+      <div id="root"></div>
+
+      <div class="sendbar">
+        <button class="sendbtn" id="sendbtn" data-i18n="btn.send">Отправить ответы</button>
+        <div class="msg" id="msg"></div>
+      </div>
+    </div>
+
+    <div class="done-card" id="doneView">
+      <div class="lead" id="doneLead">Спасибо!</div>
+      <div class="reply" id="doneReply"></div>
+      <a class="tgbtn" id="doneLink" target="_blank" rel="noopener">Продолжить в Telegram</a>
+    </div>
+  </div>
+</main>
+
+<script>
+/* ============ ДАННЫЕ ВОПРОСОВ: 6 блоков, 25 вопросов (ru/en/sr) ============ */
+var BLOCKS = [
+ {b:['Блок 1. Кто ты и что делаешь','Block 1. Who you are and what you do','Blok 1. Ko si i šta radiš'], q:[
+  ['Чем ты занимаешься? Опиши своё дело одним-двумя предложениями, простыми словами.','What do you do? Describe your work in one or two simple sentences.','Čime se baviš? Opiši svoj posao u jedno-dve proste rečenice.'],
+  ['Ты работаешь сам или есть команда? Сколько вас и кто за что отвечает?','Do you work alone or with a team? How many of you and who handles what?','Radiš sam ili imaš tim? Koliko vas je i ko je za šta zadužen?'],
+  ['Кто твои клиенты? Кому ты продаёшь и как они тебя обычно находят?','Who are your clients? Who do you sell to and how do they usually find you?','Ko su tvoji klijenti? Kome prodaješ i kako te obično pronalaze?'],
+  ['На чём ты зарабатываешь: услуга, продукт, курс, блог/канал, магазин - что основное?','What do you earn from: a service, product, course, blog/channel or shop - what is the main thing?','Od čega zarađuješ: usluga, proizvod, kurs, blog/kanal, prodavnica - šta je glavno?']
+ ]},
+ {b:['Блок 2. Что болит','Block 2. What hurts','Blok 2. Šta boli'], q:[
+  ['Что сейчас больше всего мешает? Что съедает кучу времени и сил, а отдачи мало?','What bothers you most right now? What eats a lot of time and energy with little payoff?','Šta te trenutno najviše ometa? Šta troši gomilu vremena i snage, a povratka je malo?'],
+  ['Какая рутина выматывает: одни и те же вопросы от клиентов, запись, переписка, посты, документы - что именно?','Which routine wears you out: the same client questions, booking, messaging, posts, documents - what exactly?','Koja rutina te iscrpljuje: ista pitanja klijenata, zakazivanje, prepiska, objave, dokumenti - šta tačno?'],
+  ['Где теряются люди? Что происходит с теми, кто пришёл, но так и не купил?','Where do people get lost? What happens to those who came but never bought?','Gde se ljudi gube? Šta se dešava sa onima koji su došli, ali nikad nisu kupili?'],
+  ['Если бы у тебя появился личный помощник, что ты переложил бы на него в первую очередь?','If you had a personal assistant, what would you hand over to it first?','Da imaš ličnog pomoćnika, šta bi mu prvo prepustio?']
+ ]},
+ {b:['Блок 3. Чего хочешь','Block 3. What you want','Blok 3. Šta želiš'], q:[
+  ['Какая у тебя цель на ближайшие 3-6 месяцев? Чего хочется добиться?','What is your goal for the next 3-6 months? What do you want to achieve?','Koji ti je cilj u narednih 3-6 meseci? Šta želiš da postigneš?'],
+  ['Как ты поймёшь, что всё получилось? Что изменится в деньгах, времени или клиентах?','How will you know it worked? What will change in money, time or clients?','Kako ćeš znati da je uspelo? Šta će se promeniti u novcu, vremenu ili klijentima?'],
+  ['Что для тебя сейчас важнее: экономить время, больше продаж, навести порядок в процессах - или что-то своё?','What matters most now: saving time, more sales, tidying up processes - or something else of yours?','Šta ti je sad važnije: ušteda vremena, više prodaje, sređivanje procesa - ili nešto svoje?']
+ ]},
+ {b:['Блок 4. Что уже есть','Block 4. What you already have','Blok 4. Šta već imaš'], q:[
+  ['Что у тебя уже есть: сайт, Telegram-бот, Instagram/канал, рассылка, CRM? Что реально работает, а что лежит мёртвым грузом?','What do you already have: a site, Telegram bot, Instagram/channel, newsletter, CRM? What really works and what is dead weight?','Šta već imaš: sajt, Telegram bot, Instagram/kanal, mejling, CRM? Šta stvarno radi, a šta je mrtav teret?'],
+  ['Чем пользуешься сейчас для работы: блокнот, таблицы, мессенджеры, специальные сервисы?','What do you use for work now: a notebook, spreadsheets, messengers, special services?','Čime se sada služiš za posao: notes, tabele, mesindžeri, posebni servisi?'],
+  ['Пробовал уже что-то автоматизировать или подключать ИИ? Что получилось, а что нет?','Have you already tried automating something or using AI? What worked and what did not?','Da li si već probao da automatizuješ ili koristiš veštačku inteligenciju? Šta je uspelo, a šta nije?'],
+  ['Как у тебя с контентом: ведёшь сам, получается, не хватает времени или не знаешь, о чём писать?','How is your content going: do you do it yourself, does it work, is there no time, or do you not know what to write about?','Kako stojiš sa sadržajem: vodiš sam, ide ti, nemаš vremena ili ne znaš o čemu da pišeš?']
+ ]},
+ {b:['Блок 5. Готовность','Block 5. Readiness','Blok 5. Spremnost'], q:[
+  ['Как быстро хочешь начать? Прямо сейчас или пока присматриваешься?','How quickly do you want to start? Right now or still looking around?','Koliko brzo želiš da kreneš? Odmah ili se još razgledaš?'],
+  ['Есть ли бюджет на решение этой задачи? Примерный диапазон или честно «пока не знаю».','Is there a budget for solving this? An approximate range or honestly "not sure yet".','Da li postoji budžet za rešenje ovog zadatka? Okvirni raspon ili iskreno "još ne znam".'],
+  ['Что для тебя важнее всего при выборе: результат, цена, скорость, надёжность?','What matters most when choosing: result, price, speed, reliability?','Šta ti je najvažnije pri izboru: rezultat, cena, brzina, pouzdanost?']
+ ]},
+ {b:['Блок 6. Личный помощник на каждый день','Block 6. A daily personal assistant','Blok 6. Lični pomoćnik za svaki dan'], q:[
+  ['Что в твоём обычном дне съедает больше всего времени и сил: планирование, напоминания, поиск информации, переписка, быт, записи?','What eats the most time and energy in your usual day: planning, reminders, searching for info, messaging, chores, notes?','Šta u tvom običnom danu troši najviše vremena i snage: planiranje, podsetnici, traženje informacija, prepiska, kućni poslovi, beleške?'],
+  ['Что помощник должен о тебе помнить: важные даты, привычки, цели, встречи, близкие люди?','What should an assistant remember about you: important dates, habits, goals, meetings, close people?','Šta pomoćnik treba da pamti o tebi: važne datume, navike, ciljeve, sastanke, bliske ljude?'],
+  ['Чем ты живёшь вне работы: семья, спорт, здоровье, увлечения, путешествия? Что важно каждый день?','What do you live for outside work: family, sport, health, hobbies, travel? What matters every day?','Čime živiš van posla: porodica, sport, zdravlje, hobiji, putovanja? Šta je važno svakog dana?'],
+  ['Какой стиль общения тебе ближе: по-дружески и с юмором, строго по делу, тепло и поддерживающе?','Which communication style suits you best: friendly with humour, strictly to the point, warm and supportive?','Koji ti je stil komunikacije bliži: prijateljski sa humorom, strogo poslovno, toplo i podržavajuće?'],
+  ['Удобнее общаться текстом или голосом? Нужна ли поддержка нескольких языков (например, русский и английский)?','Is text or voice easier for you? Do you need support for several languages (for example, Russian and English)?','Da li ti je lakše da komuniciraš tekstom ili glasom? Da li ti treba podrška za više jezika (npr. ruski i engleski)?'],
+  ['Если бы помощник вёл дела и напоминал о важном - в какие часы и как часто тебе комфортно, чтобы он не мешал?','If an assistant handled things and reminded you of what matters - during which hours and how often would it be comfortable so it does not disturb?','Kad bi pomoćnik vodio poslove i podsećao na važno - u koje sate i koliko često ti odgovara da ti ne smeta?'],
+  ['Что должно быть в помощнике, чтобы он стал по-настоящему твоим? Что бы ты ему доверил?','What should an assistant have to truly become yours? What would you trust it with?','Šta pomoćnik treba da ima da bi stvarno postao tvoj? Šta bi mu poverio?']
+ ]}
+];
+
+/* ============ ИНТЕРФЕЙС: словарь ru/en/sr ============ */
+const UI = {
+  ru:{ 'nav.services':'Услуги','nav.portfolio':'Портфолио','head.kicker':'KISELEVY CREO','head.title':'Опросник','head.intro':'Живой разговор, а не анкета. Расскажи о себе и своём деле открыто - так мы точнее поймём, как быть полезными. Внизу жми «Отправить» - ответы сразу уйдут к нам, и продолжим в Telegram.','lead.name.label':'Твоё имя и фамилия','lead.name.placeholder':'Как тебя зовут?','lead.contact.label':'Как с тобой связаться','lead.contact.placeholder':'Телефон, email или @telegram','prog.label':'Отвечено','btn.send':'Отправить ответы','btn.sendIng':'Отправляю...','btn.done':'Готово! Ответы отправлены','done.title':'Спасибо!','tg.btn':'Продолжить в Telegram','empty':'Пока ни одного ответа. Ответь хотя бы на несколько вопросов.','err1':'Заполни имя и контакт - так мы сможем с тобой связаться.','srvErr':'Не получилось отправить. Проверь, заполнены ли имя и контакт, и нажми ещё раз.' },
+  en:{ 'nav.services':'Services','nav.portfolio':'Portfolio','head.kicker':'KISELEVY CREO','head.title':'Questionnaire','head.intro':'A live conversation, not a form. Tell us about yourself and your work openly - the better we understand you, the more useful we can be. At the bottom press "Send" - your answers go straight to us, then we continue in Telegram.','lead.name.label':'Your full name','lead.name.placeholder':'What is your name?','lead.contact.label':'How to reach you','lead.contact.placeholder':'Phone, email or @telegram','prog.label':'Answered','btn.send':'Send answers','btn.sendIng':'Sending...','btn.done':'Done! Answers sent','done.title':'Thank you!','tg.btn':'Continue in Telegram','empty':'No answers yet. Please answer at least a few questions.','err1':'Please fill in your name and contact so we can reach you.','srvErr':'Could not send. Make sure your name and contact are filled in and press again.' },
+  sr:{ 'nav.services':'Usluge','nav.portfolio':'Portfolio','head.kicker':'KISELEVY CREO','head.title':'Upitnik','head.intro':'Živ razgovor, a ne formular. Otvoreno nam ispričaj o sebi i svom poslu - što bolje razumemo tebe, to korisniji možemo biti. Na dnu klikni "Pošalji" - odgovori odmah stižu do nas, pa nastavljamo u Telegramu.','lead.name.label':'Tvoje ime i prezime','lead.name.placeholder':'Kako se zoveš?','lead.contact.label':'Kako da te kontaktiramo','lead.contact.placeholder':'Telefon, email ili @telegram','prog.label':'Odgovoreno','btn.send':'Pošalji odgovore','btn.sendIng':'Šaljem...','btn.done':'Gotovo! Odgovori poslati','done.title':'Hvala!','tg.btn':'Nastavi u Telegramu','empty':'Još nema odgovora. Odgovori bar na nekoliko pitanja.','err1':'Popuni ime i kontakt da bismo mogli da te kontaktiramo.','srvErr':'Nije uspelo slanje. Proveri da su ime i kontakt popunjeni i pokušaj ponovo.' }
+};
+
+var LANG='ru';
+var TOTAL=0;
+BLOCKS.forEach(function(b){ TOTAL+=b.q.length; });
+var LS_KEY='kiselevy_oprosnik_v1';
+var store={};
+try{ store=JSON.parse(localStorage.getItem(LS_KEY)||'{}')||{}; }catch(e){ store={}; }
+
+function T(k){ var d=UI[LANG]||UI.ru; return d[k]!==undefined?d[k]:k; }
+function setHtmlLang(){ document.documentElement.lang=LANG; }
+function applyStatic(){
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    var v=T(el.getAttribute('data-i18n')); if(v!==el.getAttribute('data-i18n')) el.textContent=v;
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el){
+    var v=T(el.getAttribute('data-i18n-placeholder')); if(v!==el.getAttribute('data-i18n-placeholder')) el.setAttribute('placeholder',v);
+  });
+  setHtmlLang();
+}
+
+/* ============ РЕНДЕР ВОПРОСОВ ============ */
+function render(restore){
+  var root=document.getElementById('root');
+  root.innerHTML='';
+  var qi=0;
+  BLOCKS.forEach(function(block,bi){
+    var wrap=document.createElement('div'); wrap.className='block';
+    var head=document.createElement('div'); head.className='block-head';
+    head.textContent=block.b[(LANG==='en')?1:(LANG==='sr'?2:0)];
+    var card=document.createElement('div'); card.className='card';
+    block.q.forEach(function(qrow){
+      var text=qrow[(LANG==='en')?1:(LANG==='sr'?2:0)];
+      var idx=qi; qi++;
+      var qdiv=document.createElement('div'); qdiv.className='q';
+      var lab=document.createElement('div'); lab.className='qlabel';
+      var num=document.createElement('span'); num.className='num'; num.textContent=(idx+1)+'.';
+      var txt=document.createElement('span'); txt.textContent=text;
+      lab.appendChild(num); lab.appendChild(txt);
+      var ta=document.createElement('textarea');
+      ta.setAttribute('data-idx',idx);
+      if(store['q'+idx]) ta.value=store['q'+idx];
+      ta.addEventListener('input',function(e){
+        var k='q'+e.target.getAttribute('data-idx');
+        store[k]=e.target.value; save(); prog();
+      });
+      qdiv.appendChild(lab); qdiv.appendChild(ta);
+      card.appendChild(qdiv);
+    });
+    wrap.appendChild(head); wrap.appendChild(card);
+    root.appendChild(wrap);
+  });
+  if(restore){ prog(); }
+}
+function prog(){
+  var done=0;
+  for(var i=0;i<TOTAL;i++){ if((store['q'+i]||'').trim()) done++; }
+  document.getElementById('progbar').style.width=Math.round(done/TOTAL*100)+'%';
+  document.getElementById('prognum').textContent=done+' / '+TOTAL;
+}
+function save(){ try{ localStorage.setItem(LS_KEY,JSON.stringify(store)); }catch(e){} }
+
+/* ============ ПЕРЕКЛЮЧЕНИЕ ЯЗЫКА ============ */
+function setLang(l){
+  LANG=(l==='ru'||l==='en'||l==='sr')?l:'ru';
+  document.querySelectorAll('.lang-btn').forEach(function(b){ b.classList.toggle('active', b.dataset.lang===l); });
+  applyStatic();
+  render(true);
+}
+function applyUI(id){
+  var el=document.getElementById(id);
+  if(el && UI[LANG]) el.textContent=(UI[LANG]['btn.'+id])||el.textContent;
+}
+
+/* ============ ОТПРАВКА ============ */
+function collect(){
+  var out={};
+  for(var i=0;i<TOTAL;i++){ var v=(store['q'+i]||'').trim(); if(v) out[i]=v; }
+  return out;
+}
+function countAnswered(){ return Object.keys(collect()).length; }
+
+var sending=false;
+document.getElementById('sendbtn').addEventListener('click', async function(){
+  if(sending) return;
+  var msg=document.getElementById('msg');
+  var btn=this;
+  var fname=document.getElementById('fname').value.trim();
+  var fcontact=document.getElementById('fcontact').value.trim();
+  msg.className='msg'; msg.textContent='';
+  // требуется имя и контакт
+  if(!fname||!fcontact){ msg.className='msg err'; msg.textContent=T('err1'); return; }
+  if(countAnswered()===0){ msg.className='msg err'; msg.textContent=T('empty'); return; }
+
+  sending=true; btn.disabled=true; btn.textContent=T('btn.sendIng');
+  var answers={};
+  for(var i=0;i<TOTAL;i++){ var v2=(store['q'+i]||'').trim(); answers['q'+i]=v2; }
+  try{
+    var resp=await fetch('/api/oprosnik/submit',{
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ name:fname, contact:fcontact, lang:LANG, answers:answers })
+    });
+    var data=await resp.json();
+    if(data && data.ok && data.botLink){
+      document.getElementById('formView').style.display='none';
+      var dv=document.getElementById('doneView');
+      dv.classList.add('show');
+      document.getElementById('doneReply').textContent=(data.introReply||'Спасибо!');
+      var a=document.getElementById('doneLink');
+      a.href=data.botLink;
+      a.textContent=(UI[LANG]&&UI[LANG]['tg.btn'])?UI[LANG]['tg.btn']:'Продолжить в Telegram';
+      try{ localStorage.removeItem(LS_KEY); }catch(e){}
+    } else {
+      throw new Error('bad');
+    }
+  }catch(e){
+    msg.className='msg err'; msg.textContent=T('srvErr');
+    sending=false; btn.disabled=false; btn.textContent=T('btn.send');
+  }
+});
+
+/* ============ СТАРТ ============ */
+function init(){
+  document.querySelectorAll('.lang-btn').forEach(function(b){ b.classList.toggle('active', b.dataset.lang==='ru'); });
+  var saved='ru'; try{ saved=localStorage.getItem('site_lang')||'ru'; }catch(e){}
+  LANG=(saved==='en'||saved==='sr')?saved:'ru';
+  applyStatic();
+  setLang(LANG);
+  var n=document.getElementById('fname'); n.value=store.name||'';
+  n.addEventListener('input',function(){ store.name=n.value; store.fullname=n.value; store.fullName=n.value; save(); });
+  var c=document.getElementById('fcontact');
+  c.value=store.contact||'';
+  c.addEventListener('input',function(){ store.contact=c.value; save(); });
+}
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2a1a15"/>
+      <stop offset="1" stop-color="#0a0a0b"/>
+    </linearGradient>
+  </defs>
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="url(#bg)" stroke="#3a2a22" stroke-width="1.5"/>
+  <!-- Буква K - монограмма в сигнатуре бренда (тёплый очерк на тёмном) -->
+  <g fill="none" stroke="#c4a3a6" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M20 18 L20 46"/>
+    <path d="M20 31.5 L42 18"/>
+    <path d="M20 31.5 L42 46"/>
+  </g>
+  <circle cx="46" cy="15" r="3" fill="#e8b593"/>
+</svg>

@@ -3,3 +3,17 @@ node_modules/
 .env
 .env.local
 .env*.local
+
+# Бэкапы исходников и рабочих файлов
+backup/
+*.bak-*
+*.bak
+*.tar.gz
+
+# Личные/временные материалы (не часть сайта)
+.krops/
+.krops*/
+.vcheck/
+.prev2.jpg
+.ref-*.jpg
+.ref-*.png
