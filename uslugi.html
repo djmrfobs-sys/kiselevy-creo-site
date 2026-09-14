@@ -60,12 +60,28 @@
   .logo{font-family:'Space Grotesk', 'Segoe UI', Roboto, Arial, sans-serif;font-weight:700;font-size:1.1rem;letter-spacing:0.5px;color:var(--amethyst)}
   nav a{margin-left:24px;font-size:0.95rem;opacity:0.8}
   nav a:hover{opacity:1;color:var(--amethyst)}
-  .lang-switch{margin-left:24px;display:inline-flex;gap:4px;border:1px solid var(--panel-border);border-radius:999px;padding:3px}
-  .lang-btn{
-    background:none;border:none;color:var(--text-dim);font-family:inherit;font-weight:700;
-    font-size:0.72rem;letter-spacing:0.04em;padding:5px 10px;border-radius:999px;cursor:pointer;
+  .lang-switch{margin-left:24px;position:relative;display:inline-block}
+  .lang-current{
+    display:inline-flex;align-items:center;gap:6px;
+    background:none;border:1px solid var(--panel-border);color:var(--text);
+    font-family:inherit;font-weight:700;font-size:0.72rem;letter-spacing:0.04em;
+    padding:5px 12px;border-radius:999px;cursor:pointer;line-height:1;
   }
-  .lang-btn.active{background:var(--amethyst);color:var(--ink)}
+  .lang-current:hover{border-color:var(--amethyst);color:var(--amethyst)}
+  .lang-current::after{content:'\25BE';font-size:0.6rem;opacity:0.7}
+  .lang-menu{
+    display:none;position:absolute;top:calc(100% + 8px);right:0;z-index:50;
+    background:var(--panel);border:1px solid var(--panel-border);border-radius:12px;
+    padding:4px;min-width:74px;box-shadow:0 10px 30px rgba(0,0,0,0.35);
+  }
+  .lang-menu.open{display:block}
+  .lang-menu .lang-btn{
+    display:block;width:100%;text-align:center;
+    background:none;border:none;color:var(--text-dim);font-family:inherit;font-weight:700;
+    font-size:0.72rem;letter-spacing:0.04em;padding:7px 12px;border-radius:8px;cursor:pointer;
+  }
+  .lang-menu .lang-btn:hover{background:rgba(196,163,166,0.12);color:var(--text)}
+  .lang-menu .lang-btn.active{background:var(--amethyst);color:var(--ink)}
 
   section{padding:72px 0}
   h1,h2,h3{font-weight:700;font-family:'Space Grotesk', 'Segoe UI', Roboto, Arial, sans-serif}
@@ -526,10 +542,13 @@
       <a href="/" data-i18n="nav.portfolio">Портфолио</a>
       <a href="/#about" data-i18n="nav.about">О нас</a>
       <a href="/#contacts" data-i18n="nav.contacts">Контакты</a>
-      <span class="lang-switch">
-        <button class="lang-btn" data-lang="ru" onclick="setLang('ru')">RU</button>
-        <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
-        <button class="lang-btn" data-lang="sr" onclick="setLang('sr')">SR</button>
+      <span class="lang-switch" id="langSwitch">
+        <button class="lang-current" id="langCurrent" type="button" aria-haspopup="true" aria-expanded="false" onclick="toggleLangMenu(event)">RU</button>
+        <span class="lang-menu" id="langMenu" role="menu">
+          <button class="lang-btn" role="menuitem" data-lang="ru" onclick="pickLang('ru')">RU</button>
+          <button class="lang-btn" role="menuitem" data-lang="en" onclick="pickLang('en')">EN</button>
+          <button class="lang-btn" role="menuitem" data-lang="sr" onclick="pickLang('sr')">SR</button>
+        </span>
       </span>
     </nav>
   </div>
@@ -1110,8 +1129,38 @@ const translations = {
       I18N_ORIGINALS.push({el:el, key: el.getAttribute('data-i18n-placeholder'), kind:'placeholder', original: el.getAttribute('placeholder')});
     });
   }
+  function toggleLangMenu(e){
+    if(e) e.stopPropagation();
+    const m = document.getElementById('langMenu');
+    const b = document.getElementById('langCurrent');
+    if(!m) return;
+    const open = m.classList.toggle('open');
+    if(b) b.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+  function pickLang(lang){
+    setLang(lang);
+    const m = document.getElementById('langMenu');
+    const b = document.getElementById('langCurrent');
+    if(m) m.classList.remove('open');
+    if(b) b.setAttribute('aria-expanded','false');
+  }
+  document.addEventListener('click', function(e){
+    const sw = document.getElementById('langSwitch');
+    if(sw && !sw.contains(e.target)){
+      const m = document.getElementById('langMenu');
+      if(m) m.classList.remove('open');
+    }
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){
+      const m = document.getElementById('langMenu');
+      if(m) m.classList.remove('open');
+    }
+  });
   function setLang(lang){
     document.querySelectorAll('.lang-btn').forEach(function(b){ b.classList.toggle('active', b.dataset.lang===lang); });
+    const cur = document.getElementById('langCurrent');
+    if(cur) cur.textContent = String(lang || 'ru').toUpperCase();
     I18N_ORIGINALS.forEach(function(entry){
       const dict = translations[lang];
       const val = (lang==='ru' || !dict || !dict[entry.key]) ? entry.original : dict[entry.key];

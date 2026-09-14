@@ -44,9 +44,15 @@
   nav a{margin-left:14px;font-size:.92rem;opacity:.82}
   nav a:hover{opacity:1;color:var(--amethyst)}
   nav .sep{opacity:.35;margin-left:14px;font-size:.9rem}
-  .lang-switch{margin-left:14px;display:inline-flex;gap:4px;border:1px solid var(--panel-border);border-radius:999px;padding:3px}
-  .lang-btn{background:none;border:none;color:var(--text-dim);font-family:inherit;font-weight:700;font-size:.72rem;padding:4px 9px;border-radius:999px;cursor:pointer}
-  .lang-btn.active{background:var(--amethyst);color:var(--ink)}
+  .lang-switch{margin-left:14px;position:relative;display:inline-block}
+  .lang-current{display:inline-flex;align-items:center;gap:6px;background:none;border:1px solid var(--panel-border);color:var(--text);font-family:inherit;font-weight:700;font-size:.72rem;padding:4px 11px;border-radius:999px;cursor:pointer;line-height:1}
+  .lang-current:hover{border-color:var(--amethyst);color:var(--amethyst)}
+  .lang-current::after{content:'\25BE';font-size:.6rem;opacity:.7}
+  .lang-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;z-index:50;background:var(--panel);border:1px solid var(--panel-border);border-radius:12px;padding:4px;min-width:74px;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+  .lang-menu.open{display:block}
+  .lang-menu .lang-btn{display:block;width:100%;text-align:center;background:none;border:none;color:var(--text-dim);font-family:inherit;font-weight:700;font-size:.72rem;padding:7px 12px;border-radius:8px;cursor:pointer}
+  .lang-menu .lang-btn:hover{background:rgba(196,163,166,.12);color:var(--text)}
+  .lang-menu .lang-btn.active{background:var(--amethyst);color:var(--ink)}
 
   main{padding:44px 0 90px}
   .page-head{margin-bottom:26px}
@@ -106,10 +112,13 @@
     <nav>
       <a href="/uslugi.html" data-i18n="nav.services">Услуги</a>
       <a href="/" data-i18n="nav.portfolio">Портфолио</a>
-      <span class="lang-switch">
-        <button class="lang-btn" data-lang="ru" onclick="setLang('ru')">RU</button>
-        <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
-        <button class="lang-btn" data-lang="sr" onclick="setLang('sr')">SR</button>
+      <span class="lang-switch" id="langSwitch">
+        <button class="lang-current" id="langCurrent" type="button" aria-haspopup="true" aria-expanded="false" onclick="toggleLangMenu(event)">RU</button>
+        <span class="lang-menu" id="langMenu" role="menu">
+          <button class="lang-btn" role="menuitem" data-lang="ru" onclick="pickLang('ru')">RU</button>
+          <button class="lang-btn" role="menuitem" data-lang="en" onclick="pickLang('en')">EN</button>
+          <button class="lang-btn" role="menuitem" data-lang="sr" onclick="pickLang('sr')">SR</button>
+        </span>
       </span>
     </nav>
   </div>
@@ -266,9 +275,31 @@ function prog(){
 function save(){ try{ localStorage.setItem(LS_KEY,JSON.stringify(store)); }catch(e){} }
 
 /* ============ ПЕРЕКЛЮЧЕНИЕ ЯЗЫКА ============ */
+function toggleLangMenu(e){
+  if(e) e.stopPropagation();
+  var m=document.getElementById('langMenu'), b=document.getElementById('langCurrent');
+  if(!m) return;
+  var open=m.classList.toggle('open');
+  if(b) b.setAttribute('aria-expanded', open?'true':'false');
+}
+function pickLang(l){
+  setLang(l);
+  var m=document.getElementById('langMenu'), b=document.getElementById('langCurrent');
+  if(m) m.classList.remove('open');
+  if(b) b.setAttribute('aria-expanded','false');
+}
+document.addEventListener('click', function(e){
+  var sw=document.getElementById('langSwitch');
+  if(sw && !sw.contains(e.target)){ var m=document.getElementById('langMenu'); if(m) m.classList.remove('open'); }
+});
+document.addEventListener('keydown', function(e){
+  if(e.key==='Escape'){ var m=document.getElementById('langMenu'); if(m) m.classList.remove('open'); }
+});
 function setLang(l){
   LANG=(l==='ru'||l==='en'||l==='sr')?l:'ru';
   document.querySelectorAll('.lang-btn').forEach(function(b){ b.classList.toggle('active', b.dataset.lang===l); });
+  var cur=document.getElementById('langCurrent');
+  if(cur) cur.textContent=String(l||'ru').toUpperCase();
   applyStatic();
   render(true);
 }
