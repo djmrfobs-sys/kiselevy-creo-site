@@ -140,8 +140,19 @@ async function setFunnelState(chatId, state) {
     await writeJsonBlob(CONTEXTS_PATH, {});
     return setFunnelState(chatId, state);
   }
-  map['funnel:' + chatId] = Object.assign({ updatedAt: Date.now() }, state || {});
+  const prev = map['funnel:' + chatId] || {};
+  map['funnel:' + chatId] = Object.assign({ updatedAt: Date.now() }, prev, state || {});
   await writeJsonBlob(CONTEXTS_PATH, map);
+}
+
+// Явная пометка: заявка уже ушла команде (чтобы не дублировать при каждом сообщении)
+async function isLeadNotified(chatId) {
+  const st = await getFunnelState(chatId);
+  return !!(st && st.leadNotified);
+}
+
+async function markLeadNotified(chatId, info) {
+  await setFunnelState(chatId, Object.assign({ leadNotified: true, leadNotifiedAt: Date.now() }, info || {}));
 }
 
 function newId() {
@@ -164,6 +175,8 @@ module.exports = {
   clearDialogHistory,
   getFunnelState,
   setFunnelState,
+  isLeadNotified,
+  markLeadNotified,
   makeLeadCode,
   SUBMISSIONS_PATH,
 };

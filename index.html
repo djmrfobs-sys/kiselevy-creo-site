@@ -111,7 +111,7 @@
   .hero-bg{
     position:absolute;inset:0;
     width:100%;height:100%;
-    object-fit:contain;object-position:center center;
+    object-fit:cover;object-position:60% center;
     z-index:0;
     background:var(--bg);
   }
@@ -122,7 +122,7 @@
       linear-gradient(180deg, rgba(10,10,11,0.55) 0%, rgba(10,10,11,0.18) 28%, rgba(10,10,11,0.38) 55%, rgba(10,10,11,0.92) 100%);
     z-index:1;
   }
-  .hero .container{position:absolute;left:0;right:0;bottom:0;z-index:2;padding-bottom:56px}
+  .hero .container{position:absolute;left:0;right:0;bottom:0;z-index:2;padding-bottom:56px;padding-top:72px}
   .hero-text{text-align:center;max-width:720px;margin:0 auto}
   .hero-text .eyebrow{font-size:1.05rem;font-weight:800;margin-bottom:14px}
   .badge-pill{
@@ -394,6 +394,10 @@
     text-align:center;padding:36px 0;
     border-top:1px solid var(--panel-border);
   }
+  /* ПРОЙТИ ОПРОС: воздух между текстом и кнопкой */
+  #opros h2{margin-bottom:18px}
+  #opros p{max-width:620px;margin:0 auto 44px}
+  #opros .btn{margin:0 auto}
 
   footer{
     background:var(--bg);
@@ -517,10 +521,15 @@
 
   @media (max-width:760px){
     .hero{aspect-ratio:3/2;min-height:56vh}
-    .hero-bg{object-fit:contain;object-position:center top}
-    .hero .container{padding-bottom:32px}
+  }
+  @media (max-width:900px){
+    .hero-bg{object-fit:cover;object-position:62% center}
+    .hero .container{padding-bottom:32px;padding-top:64px}
   }
   @media (max-width:600px){
+    .hero{aspect-ratio:auto;min-height:78vh}
+    .hero .container{padding-top:56px;padding-bottom:40px}
+    .hero-text .eyebrow{font-size:0.92rem;margin-bottom:12px}
     .hero h1{font-size:2.1rem}
     h2{font-size:1.9rem}
     header .container{flex-wrap:wrap;gap:8px 0}
@@ -608,9 +617,7 @@
 </header>
 
 <section class="hero">
-  <video class="hero-bg" autoplay muted loop playsinline preload="auto" poster="assets/photos/artur-i-keti-main.jpg" aria-label="Артур и Кети, команда KISELEVY CREO">
-    <source src="assets/video/artur-keti-blink.mp4" type="video/mp4">
-  </video>
+  <img class="hero-bg" src="assets/photos/hero-artur-keti-studio.jpg" alt="Артур и Кети, команда KISELEVY CREO">
   <div class="hero-overlay"></div>
   <div class="container">
     <div class="hero-text">
