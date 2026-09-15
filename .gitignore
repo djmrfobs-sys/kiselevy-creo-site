@@ -17,3 +17,26 @@ backup/
 .prev2.jpg
 .ref-*.jpg
 .ref-*.png
+
+# Служебные данные генератора страниц (нужны локально, но не в репо)
+_*.json
+_service_page_template.html
+backup_services_home_section.html
+
+# Служебные файлы разработки
+build.py
+check_site.sh
+CLAUDE.md
+research.md
+
+# Личные/внутренние материалы
+knowledge/
+*профиль*.md
+*реструктуризац*.*
+наши цвета/
+our style/
+тренды инстаграм/
+шрифты/
+
+# Личные файлы (не для публичного репо)
+*профиль*.md

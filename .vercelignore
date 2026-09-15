@@ -25,3 +25,8 @@ research.md
 our style/
 тренды инстаграм/
 шрифты/
+
+# Служебные данные генератора страниц
+_*.json
+_service_page_template.html
+_services_content.json

@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Автоматизация бизнеса под ключ: заявки, отчёты, рутина | KISELEVY CREO</title>
+<meta name="description" content="Автоматизация бизнеса под ключ: сбор заявок в одно окно, уведомления команде, автонапоминания, отчёты без ручного труда. Убираем рутину и потери заявок. От 40 000 руб.">
+<meta name="keywords" content="автоматизация бизнеса, автоматизация заявок, автоматизация процессов, автоматизация продаж, настроить уведомления о заявках, интеграция сервисов, автоматические отчёты, автоматизация для малого бизнеса, цифровизация бизнеса, автоматизация рутины">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="Артур Киселёв">
+<link rel="canonical" href="https://kiselevycreo.ru/avtomatizaciya-biznesa.html">
+<meta property="og:title" content="Автоматизация бизнеса под ключ: заявки, отчёты, рутина | KISELEVY CREO">
+<meta property="og:description" content="Автоматизация бизнеса под ключ: сбор заявок в одно окно, уведомления команде, автонапоминания, отчёты без ручного труда. Убираем рутину и потери заявок. От 40 000 руб.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://kiselevycreo.ru/avtomatizaciya-biznesa.html">
+<meta property="og:site_name" content="KISELEVY CREO">
+<meta property="og:locale" content="ru_RU">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<style>
+  :root{
+    --bg:#0a0a0b;
+    --bg-glow:#1c1512;
+    --panel:#151210;
+    --panel-border:#2e2521;
+    --lilac-pale:#f0e9dc;
+    --lavender:#e8ddcb;
+    --amethyst:#c4a3a6;
+    --violet-deep:#b89a9c;
+    --lavender-dim:#2b211f;
+    --text:#ede7dd;
+    --text-dim:#b7a99b;
+    --ink:#171310;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
+    background:
+      radial-gradient(ellipse 1400px 900px at 50% -8%, rgba(184,154,156,0.05) 0%, transparent 65%),
+      var(--bg);
+    color:var(--text);
+    line-height:1.6;
+  }
+  a{color:inherit;text-decoration:none}
+  .container{max-width:1000px;margin:0 auto;padding:0 24px}
+
+  header{
+    position:sticky;top:0;z-index:10;
+    background:rgba(10,10,12,0.88);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--panel-border);
+  }
+  header .container{
+    display:flex;align-items:center;justify-content:space-between;
+    padding-top:16px;padding-bottom:16px;
+  }
+  .logo{font-family:'Space Grotesk', sans-serif;font-weight:700;font-size:1.1rem;letter-spacing:0.5px;color:var(--amethyst)}
+  nav a{margin-left:22px;font-size:0.92rem;opacity:0.8}
+  nav a:hover{opacity:1;color:var(--amethyst)}
+  @media (max-width:760px){
+    nav a{margin-left:14px;font-size:0.84rem}
+    nav a.hide-sm{display:none}
+  nav a.nav-tg{color:var(--amethyst);opacity:1}
+  }
+
+  .back-row{padding-top:26px}
+  .back-link{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:0.88rem;color:var(--text-dim);
+    border:1px solid var(--panel-border);border-radius:999px;
+    padding:8px 18px;transition:border-color 0.18s ease,color 0.18s ease;
+  }
+  .back-link:hover{border-color:var(--amethyst);color:var(--amethyst)}
+  .hero{padding:34px 0 40px;text-align:center}
+  .eyebrow{
+    display:block;font-size:0.78rem;font-weight:700;letter-spacing:0.1em;
+    text-transform:uppercase;color:var(--amethyst);margin-bottom:14px;
+  }
+  h1{
+    font-family:'Space Grotesk', sans-serif;font-size:2.6rem;line-height:1.12;
+    color:var(--lilac-pale);margin-bottom:18px;
+    text-shadow:0 0 26px rgba(196,163,166,0.18);
+  }
+  h1 .accent{color:var(--amethyst)}
+  .hero-sub{font-size:1.05rem;color:var(--text-dim);max-width:660px;margin:0 auto 28px}
+
+  section{padding:52px 0}
+  h2{
+    font-family:'Space Grotesk', sans-serif;font-size:1.9rem;line-height:1.15;
+    color:var(--lilac-pale);margin-bottom:14px;
+  }
+  h2 .accent{color:var(--amethyst)}
+  .section-lead{color:var(--text-dim);margin-bottom:32px;max-width:720px}
+
+  .btn{
+    display:inline-block;background:var(--amethyst);color:var(--ink);
+    font-weight:700;font-size:1rem;padding:15px 32px;border-radius:999px;
+    border:none;cursor:pointer;transition:transform 0.15s ease, box-shadow 0.15s ease;
+    box-shadow:0 8px 26px rgba(196,163,166,0.22);
+  }
+  .btn:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(196,163,166,0.3)}
+  .btn-outline{
+    background:transparent;color:var(--lavender);border:1px solid var(--panel-border);
+    box-shadow:none;
+  }
+  .btn-outline:hover{border-color:var(--amethyst);color:var(--amethyst);box-shadow:none}
+  .btn-pulse{animation:pulseGlow 3.4s ease-in-out infinite}
+  @keyframes pulseGlow{
+    0%,100%{box-shadow:0 8px 26px rgba(196,163,166,0.22)}
+    50%{box-shadow:0 8px 34px rgba(196,163,166,0.42)}
+  }
+  .cta-row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px}
+  .card{
+    background:var(--panel);border:1px solid var(--panel-border);
+    border-radius:16px;padding:26px;
+  }
+  .card h3{
+    font-family:'Space Grotesk', sans-serif;font-size:1.12rem;color:var(--lilac-pale);
+    margin-bottom:10px;
+  }
+  .card p{font-size:0.92rem;color:var(--text-dim)}
+  .card .price{
+    font-family:'Space Grotesk', sans-serif;font-size:1.25rem;font-weight:700;
+    color:var(--amethyst);margin:12px 0 10px;
+  }
+  .card ul{margin:12px 0 0 18px;font-size:0.9rem;color:var(--text-dim)}
+  .card ul li{margin-bottom:6px}
+  .card .pain{
+    font-size:0.86rem;color:var(--lavender);background:var(--lavender-dim);
+    border-left:3px solid var(--amethyst);border-radius:8px;padding:10px 14px;margin-top:14px;
+  }
+  .card .more{font-size:0.88rem;color:var(--text-dim);margin-top:12px}
+
+  .steps{counter-reset:step}
+  .step{
+    display:flex;gap:18px;padding:20px 0;border-bottom:1px solid var(--panel-border);
+  }
+  .step:last-child{border-bottom:none}
+  .step-num{
+    flex:0 0 40px;height:40px;border-radius:50%;
+    background:var(--lavender-dim);border:1px solid rgba(196,163,166,0.28);
+    color:var(--amethyst);font-weight:700;font-family:'Space Grotesk', sans-serif;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .step-body h3{
+    font-family:'Space Grotesk', sans-serif;font-size:1.05rem;
+    color:var(--lilac-pale);margin-bottom:6px;
+  }
+  .step-body p{font-size:0.92rem;color:var(--text-dim)}
+
+  .faq-item{border-bottom:1px solid var(--panel-border);padding:18px 0}
+  .faq-item:last-child{border-bottom:none}
+  .faq-q{
+    font-family:'Space Grotesk', sans-serif;font-size:1.02rem;color:var(--lilac-pale);
+    margin-bottom:8px;
+  }
+  .faq-a{font-size:0.92rem;color:var(--text-dim)}
+
+  .final-cta{
+    background:linear-gradient(180deg, rgba(196,163,166,0.07), rgba(196,163,166,0.02));
+    border:1px solid var(--panel-border);border-radius:20px;
+    padding:44px 32px;text-align:center;
+  }
+  .final-cta h2{margin-bottom:12px}
+  .final-cta p{color:var(--text-dim);max-width:600px;margin:0 auto 26px}
+
+  .other-links{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:28px}
+  .other-links a{
+    font-size:0.86rem;color:var(--text-dim);border:1px solid var(--panel-border);
+    border-radius:999px;padding:8px 18px;
+  }
+  .other-links a:hover{border-color:var(--amethyst);color:var(--amethyst)}
+
+  footer{
+    border-top:1px solid var(--panel-border);padding:34px 0;text-align:center;
+    color:var(--text-dim);font-size:0.86rem;
+  }
+  footer p{margin-bottom:8px}
+  footer a:hover{color:var(--amethyst)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <a class="logo" href="/">KISELEVY&nbsp;CREO</a>
+    <nav>
+      <a href="/uslugi.html">Услуги</a>
+      <a href="/portfolio.html" class="hide-sm">Портфолио</a>
+      <a href="/#about" class="hide-sm">О нас</a>
+      <a href="/#contacts">Контакты</a>
+      <a href="https://t.me/Kiselevy_Creo_digital" target="_blank" rel="noopener" class="nav-tg hide-sm">Канал</a>
+    </nav>
+  </div>
+</header>
+
+<div class="container back-row">
+  <a class="back-link" href="/uslugi.html">&#8592; Все услуги и цены</a>
+</div>
+
+<section class="hero">
+  <div class="container">
+    <span class="eyebrow">Цифровой бутик KISELEVY CREO</span>
+    <h1>Автоматизация <span class="accent">бизнеса</span> под ключ</h1>
+    <p class="hero-sub">Убираем ручную работу, из-за которой заявки остывают, а люди забывают написать клиенту. Процессы начинают работать сами.</p>
+    <div class="cta-row">
+      <a class="btn btn-pulse" href="https://t.me/Site_Kiselevy_Creo_bot" target="_blank" rel="noopener">Начать разговор в Telegram</a>
+      <a class="btn btn-outline" href="/oprosnik.html">Пройти опрос - 3 минуты</a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <h2>Где бизнес <span class="accent">теряет деньги</span></h2>
+    <p class="section-lead">Чаще всего не из-за плохих услуг, а из-за рутины: заявка пришла не туда, ответили через день, отчёт не сделали, клиента забыли.</p>
+    <div class="cards">      <div class="card">
+        <h3>Заявка не уходит в никуда</h3>
+        <div class="price">Потери заявок почти в ноль</div>
+        <p>Всё, что приходит с сайта, из соцсетей, из чатов и по телефону, падает в одно окно с понятным статусом.</p>
+        <ul></ul>
+        
+      </div>
+      <div class="card">
+        <h3>Напоминания работают сами</h3>
+        <div class="price">Никто не забыт</div>
+        <p>Если заявка висит без ответа больше суток, система напомнит вам и поднимет вопрос наверх.</p>
+        <ul></ul>
+        
+      </div>
+      <div class="card">
+        <h3>Отчёты собираются сами</h3>
+        <div class="price">Видно картину целиком</div>
+        <p>Сколько заявок, откуда, сколько стало клиентами, где узкое место. Без выгрузок и ручных таблиц.</p>
+        <ul></ul>
+        
+      </div></div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <h2>Что <span class="accent">делаем</span></h2>
+    <p class="section-lead">Начинаем с самого узкого места, чтобы первые деньги вернулись быстро.</p>
+    <div class="cards">      <div class="card">
+        <h3>Автоматизация заявок</h3>
+        <div class="price">от 40 000 руб</div>
+        <p>Все заявки из разных источников собираются в одно окно, с уведомлениями, статусами и напоминаниями.</p>
+        <ul><li>Один вход для всех заявок</li><li>Уведомления команде</li><li>Статусы и напоминания</li><li>Понятная админка</li></ul>
+        <div class="pain">Подходит, если заявки приходят в разные места</div>
+      </div>
+      <div class="card">
+        <h3>Автоматизация рутины</h3>
+        <div class="price">от 70 000 руб</div>
+        <p>Убираем повторяющиеся действия: рассылки, напоминания клиентам, подготовка документов, выгрузки, сверки.</p>
+        <ul><li>Автоматические рассылки</li><li>Напоминания клиентам</li><li>Документы по шаблону</li><li>Сбор данных из сервисов</li></ul>
+        <div class="pain">Подходит, если день уходит на одинаковые действия</div>
+      </div>
+      <div class="card">
+        <h3>Система отчётности</h3>
+        <div class="price">от 100 000 руб</div>
+        <p>Собираем цифры по продажам, заявкам и источникам в одну понятную картину, обновляемую автоматически.</p>
+        <ul><li>Сводка по всем каналам</li><li>Обновление автоматически</li><li>Показатели по дням и неделям</li><li>Понятно, где узкое место</li></ul>
+        <div class="pain">Подходит, если решения принимаются на ощупь</div>
+      </div></div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <h2>Как <span class="accent">работаем</span></h2>
+    <p class="section-lead">Начинаем с разбора процессов, а не с инструментов: сначала понятно где деньги, потом код.</p>
+    <div class="steps">      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h3>Разбор процессов</h3>
+          <p>Смотрим, как сейчас приходят заявки, кто и когда отвечает, что делается руками и где ломается.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h3>Карта потерь</h3>
+          <p>Показываю, на каких шагах теряются заявки и время. Расставляем приоритеты по деньгам.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h3>Сборка автоматизации</h3>
+          <p>Настраиваем сбор заявок, уведомления, статусы, напоминания и связки между сервисами.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h3>Проверка на живых заявках</h3>
+          <p>Прогоняем реальные сценарии: пришла заявка, ушло уведомление, сработало напоминание, обновился отчёт.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <h3>Передача и развитие</h3>
+          <p>Показываю команде, как всё работает. Дальше можно расширять по мере роста.</p>
+        </div>
+      </div></div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <h2>Частые <span class="accent">вопросы</span></h2>
+    <div style="margin-top:26px">      <div class="faq-item">
+        <div class="faq-q">С чего начать автоматизацию?</div>
+        <div class="faq-a">С самого болезненного места, обычно это приём и обработка заявок. Этот шаг даёт результат быстрее всего.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Нужно ли мне разбираться в технике?</div>
+        <div class="faq-a">Нет. Я настраиваю всё сам, объясняю простым языком и отдаю понятную инструкцию. От вас нужны только ответы про то, как устроен бизнес.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Что если у меня уже есть CRM?</div>
+        <div class="faq-a">Работаем с тем, что есть. Настраиваем связку с вашей системой, чтобы не ломать привычный порядок.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Сколько времени это занимает?</div>
+        <div class="faq-a">Автоматизация заявок обычно 1-2 недели. Более широкие системы - от месяца, зависит от количества процессов.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Как понять, что это окупилось?</div>
+        <div class="faq-a">Сравниваем цифры до и после: сколько заявок доходило до ответа, сколько терялось, сколько времени уходило на рутину. Обычно первые деньги возвращаются в первый месяц.</div>
+      </div></div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="final-cta">
+      <h2>Найдём, где именно утекают деньги</h2>
+      <p>Проходите опрос на 3 минуты, и я покажу, какие шаги в вашем бизнесе можно снять с ручного труда в первую очередь. Без обязательств.</p>
+      <div class="cta-row">
+        <a class="btn btn-pulse" href="https://t.me/Site_Kiselevy_Creo_bot" target="_blank" rel="noopener">Начать разговор в Telegram</a>
+        <a class="btn btn-outline" href="/oprosnik.html">Пройти опрос - 3 минуты</a>
+      </div>
+      <div class="other-links"><a href="/razrabotka-telegram-botov.html">Разработка Telegram-ботов</a>
+        <a href="/sozdanie-saytov.html">Сайты и лендинги</a>
+        <a href="/neyropomoshchniki.html">Нейропомощники и ИИ-ассистенты</a>
+        <a href="/avtomatizaciya-biznesa.html">Автоматизация бизнеса</a>
+        <a href="/uslugi.html">Все услуги и цены</a></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p><a href="/">На главную</a> &nbsp;·&nbsp; <a href="/uslugi.html">Все услуги и цены</a> &nbsp;·&nbsp; <a href="/portfolio.html">Портфолио</a></p>
+    <p><a href="privacy.html">Политика обработки персональных данных</a></p>
+    <p>© KISELEVY CREO, 2026</p>
+  </div>
+</footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Автоматизация бизнеса",
+  "serviceType": "Автоматизация бизнеса",
+  "description": "Автоматизация бизнеса под ключ: сбор заявок в одно окно, уведомления команде, автонапоминания, отчёты без ручного труда. Убираем рутину и потери заявок. От 40 000 руб.",
+  "url": "https://kiselevycreo.ru/avtomatizaciya-biznesa.html",
+  "areaServed": {
+    "@type": "Country",
+    "name": "Россия"
+  },
+  "availableChannel": {
+    "@type": "ServiceChannel",
+    "serviceUrl": "https://kiselevycreo.ru",
+    "servicePhone": "+7-928-432-12-76"
+  },
+  "provider": {
+    "@type": "ProfessionalService",
+    "@id": "https://kiselevycreo.ru/#organization",
+    "name": "KISELEVY CREO",
+    "url": "https://kiselevycreo.ru/",
+    "founder": [
+      {
+        "@type": "Person",
+        "name": "Артур Киселёв"
+      },
+      {
+        "@type": "Person",
+        "name": "Кети Киселёва"
+      }
+    ]
+  },
+  "offers": [
+    {
+      "@type": "Offer",
+      "name": "Автоматизация заявок",
+      "price": "40000",
+      "priceCurrency": "RUB"
+    },
+    {
+      "@type": "Offer",
+      "name": "Автоматизация рутины",
+      "price": "70000",
+      "priceCurrency": "RUB"
+    },
+    {
+      "@type": "Offer",
+      "name": "Система отчётности",
+      "price": "100000",
+      "priceCurrency": "RUB"
+    }
+  ],
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "С чего начать автоматизацию?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "С самого болезненного места, обычно это приём и обработка заявок. Этот шаг даёт результат быстрее всего."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Нужно ли мне разбираться в технике?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Нет. Я настраиваю всё сам, объясняю простым языком и отдаю понятную инструкцию. От вас нужны только ответы про то, как устроен бизнес."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Что если у меня уже есть CRM?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Работаем с тем, что есть. Настраиваем связку с вашей системой, чтобы не ломать привычный порядок."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Сколько времени это занимает?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Автоматизация заявок обычно 1-2 недели. Более широкие системы - от месяца, зависит от количества процессов."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Как понять, что это окупилось?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Сравниваем цифры до и после: сколько заявок доходило до ответа, сколько терялось, сколько времени уходило на рутину. Обычно первые деньги возвращаются в первый месяц."
+      }
+    }
+  ]
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Разработка Telegram-ботов под ключ | KISELEVY CREO</title>
+<meta name="description" content="Разработка Telegram-ботов под ключ: приём заявок, продажи, поддержка клиентов, запись, оплата. Бот работает круглосуточно и не теряет ни одну заявку. Цена от 25 000 руб.">
+<meta name="keywords" content="разработка telegram ботов, telegram бот под ключ, заказать telegram бота, бот для приема заявок, бот для бизнеса, чат-бот для продаж, бот для клиники, бот для салона, автоматизация заявок, разработка ботов, чат-бот для заявок">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="Артур Киселёв">
+<link rel="canonical" href="https://kiselevycreo.ru/razrabotka-telegram-botov.html">
+<meta property="og:title" content="Разработка Telegram-ботов под ключ | KISELEVY CREO">
+<meta property="og:description" content="Разработка Telegram-ботов под ключ: приём заявок, продажи, поддержка клиентов, запись, оплата. Бот работает круглосуточно и не теряет ни одну заявку. Цена от 25 000 руб.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://kiselevycreo.ru/razrabotka-telegram-botov.html">
+<meta property="og:site_name" content="KISELEVY CREO">
+<meta property="og:locale" content="ru_RU">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<style>
+  :root{
+    --bg:#0a0a0b;
+    --bg-glow:#1c1512;
+    --panel:#151210;
+    --panel-border:#2e2521;
+    --lilac-pale:#f0e9dc;
+    --lavender:#e8ddcb;
+    --amethyst:#c4a3a6;
+    --violet-deep:#b89a9c;
+    --lavender-dim:#2b211f;
+    --text:#ede7dd;
+    --text-dim:#b7a99b;
+    --ink:#171310;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
+    background:
+      radial-gradient(ellipse 1400px 900px at 50% -8%, rgba(184,154,156,0.05) 0%, transparent 65%),
+      var(--bg);
+    color:var(--text);
+    line-height:1.6;
+  }
+  a{color:inherit;text-decoration:none}
+  .container{max-width:1000px;margin:0 auto;padding:0 24px}
+
+  header{
+    position:sticky;top:0;z-index:10;
+    background:rgba(10,10,12,0.88);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--panel-border);
+  }
+  header .container{
+    display:flex;align-items:center;justify-content:space-between;
+    padding-top:16px;padding-bottom:16px;
+  }
+  .logo{font-family:'Space Grotesk', sans-serif;font-weight:700;font-size:1.1rem;letter-spacing:0.5px;color:var(--amethyst)}
+  nav a{margin-left:22px;font-size:0.92rem;opacity:0.8}
+  nav a:hover{opacity:1;color:var(--amethyst)}
+  @media (max-width:760px){
+    nav a{margin-left:14px;font-size:0.84rem}
+    nav a.hide-sm{display:none}
+  nav a.nav-tg{color:var(--amethyst);opacity:1}
+  }
+
+  .back-row{padding-top:26px}
+  .back-link{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:0.88rem;color:var(--text-dim);
+    border:1px solid var(--panel-border);border-radius:999px;
+    padding:8px 18px;transition:border-color 0.18s ease,color 0.18s ease;
+  }
+  .back-link:hover{border-color:var(--amethyst);color:var(--amethyst)}
+  .hero{padding:34px 0 40px;text-align:center}
+  .eyebrow{
+    display:block;font-size:0.78rem;font-weight:700;letter-spacing:0.1em;
+    text-transform:uppercase;color:var(--amethyst);margin-bottom:14px;
+  }
+  h1{
+    font-family:'Space Grotesk', sans-serif;font-size:2.6rem;line-height:1.12;
+    color:var(--lilac-pale);margin-bottom:18px;
+    text-shadow:0 0 26px rgba(196,163,166,0.18);
+  }
+  h1 .accent{color:var(--amethyst)}
+  .hero-sub{font-size:1.05rem;color:var(--text-dim);max-width:660px;margin:0 auto 28px}
+
+  section{padding:52px 0}
+  h2{
+    font-family:'Space Grotesk', sans-serif;font-size:1.9rem;line-height:1.15;
+    color:var(--lilac-pale);margin-bottom:14px;
+  }
+  h2 .accent{color:var(--amethyst)}
+  .section-lead{color:var(--text-dim);margin-bottom:32px;max-width:720px}
+
+  .btn{
+    display:inline-block;background:var(--amethyst);color:var(--ink);
+    font-weight:700;font-size:1rem;padding:15px 32px;border-radius:999px;
+    border:none;cursor:pointer;transition:transform 0.15s ease, box-shadow 0.15s ease;
+    box-shadow:0 8px 26px rgba(196,163,166,0.22);
+  }
+  .btn:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(196,163,166,0.3)}
+  .btn-outline{
+    background:transparent;color:var(--lavender);border:1px solid var(--panel-border);
+    box-shadow:none;
+  }
+  .btn-outline:hover{border-color:var(--amethyst);color:var(--amethyst);box-shadow:none}
+  .btn-pulse{animation:pulseGlow 3.4s ease-in-out infinite}
+  @keyframes pulseGlow{
+    0%,100%{box-shadow:0 8px 26px rgba(196,163,166,0.22)}
+    50%{box-shadow:0 8px 34px rgba(196,163,166,0.42)}
+  }
+  .cta-row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px}
+  .card{
+    background:var(--panel);border:1px solid var(--panel-border);
+    border-radius:16px;padding:26px;
+  }
+  .card h3{
+    font-family:'Space Grotesk', sans-serif;font-size:1.12rem;color:var(--lilac-pale);
+    margin-bottom:10px;
+  }
+  .card p{font-size:0.92rem;color:var(--text-dim)}
+  .card .price{
+    font-family:'Space Grotesk', sans-serif;font-size:1.25rem;font-weight:700;
+    color:var(--amethyst);margin:12px 0 10px;
+  }
+  .card ul{margin:12px 0 0 18px;font-size:0.9rem;color:var(--text-dim)}
+  .card ul li{margin-bottom:6px}
+  .card .pain{
+    font-size:0.86rem;color:var(--lavender);background:var(--lavender-dim);
+    border-left:3px solid var(--amethyst);border-radius:8px;padding:10px 14px;margin-top:14px;
+  }
+  .card .more{font-size:0.88rem;color:var(--text-dim);margin-top:12px}
+
+  .steps{counter-reset:step}
+  .step{
+    display:flex;gap:18px;padding:20px 0;border-bottom:1px solid var(--panel-border);
+  }
+  .step:last-child{border-bottom:none}
+  .step-num{
+    flex:0 0 40px;height:40px;border-radius:50%;
+    background:var(--lavender-dim);border:1px solid rgba(196,163,166,0.28);
+    color:var(--amethyst);font-weight:700;font-family:'Space Grotesk', sans-serif;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .step-body h3{
+    font-family:'Space Grotesk', sans-serif;font-size:1.05rem;
+    color:var(--lilac-pale);margin-bottom:6px;
+  }
+  .step-body p{font-size:0.92rem;color:var(--text-dim)}
+
+  .faq-item{border-bottom:1px solid var(--panel-border);padding:18px 0}
+  .faq-item:last-child{border-bottom:none}
+  .faq-q{
+    font-family:'Space Grotesk', sans-serif;font-size:1.02rem;color:var(--lilac-pale);
+    margin-bottom:8px;
+  }
+  .faq-a{font-size:0.92rem;color:var(--text-dim)}
+
+  .final-cta{
+    background:linear-gradient(180deg, rgba(196,163,166,0.07), rgba(196,163,166,0.02));
+    border:1px solid var(--panel-border);border-radius:20px;
+    padding:44px 32px;text-align:center;
+  }
+  .final-cta h2{margin-bottom:12px}
+  .final-cta p{color:var(--text-dim);max-width:600px;margin:0 auto 26px}
+
+  .other-links{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:28px}
+  .other-links a{
+    font-size:0.86rem;color:var(--text-dim);border:1px solid var(--panel-border);
+    border-radius:999px;padding:8px 18px;
+  }
+  .other-links a:hover{border-color:var(--amethyst);color:var(--amethyst)}
+
+  footer{
+    border-top:1px solid var(--panel-border);padding:34px 0;text-align:center;
+    color:var(--text-dim);font-size:0.86rem;
+  }
+  footer p{margin-bottom:8px}
+  footer a:hover{color:var(--amethyst)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <a class="logo" href="/">KISELEVY&nbsp;CREO</a>
+    <nav>
+      <a href="/uslugi.html">Услуги</a>
+      <a href="/portfolio.html" class="hide-sm">Портфолио</a>
+      <a href="/#about" class="hide-sm">О нас</a>
+      <a href="/#contacts">Контакты</a>
+      <a href="https://t.me/Kiselevy_Creo_digital" target="_blank" rel="noopener" class="nav-tg hide-sm">Канал</a>
+    </nav>
+  </div>
+</header>
+
+<div class="container back-row">
+  <a class="back-link" href="/uslugi.html">&#8592; Все услуги и цены</a>
+</div>
+
+<section class="hero">
+  <div class="container">
+    <span class="eyebrow">Цифровой бутик KISELEVY CREO</span>
+    <h1>Разработка <span class="accent">Telegram-ботов</span> под ключ</h1>
+    <p class="hero-sub">Бот, который принимает заявки, отвечает клиентам и продаёт, пока вы спите. Без выходных, без больничных, без потерянных сообщений.</p>
+    <div class="cta-row">
+      <a class="btn btn-pulse" href="https://t.me/Site_Kiselevy_Creo_bot" target="_blank" rel="noopener">Начать разговор в Telegram</a>
+      <a class="btn btn-outline" href="/oprosnik.html">Пройти опрос - 3 минуты</a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <h2>Зачем бизнесу <span class="accent">Telegram-бот</span></h2>
+    <p class="section-lead">Telegram давно не мессенджер для переписки, а рабочий канал продаж. Клиент пишет, когда ему удобно, а не когда у вас открыто.</p>
+    <div class="cards">      <div class="card">
+        <h3>Заявки больше не теряются</h3>
+        <div class="price">Экономия до 2 часов в день</div>
+        <p>Каждое сообщение попадает в систему с датой, именем и разбором запроса. Ничего не уходит в переписку, которую забыли открыть.</p>
+        <ul></ul>
+        
+      </div>
+      <div class="card">
+        <h3>Клиент получает ответ сразу</h3>
+        <div class="price">Ответ за секунды, не за часы</div>
+        <p>Ночью, в выходные, в праздники. Бот отвечает на типовые вопросы, называет цены, подбирает услугу и доводит до заявки.</p>
+        <ul></ul>
+        
+      </div>
+      <div class="card">
+        <h3>Один вход вместо пяти чатов</h3>
+        <div class="price">Порядок в заявках</div>
+        <p>Заявки с сайта, из соцсетей, из чата и по опросу собираются в одно окно, где видно, кто в каком статусе и кому нужен ответ.</p>
+        <ul></ul>
+        
+      </div></div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <h2>Что <span class="accent">делаем</span></h2>
+    <p class="section-lead">Берём задачу целиком: от идеи и логики до запуска и передачи вам в руки с инструкцией.</p>
+    <div class="cards">      <div class="card">
+        <h3>Бот для приёма заявок</h3>
+        <div class="price">от 25 000 руб</div>
+        <p>Понятный сценарий: бот приветствует, задаёт нужные вопросы и передаёт вам готовую заявку с ответами.</p>
+        <ul><li>Один сценарий диалога</li><li>Уведомления вам в Telegram</li><li>Админка со списком заявок</li></ul>
+        <div class="pain">Подходит, если заявки приходят в личку и теряются</div>
+      </div>
+      <div class="card">
+        <h3>Бот-продавец</h3>
+        <div class="price">от 45 000 руб</div>
+        <p>Бот подбирает продукт под задачу, отвечает на вопросы и возражения, называет цены и доводит человека до оплаты или разговора с вами.</p>
+        <ul><li>Разбор запроса клиента</li><li>Подбор продукта</li><li>Ответы на возражения</li><li>Вывод на оплату</li></ul>
+        <div class="pain">Подходит, если много вопросов и мало времени отвечать</div>
+      </div>
+      <div class="card">
+        <h3>Бот под ключ под вашу задачу</h3>
+        <div class="price">от 90 000 руб</div>
+        <p>Связка бота с сайтом, оплатами, таблицами и CRM. Логика воронки выстроена под ваш бизнес и посчитана по деньгам.</p>
+        <ul><li>Интеграции с оплатой</li><li>Связка с сайтом</li><li>Воронка с прогревом</li><li>Обучение вашей команды</li></ul>
+        <div class="pain">Подходит, если нужен не бот, а система продаж</div>
+      </div></div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <h2>Как <span class="accent">работаем</span></h2>
+    <p class="section-lead">Никаких сюрпризов по ходу: вы видите результат на каждом этапе.</p>
+    <div class="steps">      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h3>Разбор задачи</h3>
+          <p>Смотрим, откуда приходят заявки, кто отвечает и где теряются люди. На выходе понятная схема будущего бота.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h3>Сценарий и тексты</h3>
+          <p>Пишем диалог так, как говорит живой человек: приветствие, вопросы, ответы на возражения, финальный шаг.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h3>Сборка и подключение</h3>
+          <p>Собираем бота, подключаем уведомления, админку, оплату и связки с вашими сервисами.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h3>Запуск и проверка</h3>
+          <p>Тестируем все ветки диалога, смотрим, как бот ведёт разных клиентов, правим мелочи.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <h3>Передача и поддержка</h3>
+          <p>Показываю, как всё работает, отдаю доступы и остаюсь на связи. Дальше можно развивать: новые сценарии, новые ветки, новые продукты.</p>
+        </div>
+      </div></div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <h2>Частые <span class="accent">вопросы</span></h2>
+    <div style="margin-top:26px">      <div class="faq-item">
+        <div class="faq-q">Сколько времени занимает разработка бота?</div>
+        <div class="faq-a">Простой бот для приёма заявок - от 3 до 5 дней. Бот-продавец с подбором продукта - от недели до двух. Под ключ со связками - обычно 2-4 недели.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Можно ли подключить оплату внутри бота?</div>
+        <div class="faq-a">Да, делаем приём оплаты прямо в Telegram и на сайте. Клиент выбирает продукт, платит, бот сразу подтверждает и передаёт вам информацию.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Бот заменяет живого человека?</div>
+        <div class="faq-a">Нет. Бот снимает рутину: приветствие, типовые вопросы, цены, подбор. Как только человеку нужен живой разговор, бот передаёт его вам с уже собранным разбором.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">А если клиент напишет что-то нестандартное?</div>
+        <div class="faq-a">Бот отвечает по базе знаний и мягко ведёт к следующему шагу. Если вопрос выходит за рамки, присылает уведомление вам, и вы подключаетесь.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Что нужно от меня для старта?</div>
+        <div class="faq-a">Рассказать про бизнес, услуги и цены, а также дать то, что уже есть: тексты, фото, примеры. Остальное берём на себя.</div>
+      </div></div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="final-cta">
+      <h2>Подберём бота под вашу задачу</h2>
+      <p>Расскажите, где теряются клиенты, и я скажу, каким должен быть бот именно у вас. Опрос занимает 3 минуты, дальше подберу решение и назову цену.</p>
+      <div class="cta-row">
+        <a class="btn btn-pulse" href="https://t.me/Site_Kiselevy_Creo_bot" target="_blank" rel="noopener">Начать разговор в Telegram</a>
+        <a class="btn btn-outline" href="/oprosnik.html">Пройти опрос - 3 минуты</a>
+      </div>
+      <div class="other-links"><a href="/razrabotka-telegram-botov.html">Разработка Telegram-ботов</a>
+        <a href="/sozdanie-saytov.html">Сайты и лендинги</a>
+        <a href="/neyropomoshchniki.html">Нейропомощники и ИИ-ассистенты</a>
+        <a href="/avtomatizaciya-biznesa.html">Автоматизация бизнеса</a>
+        <a href="/uslugi.html">Все услуги и цены</a></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p><a href="/">На главную</a> &nbsp;·&nbsp; <a href="/uslugi.html">Все услуги и цены</a> &nbsp;·&nbsp; <a href="/portfolio.html">Портфолио</a></p>
+    <p><a href="privacy.html">Политика обработки персональных данных</a></p>
+    <p>© KISELEVY CREO, 2026</p>
+  </div>
+</footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Разработка Telegram-ботов",
+  "serviceType": "Разработка Telegram-ботов",
+  "description": "Разработка Telegram-ботов под ключ: приём заявок, продажи, поддержка клиентов, запись, оплата. Бот работает круглосуточно и не теряет ни одну заявку. Цена от 25 000 руб.",
+  "url": "https://kiselevycreo.ru/razrabotka-telegram-botov.html",
+  "areaServed": {
+    "@type": "Country",
+    "name": "Россия"
+  },
+  "availableChannel": {
+    "@type": "ServiceChannel",
+    "serviceUrl": "https://kiselevycreo.ru",
+    "servicePhone": "+7-928-432-12-76"
+  },
+  "provider": {
+    "@type": "ProfessionalService",
+    "@id": "https://kiselevycreo.ru/#organization",
+    "name": "KISELEVY CREO",
+    "url": "https://kiselevycreo.ru/",
+    "founder": [
+      {
+        "@type": "Person",
+        "name": "Артур Киселёв"
+      },
+      {
+        "@type": "Person",
+        "name": "Кети Киселёва"
+      }
+    ]
+  },
+  "offers": [
+    {
+      "@type": "Offer",
+      "name": "Бот для приёма заявок",
+      "price": "25000",
+      "priceCurrency": "RUB"
+    },
+    {
+      "@type": "Offer",
+      "name": "Бот-продавец",
+      "price": "45000",
+      "priceCurrency": "RUB"
+    },
+    {
+      "@type": "Offer",
+      "name": "Бот под ключ",
+      "price": "90000",
+      "priceCurrency": "RUB"
+    }
+  ],
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Сколько времени занимает разработка бота?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Простой бот для приёма заявок - от 3 до 5 дней. Бот-продавец с подбором продукта - от недели до двух. Под ключ со связками - обычно 2-4 недели."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Можно ли подключить оплату внутри бота?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Да, делаем приём оплаты прямо в Telegram и на сайте. Клиент выбирает продукт, платит, бот сразу подтверждает и передаёт вам информацию."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Бот заменяет живого человека?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Нет. Бот снимает рутину: приветствие, типовые вопросы, цены, подбор. Как только человеку нужен живой разговор, бот передаёт его вам с уже собранным разбором."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "А если клиент напишет что-то нестандартное?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Бот отвечает по базе знаний и мягко ведёт к следующему шагу. Если вопрос выходит за рамки, присылает уведомление вам, и вы подключаетесь."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Что нужно от меня для старта?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Рассказать про бизнес, услуги и цены, а также дать то, что уже есть: тексты, фото, примеры. Остальное берём на себя."
+      }
+    }
+  ]
+}
+</script>
+
+</body>
+</html>
