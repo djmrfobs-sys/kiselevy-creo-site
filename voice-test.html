@@ -73,11 +73,16 @@
   .who.you{background:var(--blue);color:#fff}
   .who.sys{background:var(--cream);color:#8a7364}
   .hint{font-size:12.5px;color:#9c8778;margin-top:14px;line-height:1.5}
+
+@media (max-width: 640px){
+  .card{ max-width:100%; width:100%; height:100vh; border-radius:0; padding:20px; }
+  body{ padding:0; align-items:flex-start; }
+}
 </style>
 </head>
 <body>
 <div class="card">
-  <div class="brand">Kiselevy Creo</div>
+  <div class="brand"><img src="/assets/icons/icon-ai.svg" class="site-icon" alt=""> Kiselevy Creo</div>
   <h1>Голосовой ассистент</h1>
   <div class="sub">Тестовый режим. Живой диалог с ботом голосом в браузере.</div>
 
@@ -89,6 +94,7 @@
   <div class="controls">
     <button class="btn-main" id="startBtn">Начать разговор</button>
     <button class="btn-ghost" id="stopBtn" disabled>Стоп</button>
+    <button class="btn-ghost" id="retryBtn" style="display:none">Повторить</button>
   </div>
 
   <div class="log" id="log"></div>
@@ -119,6 +125,7 @@ const logEl = document.getElementById('log');
 
 let ws = null, audioCtx = null, micStream = null, processor = null, sourceNode = null;
 let playbackCtx = null, nextPlayTime = 0, running = false;
+let reconnectAttempts = 0; const MAX_RECONNECT = 3; const BASE_RECONNECT_MS = 1000; const RETRY_BTN = null;
 
 function setStatus(text, cls){
   statusText.textContent = text;
@@ -129,11 +136,15 @@ function log(who, text){
   row.className = 'row';
   const tag = document.createElement('span');
   tag.className = 'who ' + who;
-  tag.textContent = who === 'bot' ? 'Бот' : who === 'you' ? 'Вы' : 'Инфо';
+  // Иконки для меток
+  if (who === 'bot') tag.innerHTML = '<img src="/assets/icons/icon-ai.svg" class="site-icon" alt=""> Бот';
+  else if (who === 'you') tag.innerHTML = '<img src="/assets/icons/icon-medal.svg" class="site-icon" alt=""> Вы';
+  else tag.innerHTML = '<img src="/assets/icons/icon-certified.svg" class="site-icon" alt=""> Инфо';
   row.appendChild(tag);
   row.appendChild(document.createTextNode(text));
   logEl.appendChild(row);
-  logEl.scrollTop = logEl.scrollHeight;
+  // Ставим видимым начало новых ответов бота, чтобы пользователь видел начало ответа
+  if (who === 'bot') { try{ row.scrollIntoView({block: 'start'}); } catch(e){ logEl.scrollTop = logEl.scrollHeight; } } else { logEl.scrollTop = logEl.scrollHeight; }
 }
 function b64encode(bytes){
   let bin = '';
@@ -165,19 +176,29 @@ function pcm16ToFloat(u8){
 }
 
 // Берём эфемерный токен у нашего сервера. Ключ Gemini в браузер не попадает.
-async function fetchToken(){
-  const r = await fetch('/api/voice-token?t=' + encodeURIComponent(ACCESS), {
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({t: ACCESS, model: MODEL})
-  });
-  if (!r.ok){
-    const e = await r.json().catch(() => ({}));
-    throw new Error(e.error || ('http_' + r.status));
+async function fetchToken(timeoutMs=8000){
+  const controller = new AbortController();
+  const id = setTimeout(()=>controller.abort(), timeoutMs);
+  try{
+    const r = await fetch('/api/voice-token?t=' + encodeURIComponent(ACCESS), {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({t: ACCESS, model: MODEL}),
+      signal: controller.signal
+    });
+    clearTimeout(id);
+    const text = await r.text();
+    if(!r.ok){
+      let e = {};
+      try{ e = JSON.parse(text); }catch(_){ e = {}};
+      throw new Error((e && e.error) || ('http_' + r.status + ' ' + text.slice(0,200)));
+    }
+    return JSON.parse(text);
+  }catch(err){
+    if(err && err.name === 'AbortError') throw new Error('token_timeout');
+    throw err;
   }
-  return r.json();
 }
-
 async function start(){
   try {
     setStatus('Получаю доступ...', 'work');
@@ -208,7 +229,16 @@ async function start(){
     const wsUrl = 'wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1alpha.GenerativeService.BidiGenerateContent?key=' + encodeURIComponent(token);
     ws = new WebSocket(wsUrl);
 
+    // Если ws не откроется за 8 секунд — сообщаем и сбрасываем.
+    let wsOpenTimer = setTimeout(()=>{
+      log('sys','Ошибка: WebSocket не открылся за 8s.');
+      setStatus('Ошибка соединения','err');
+      try{ if (ws && ws.readyState === 1) ws.close(); }catch(_){ }
+      cleanup();
+    }, 8000);
+
     ws.onopen = () => {
+      clearTimeout(wsOpenTimer);
       ws.send(JSON.stringify({
         setup:{
           model: model,
@@ -249,7 +279,21 @@ async function start(){
 
     ws.onerror = () => { log('sys', 'Ошибка соединения.'); setStatus('Ошибка соединения', 'err'); };
     ws.onclose = (e) => {
-      if (running) log('sys', 'Соединение закрыто (код ' + e.code + ').');
+      if (running) {
+        log('sys', 'Соединение закрыто (код ' + e.code + ').');
+        // Попытка переподключения с экспоненциальным бэкоффом
+        if (reconnectAttempts < MAX_RECONNECT) {
+          const delay = Math.min(30000, BASE_RECONNECT_MS * Math.pow(2, reconnectAttempts));
+          reconnectAttempts++;
+          log('sys', 'Попытка переподключения через ' + Math.round(delay/1000) + 's (попытка ' + reconnectAttempts + '/' + MAX_RECONNECT + ')');
+          setStatus('Переподключение...', 'work');
+          cleanup();
+          setTimeout(() => { start(); }, delay);
+          return;
+        } else {
+          log('sys', 'Достигнуто максимальное число попыток переподключения.');
+        }
+      }
       cleanup();
     };
   } catch(e){
@@ -258,7 +302,7 @@ async function start(){
     else if (msg === 'rate_limited'){ log('sys', 'Слишком много попыток. Подожди немного.'); setStatus('Слишком часто', 'err'); }
     else if (msg === 'server_not_configured'){ log('sys', 'На сервере не задан ключ Gemini.'); setStatus('Не настроено', 'err'); }
     else if (msg === 'mic'){ setStatus('Микрофон не открылся', 'err'); }
-    else { log('sys', 'Не удалось начать: ' + msg); setStatus('Ошибка', 'err'); }
+    else { log('sys', 'Не удалось начать: ' + msg); setStatus('Ошибка', 'err'); retryBtn && (retryBtn.style.display = 'inline-block'); }
     if (micStream){ micStream.getTracks().forEach(t => t.stop()); micStream = null; }
   }
 }
@@ -306,6 +350,18 @@ function cleanup(){
 
 startBtn.onclick = start;
 stopBtn.onclick = cleanup;
+const retryBtn = document.getElementById('retryBtn');
+retryBtn.onclick = () => { reconnectAttempts = 0; retryBtn.style.display = "none"; start(); };
 </script>
+
+
+<!-- Back button -->
+<style>
+#backBtn{display:none !important}
+#backBtn:active{transform:scale(.98)}
+@media(max-width:640px){ #backBtn{display:none !important} }
+</style>
+<button id="backBtn" aria-label="Назад" title="Назад" onclick="(function(){ try{ if(history.length>1) history.back(); else location.href='/' }catch(e){ location.href='/' } })()">←</button>
+
 </body>
 </html>

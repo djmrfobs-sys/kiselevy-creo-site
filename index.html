@@ -28,8 +28,8 @@
 </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/112357067" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
-<title>KISELEVY CREO - разработка Telegram-ботов, сайтов и нейропомощников под ключ | Артур Киселёв</title>
-<meta name="description" content="KISELEVY CREO - цифровой бутик Артура Киселёва. Разработка Telegram-ботов, сайтов, нейропомощников, автоматизация бизнеса и цифровые продукты под ключ. Воронки продаж, чат-боты для заявок, ИИ-помощники. Бесплатный разбор вашей задачи.">
+<title>НЕЙРО БУТИК - KISELEVY CREO — Разработка :Telegram-боты, сайты,нейропомощники| и автоматизация бизнеса под ключ</title>
+<meta name="description" content="НЕЙРО БУТИК - KISELEVY CREO — Разработка :Telegram-боты, сайты,нейропомощники| и автоматизация бизнеса под ключ">
 <meta name="keywords" content="KISELEVY CREO, Артур Киселёв, Кети Киселёва, разработка Telegram-ботов, создание сайтов под ключ, нейропомощник, нейросотрудник, автоматизация бизнеса, воронка продаж в Telegram, чат-бот для заявок, ИИ для бизнеса, цифровой бутик, нейро-маркетинг, бот для приёма заявок, разработка ботов на заказ, автоматизация продаж, цифровой фасад, нейро-коучинг, aй-ассистент для бизнеса, kiselevycreo, kiselevy creo, kiselyov creo">
 <meta name="author" content="Артур Киселёв">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
@@ -58,6 +58,7 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <style>
+#backBtn{display:none !important}
   :root{
     /* Наш стиль: тёмный графит + тёплая пыльная роза + кремовые акценты */
     --bg:#0a0a0b;
@@ -483,6 +484,8 @@
     border-top:1px solid var(--panel-border);
   }
   footer a{text-decoration:underline;color:var(--lavender)}
+  .footer-requisites{margin-top:14px;padding-top:14px;border-top:1px solid rgba(196,163,166,0.25)}
+  .footer-requisites p{margin:2px 0;font-size:0.85rem;opacity:0.85}
   .footer-link{font-weight:700}
   .footer-link:hover{color:var(--lilac-pale)}
 
@@ -800,17 +803,7 @@
       <p class="hero-sub" data-i18n="hero.sub">Рутина съедает ваши дни, заявки теряются, а бизнес держится
         только на вас. Мы строим системы, которые забирают рутину и приводят клиентов,
         чтобы вы получили главное - вернули себе самый ценный актив. Это ваше время</p>
-      <a class="btn btn-pulse" href="#" onclick="toggleChat();return false;" data-i18n="cta.discuss">Обсудить проект</a>
-    </div>
-  </div>
-</section>
-
-<section class="block-cta" id="opros">
-  <div class="container">
-    <h2 data-i18n-html="opros.h2">Не знаете, что <span class="accent">подойдёт</span> именно вам?</h2>
-    <p data-i18n="opros.text">Пройдите короткий опрос - расскажите о своём деле и задаче простыми словами.
-      Внизу жмите «Отправить», ответы сразу уйдут к нам, и продолжим в Telegram: подберём решение под вас и объясним, почему именно оно.</p>
-    <a class="btn btn-pulse" href="oprosnik.html" data-i18n="opros.btn">Пройти опрос</a>
+      <a class="btn btn-pulse" href="#" onclick="toggleChat();return false;" data-i18n="cta.discuss" aria-label="Получить бесплатный разбор">Получить бесплатный разбор</a>
   </div>
 </section>
 
@@ -830,61 +823,47 @@
   </div>
 </section>
 
+
+<style>
+.cert-badge{ display:flex; align-items:center; justify-content:center; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06)); padding:18px; border-radius:14px; box-shadow:0 8px 30px rgba(0,0,0,.35); }
+.cert-icon{ width:96px; height:96px; }
+.cert-hero{ width:56px; height:56px; border-radius:8px; object-fit:cover; vertical-align:middle; margin-right:10px;}
+.cert-card p{ margin-top:10px; color:#fff; }
+</style>
+
 <section class="certs-inline" id="certs">
   <div class="container">
-    <h2 data-i18n-html="certs.h2">Сертификаты и <span class="accent">дипломы</span></h2>
+    <h2 data-i18n-html="certs.h2"><img src="/assets/icons/cert-hero.jpg" class="cert-hero" alt=""> Сертификаты и <span class="accent">дипломы</span></h2>
     <div class="cert-grid">
       <div class="cert-card" onclick="openLightbox('assets/certificates/keti-producer-reels.jpg')">
-        <img src="assets/certificates/keti-producer-reels.jpg" alt="Сертификат Екатерины Киселёвой «Продюсер Reels»" loading="lazy">
+        <div class="cert-badge"><img src="/assets/icons/icon-certified.svg" class="cert-icon" alt="Сертификат Екатерины Киселёвой «Продюсер Reels»" ></div>
         <p data-i18n="certs.1">Екатерина Киселёва - «Продюсер Reels», заработок на Reels</p>
       </div>
       <div class="cert-card" onclick="openLightbox('assets/certificates/keti-zarabotok-na-reels-dark.jpg')">
-        <img src="assets/certificates/keti-zarabotok-na-reels-dark.jpg" alt="Сертификат Екатерины Киселёвой «Заработок на Reels»" loading="lazy">
+        <div class="cert-badge"><img src="/assets/icons/icon-medal.svg" class="cert-icon" alt="Сертификат Екатерины Киселёвой «Заработок на Reels»" ></div>
         <p data-i18n="certs.2">Екатерина Киселёва - курс «Заработок на Reels», преподаватель Арина Алекс</p>
       </div>
       <div class="cert-card" onclick="openLightbox('assets/certificates/artur-neurofair.jpg')">
-        <img src="assets/certificates/artur-neurofair.jpg" alt="Сертификат Артура «Первая в России ярмарка нейросотрудников»" loading="lazy">
+        <div class="cert-badge"><img src="/assets/icons/icon-ai.svg" class="cert-icon" alt="Сертификат Артура «Первая в России ярмарка нейросотрудников»" ></div>
         <p data-i18n="certs.3">Артур - участник «Первой в России ярмарки нейросотрудников», 24-26 марта 2026</p>
       </div>
       <div class="cert-card" onclick="openLightbox('assets/certificates/artur-neurouniversitet-2026.jpg')">
-        <img src="assets/certificates/artur-neurouniversitet-2026.jpg" alt="Сертификат Артура «НейроУниверситет прибыльных профессий»" loading="lazy">
+        <div class="cert-badge"><img src="/assets/icons/icon-seo.svg" class="cert-icon" alt="Сертификат Артура «НейроУниверситет прибыльных профессий»" ></div>
         <p data-i18n="certs.4">Артур - курс «НейроУниверситет прибыльных профессий: от основ к практическому применению», 02.03-29.05.2026</p>
       </div>
       <div class="cert-card" onclick="openLightbox('assets/certificates/artur-ai-agent-praktikum-2026.jpg')">
-        <img src="assets/certificates/artur-ai-agent-praktikum-2026.jpg" alt="Сертификат Артура «Создаём AI-агента вместе»" loading="lazy">
+        <div class="cert-badge"><img src="/assets/icons/icon-ai.svg" class="cert-icon" alt="Сертификат Артура «Создаём AI-агента вместе»" ></div>
         <p data-i18n="certs.5">Артур - практикум «Создаём AI-агента вместе», 16-17 июня 2026</p>
       </div>
       <div class="cert-card" onclick="openLightbox('assets/certificates/artur-vaib-na-million-2026.jpg')">
-        <img src="assets/certificates/artur-vaib-na-million-2026.jpg" alt="Сертификат Артура «Вайб на миллион»" loading="lazy">
+        <div class="cert-badge"><img src="/assets/icons/icon-ppc.svg" class="cert-icon" alt="Сертификат Артура «Вайб на миллион»" ></div>
         <p data-i18n="certs.6">Артур Киселев - практикум «Вайб на миллион», 8-9 июля 2026</p>
       </div>
     </div>
   </div>
 </section>
 
-<div class="block-cta"><a class="btn" href="#" onclick="toggleChat();return false;" data-i18n="cta.discuss">Обсудить проект</a></div>
-
-<section class="team" id="team">
-  <div class="container">
-    <h2 data-i18n-html="team.h2">Наша <span class="accent">команда</span></h2>
-    <div class="team-grid">
-      <div class="team-card">
-        <div class="team-avatar"><img src="assets/photos/artur-team-portrait.jpg" alt="Артур"></div>
-        <h3>Артур</h3>
-        <div class="team-role" data-i18n="team.artur.role">Разработчик цифровых продуктов, креатор</div>
-        <p class="desc" data-i18n="team.artur.desc">Боты, сайты, нейропомощники: от идеи до запуска.</p>
-      </div>
-      <div class="team-card">
-        <div class="team-avatar"><img src="assets/photos/keti-team-portrait.jpg" alt="Кети"></div>
-        <h3>Кети</h3>
-        <div class="team-role" data-i18n="team.keti.role">Продюсер · аналитик · маркетолог</div>
-        <p class="desc" data-i18n="team.keti.desc">Стратегия, позиционирование и продвижение: продукт не только сделан, но и продаётся.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="block-cta"><a class="btn" href="#" onclick="toggleChat();return false;" data-i18n="cta.discuss">Обсудить проект</a></div>
+<div class="block-cta"><a class="btn" href="#" onclick="toggleChat();return false;" data-i18n="cta.discuss" aria-label="Получить бесплатный разбор">Получить бесплатный разбор</a></div>
 
 <section class="services" id="services">
   <div class="container">
@@ -917,7 +896,7 @@
   </div>
 </section>
 
-<div class="block-cta"><a class="btn" href="#" onclick="toggleChat();return false;" data-i18n="cta.discuss">Обсудить проект</a></div>
+<div class="block-cta"><a class="btn" href="#" onclick="toggleChat();return false;" data-i18n="cta.discuss" aria-label="Получить бесплатный разбор">Получить бесплатный разбор</a></div>
 
 <section class="process" id="process">
   <div class="container">
@@ -1142,7 +1121,7 @@
       </div>
     </div>
     <div class="portfolio-more">
-      <a class="btn" href="#contacts" data-i18n="cta.discuss">Обсудить проект</a>
+      <a class="btn" href="#contacts" data-i18n="cta.discuss" aria-label="Получить бесплатный разбор">Получить бесплатный разбор</a>
     </div>
   </div>
 </section>
@@ -1214,7 +1193,7 @@
   </div>
 </section>
 
-<div class="block-cta"><a class="btn" href="#" onclick="toggleChat();return false;" data-i18n="cta.discuss">Обсудить проект</a></div>
+<div class="block-cta"><a class="btn" href="#" onclick="toggleChat();return false;" data-i18n="cta.discuss" aria-label="Получить бесплатный разбор">Получить бесплатный разбор</a></div>
 
 <section class="contacts" id="contacts">
   <div class="container">
@@ -1232,8 +1211,15 @@
 
 <footer>
   <div class="container">
-    <p><a class="footer-link" href="https://t.me/Kiselevy_Creo_digital" target="_blank" rel="noopener" data-i18n="footer.channel">Наш канал в Telegram</a></p>
+    
+    <p><a class="footer-link" href="oferta.html" data-i18n="footer.oferta">Публичная оферта (условия оказания услуг, оплата и возврат)</a></p>
     <p><a class="footer-link" href="privacy.html" data-i18n="footer.privacy">Политика обработки персональных данных</a></p>
+    <div class="footer-requisites">
+      <p>ИП Киселев Артур Пшимахович</p>
+      <p>ИНН 231406735404 · ОГРНИП 312231421500020</p>
+      <p>Адрес: 352505, Краснодарский край, г. Лабинск, ул. Филатова, д. 45</p>
+      <p>Email: <a class="footer-link" href="mailto:dj.mr.fobs@gmail.com">dj.mr.fobs@gmail.com</a></p>
+    </div>
     <p>© KISELEVY CREO, 2026</p>
   </div>
 </footer>
@@ -1748,6 +1734,7 @@
       'contacts.btn': `Message on Telegram`,
       'contacts.channel': `Subscribe to our channel`,
       'footer.channel': `Our Telegram channel`,
+      'footer.oferta': `Public offer (terms of service, payment and refunds)`,
       'footer.privacy': `Privacy Policy`,
       'certs.h2': `Certificates and <span class="accent">Diplomas</span>`,
       'certs.1': `Ekaterina Kiseleva - "Reels Producer", earning on Reels`,
@@ -2006,6 +1993,7 @@
       'contacts.btn': `Pišite na Telegram`,
       'contacts.channel': `Pretplatite se na naš kanal`,
       'footer.channel': `Naš Telegram kanal`,
+      'footer.oferta': `Javna ponuda (uslovi usluga, plaćanje i povraćaj)`,
       'footer.privacy': `Politika privatnosti`,
       'certs.h2': `Sertifikati i <span class="accent">diplome</span>`,
       'certs.1': `Ekaterina Kiseljova - "Producent Reelsa", zarada na Reelsu`,
@@ -2129,6 +2117,16 @@
     fetch('/api/track-visit', {method:'POST'}).catch(function(){});
   });
 </script>
+
+
+
+<!-- Back button -->
+<style>
+#backBtn{display:none !important}
+#backBtn:active{transform:scale(.98)}
+@media(max-width:640px){ #backBtn{display:none !important} }
+</style>
+<button id="backBtn" aria-label="Назад" title="Назад" onclick="(function(){ try{ if(history.length>1) history.back(); else location.href='/' }catch(e){ location.href='/' } })()">←</button>
 
 </body>
 </html>

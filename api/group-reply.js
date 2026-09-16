@@ -10,6 +10,9 @@
 // Запуск 24/7: Vercel serverless / webhook от Telegram (см. setup-webhook.js).
 
 const store = require('./_lib/oprosnikStore');
+
+// Ключи message_id, которые сейчас в обработке (защита от повторной доставки).
+const IN_FLIGHT = new Set();
 const K = require('./_lib/knowledge');
 const questions = require('./_lib/oprosnikQuestions');
 const brain = require('./_lib/creo-brain');
@@ -185,11 +188,32 @@ module.exports = async function handler(req, res) {
   const update = req.body || {};
   const msg = update.message;
 
-  // сразу отвечаем 200, дальше работаем в фоне
-  res.status(200).json({ ok: true });
+  if (!token || !apiKey || !msg || !msg.text) {
+    res.status(200).json({ ok: true });
+    return;
+  }
+  if (isFromBot(update)) {
+    res.status(200).json({ ok: true });
+    return;
+  }
 
-  if (!token || !apiKey || !msg || !msg.text) return;
-  if (isFromBot(update)) return;
+  // Защита от повторной доставки апдейта: пока этот message_id обрабатывается,
+  // повторный запрос отбиваем сразу. Vercel может переслать апдейт, пока первый
+  // вызов ещё работает (мы теперь отвечаем Telegram не мгновенно, а после обработки).
+  const msgKey = String(update.update_id != null ? update.update_id : (msg.message_id || ''));
+  if (msgKey && IN_FLIGHT.has(msgKey)) {
+    res.status(200).json({ ok: true, dup: true });
+    return;
+  }
+  if (msgKey) {
+    IN_FLIGHT.add(msgKey);
+    // подстраховка: не держим ключ дольше 45 секунд, чтобы не течь
+    setTimeout(() => IN_FLIGHT.delete(msgKey), 45000);
+  }
+
+  // ВАЖНО: отвечаем Telegram 200 ТОЛЬКО после обработки и отправки ответа клиенту.
+  // Раньше отдавали 200 сразу и работали в фоне - Vercel замораживал фон после
+  // ответа, и бот молчал (ответ не успевал уйти). Теперь ждём обработку.
 
   const isCommand = msg.text.startsWith('/');
   const isGroup = String(msg.chat && msg.chat.id) === String(groupChatId);
@@ -199,18 +223,25 @@ module.exports = async function handler(req, res) {
   // РЕЖИМ КОМАНДЫ: только сообщения из внутренней группы заявок
   // -------------------------------------------------------------
   if (isGroup) {
-    if (isCommand) return; // слэш-команды в группе не трогаем ботом
+    if (isCommand) {
+      res.status(200).json({ ok: true });
+      return;
+    }
     try {
       const reply = await askDeepSeek(apiKey, TEAM_PROMPT, msg.text);
       if (reply) await sendMessage(token, groupChatId, reply);
     } catch (e) {
       console.error('team mode failed', e);
     }
+    res.status(200).json({ ok: true });
     return;
   }
 
   // не команда и не группа - игнорируем (например, групповые чаты без нас)
-  if (msg.chat && msg.chat.type !== 'private') return;
+  if (msg.chat && msg.chat.type !== 'private') {
+    res.status(200).json({ ok: true });
+    return;
+  }
 
   // -------------------------------------------------------------
   // РЕЖИМ КЛИЕНТА: приватный чат
@@ -282,25 +313,46 @@ module.exports = async function handler(req, res) {
       ? { name: funnel.leadName || '', contact: funnel.leadContact || '', answers: funnel.leadAnswers || [] }
       : null;
 
-    // 2a) Определяем ветку по ответу человека и ведём этап дальше
+    // 2a) Ведём этап воронки дальше по ответу человека
     let repliedText = '';
-    if (funnel.stage === 'filter' || funnel.stage === 'match') {
+
+    // ШАГ 1: выход из диагностики. Если человек уже рассказал про дело и боль -
+    // переводим в подбор продукта. Иначе он будет вечно задавать вопросы.
+    if ((funnel.stage === 'diag' || !funnel.stage) && brain.shouldAdvanceFromDiag(msg.text, hist)) {
+      await store.setFunnelState(chatId, { stage: 'match' });
+      funnel = Object.assign({}, funnel, { stage: 'match' });
+    }
+
+    // ШАГ 2: на подборе ждём ответа человека про выбор ветки.
+    // Если человек ответил не по шаблону - переходим в фильтр и просим выбрать вариант.
+    if (funnel.stage === 'match') {
+      const b = decideBranch(msg.text);
+      if (b) {
+        funnel = Object.assign({}, funnel, { stage: b, branch: b });
+        await store.setFunnelState(chatId, {
+          stage: b,
+          branch: b,
+          branchAt: Date.now(),
+          warmupStartAt: (b === 'warm' || b === 'cold') ? Date.now() : undefined,
+          warmupStep: 0,
+          warmupDone: false,
+        });
+      } else {
+        await store.setFunnelState(chatId, { stage: 'filter' });
+        funnel = Object.assign({}, funnel, { stage: 'filter' });
+      }
+    } else if (funnel.stage === 'filter') {
       const branch = decideBranch(msg.text);
       if (branch) {
         funnel = Object.assign({}, funnel, { stage: branch, branch: branch });
-        // ставим прогреВ в расписание: с этого момента идёт серия warmup
         await store.setFunnelState(chatId, {
           stage: branch,
           branch: branch,
           branchAt: Date.now(),
-          warmupStartAt: branch === 'warm' || branch === 'cold' ? Date.now() : undefined,
+          warmupStartAt: (branch === 'warm' || branch === 'cold') ? Date.now() : undefined,
           warmupStep: 0,
           warmupDone: false,
         });
-      } else if (funnel.stage === 'match') {
-        // ответил не по шаблону - остаёмся в фильтре и просим выбрать
-        await store.setFunnelState(chatId, { stage: 'filter' });
-        funnel = Object.assign({}, funnel, { stage: 'filter' });
       }
     }
 
@@ -332,6 +384,12 @@ module.exports = async function handler(req, res) {
     console.error('client mode failed', e);
     try { await sendMessage(token, chatId, 'Маленький сбой, попробуй ещё раз чуть позже.'); } catch (_) {}
   }
+
+  // Теперь, когда обработка и отправка завершены, сообщаем Telegram об успехе.
+  // Если не отдать вовремя - Telegram перешлёт апдейт, поэтому отвечаем быстро
+  // после завершения, а защита IN_FLIGHT отобьёт возможный дубль.
+  if (msgKey) IN_FLIGHT.delete(msgKey);
+  res.status(200).json({ ok: true });
 };
 
 // отдельный вызов DeepSeek по уже готовому массиву messages (с системой)

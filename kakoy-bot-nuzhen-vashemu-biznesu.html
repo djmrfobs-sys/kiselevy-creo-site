@@ -284,5 +284,15 @@
 }
 </script>
 
+
+
+<!-- Back button -->
+<style>
+#backBtn{display:none !important}
+#backBtn:active{transform:scale(.98)}
+@media(max-width:640px){ #backBtn{display:none !important} }
+</style>
+<button id="backBtn" aria-label="Назад" title="Назад" onclick="(function(){ try{ if(history.length>1) history.back(); else location.href='/' }catch(e){ location.href='/' } })()">←</button>
+
 </body>
 </html>

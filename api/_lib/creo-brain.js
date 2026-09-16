@@ -41,6 +41,23 @@ function decideBranch(text) {
 }
 
 // ------------------------------------------------------------------
+// ВЫХОД ИЗ ДИАГНОСТИКИ
+// Диагностика заканчивается, когда человек рассказал про своё дело и боль.
+// Простое "привет" или "да" - это ещё не диагностика, рано двигать.
+const SMALLTALK = /^(привет|здравствуй|здравствуйте|hi|hello|hey|добрый день|добрый вечер|доброе утро|cao|zdravo|ок|окей|ok|да|нет|yes|no|спасибо|спс|благодарю)\s*[!.,?]*$/i;
+const BUSINESS_SIGNAL = /(сайт|бот|телеграм|telegram|канал|заявк|клиент|бизнес|компан|магазин|студи|салон|клиник|школ|курс|услуг|товар|продаж|запис|мастер|тренер|эксперт|врач|консульт|автоматиз|воронк|маркетинг|реклам|инстаграм|instagram|whatsapp|теря|не успева|рутин|вручную|менеджер|админ|заказ|site|bot|leads?|clients?|business|automation|marketing|sales)/i;
+
+/** Пора переходить от диагностики к подбору? */
+function shouldAdvanceFromDiag(text, history) {
+  const t = String(text || '').trim();
+  if (!t) return false;
+  if (SMALLTALK.test(t)) return false;
+  const turns = Array.isArray(history) ? history.filter((m) => m && m.role === 'user').length : 0;
+  // либо человек прямо назвал сферу/боль, либо уже разговорились (3+ реплик от него)
+  return BUSINESS_SIGNAL.test(t) || turns >= 3;
+}
+
+// ------------------------------------------------------------------
 // ЯЗЫК: русский / английский / сербский
 function guessLang(text, ctx) {
   if (ctx && ctx.lang) return ctx.lang;
@@ -78,6 +95,7 @@ function clientSystemPrompt(leadCtx, lang, funnel) {
   const L = normLang(lang);
   const name = leadCtx && leadCtx.name ? ' ' + String(leadCtx.name).split(' ')[0] : '';
   const hasCtx = !!(leadCtx && (leadCtx.name || (leadCtx.answers && leadCtx.answers.length)));
+  const funnelRules = L === 'ru' ? K.FUNNEL_RULES : K.FUNNEL_RULES_EN;
   const answersBlock = questions.describeAnswers(leadCtx && leadCtx.answers, L === 'ru' ? 'ru' : 'en');
 
   const contextLine = hasCtx
@@ -113,6 +131,8 @@ ${contextLine}
 ТЕКУЩИЙ ЭТАП ВОРОНКИ: ${stageLine}${branchLine ? '\n' + branchLine : ''}${productLine ? '\n' + productLine : ''}`,
 
     CHANNEL_INVITE_RU,
+
+    funnelRules,
 
     K.buildKnowledgeBlock(L === 'ru' ? 'ru' : 'en'),
 
@@ -259,6 +279,7 @@ module.exports = {
   CHANNEL_INVITE_RU,
   TEAM_PROMPT,
   decideBranch,
+  shouldAdvanceFromDiag,
   guessLang,
   normLang,
   clientSystemPrompt,
