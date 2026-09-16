@@ -1,0 +1,45 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Upload files to VPS
+        uses: appleboy/scp-action@v0.1.2
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_KEY }}
+          port: ${{ secrets.DEPLOY_PORT || '22' }}
+          source: "./"
+          target: ${{ secrets.DEPLOY_PATH }}
+
+      - name: Post-deploy commands
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_KEY }}
+          port: ${{ secrets.DEPLOY_PORT || '22' }}
+          script: |
+            set -e
+            timestamp=$(date -u +"%Y%m%dT%H%M%SZ")
+            mkdir -p /root/backups
+            if [ -d "${{ secrets.DEPLOY_PATH }}" ]; then
+              tar -czf /root/backups/site_backup_${timestamp}.tar.gz -C "${{ secrets.DEPLOY_PATH }}" . || true
+            fi
+            # Move uploaded files into webroot (action uploads to target path)
+            # Ensure permissions and reload nginx
+            if id www-data >/dev/null 2>&1; then
+              chown -R www-data:www-data "${{ secrets.DEPLOY_PATH }}"
+            else
+              chown -R root:root "${{ secrets.DEPLOY_PATH }}"
+            fi
+            systemctl reload nginx || true
