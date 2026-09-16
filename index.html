@@ -1042,7 +1042,8 @@
   .chat-input:focus{ outline:none; border-color:var(--sky-deep); }
 
   @media(max-width:640px){
-    .chat-panel{ width:calc(100vw - 32px); height:70vh; right:-10px; }
+    /* На мобильных экранах развернуть панель чата на весь экран */
+    .chat-panel{ width:100vw; height:100vh; right:0; bottom:0; left:0; top:0; border-radius:0; }
     .chat-widget{ bottom:16px; right:16px; }
     .chat-toggle{ width:52px; height:52px; font-size:22px; }
   }
@@ -1050,6 +1051,7 @@
 
   /* ========== PAGE TRANSITIONS ========== */
   .page-transition{ position:fixed; inset:0; z-index:9998; pointer-events:none; overflow:hidden; }
+.site-icon{ width:28px; height:28px; border-radius:6px; vertical-align:middle; }
   .page-transition-inner{ position:absolute; inset:0; background:var(--peach-deep); transform:translateY(100%); transition:transform .5s var(--ease); }
   .page-transition.active .page-transition-inner{ transform:translateY(0); }
   .page-transition.out .page-transition-inner{ transform:translateY(-100%); }
@@ -1503,12 +1505,12 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="achieve-card reveal">
           <div class="achieve-number"><span class="stat-number" data-target="12">0</span>+</div>
           <div class="achieve-label" data-i18n="achiev_3">Ниш и направлений</div>
-          <div class="achieve-icon">🎯</div>
+          <div class="achieve-icon"><img src="/projects/KISELEVY_CREO/site/assets/icons/icon-ppc.svg" class="site-icon" alt=""></div>
         </div>
         <div class="achieve-card reveal">
           <div class="achieve-number"><span class="stat-number" data-target="3">0</span></div>
           <div class="achieve-label" data-i18n="achiev_4">Года на рынке</div>
-          <div class="achieve-icon">📈</div>
+          <div class="achieve-icon"><img src="/projects/KISELEVY_CREO/site/assets/icons/icon-seo.svg" class="site-icon" alt=""></div>
         </div>
       </div>
     </div>
@@ -1520,7 +1522,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="trust-heading" data-i18n="logobar_title">Нам доверяют</div>
       <div class="trust-container">
         <div class="logobar-track">
-          <span class="logobar-item"><span>🤖</span> Чат-боты</span>
+          <span class="logobar-item"><span><img src="/projects/KISELEVY_CREO/site/assets/icons/icon-ai.svg" class="site-icon" alt=""></span> Чат-боты</span>
           <span class="logobar-item"><span>🌐</span> Сайты</span>
           <span class="logobar-item"><span>🧠</span> AI-решения</span>
           <span class="logobar-item"><span>📢</span> Маркетинг</span>
@@ -1528,7 +1530,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <span class="logobar-item"><span>⚡</span> Автоматизация</span>
           <span class="logobar-item"><span>🔄</span> Воронки</span>
           <span class="logobar-item"><span>📱</span> Telegram</span>
-          <span class="logobar-item"><span>🤖</span> Чат-боты</span>
+          <span class="logobar-item"><span><img src="/projects/KISELEVY_CREO/site/assets/icons/icon-ai.svg" class="site-icon" alt=""></span> Чат-боты</span>
           <span class="logobar-item"><span>🌐</span> Сайты</span>
           <span class="logobar-item"><span>🧠</span> AI-решения</span>
           <span class="logobar-item"><span>📢</span> Маркетинг</span>
@@ -1647,18 +1649,18 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="trust-container">
         <div class="trust-track" id="trustTrack">
           <!-- First set -->
-          <span class="trust-logo">🤖 <span data-i18n="trust_ai">AI-проекты</span></span>
+          <span class="trust-logo"><img src="/projects/KISELEVY_CREO/site/assets/icons/icon-ai.svg" class="site-icon" alt=""> <span data-i18n="trust_ai">AI-проекты</span></span>
           <span class="trust-logo">💬 <span data-i18n="trust_bots">Чат-боты</span></span>
           <span class="trust-logo">⚡ <span data-i18n="trust_automation">Автоматизация</span></span>
           <span class="trust-logo">📱 <span data-i18n="trust_dev">Веб-разработка</span></span>
-          <span class="trust-logo">🎯 <span data-i18n="trust_marketing">Маркетинг</span></span>
+          <span class="trust-logo"><img src="/projects/KISELEVY_CREO/site/assets/icons/icon-ppc.svg" class="site-icon" alt=""> <span data-i18n="trust_marketing">Маркетинг</span></span>
           <span class="trust-logo">🚀 <span data-i18n="trust_production">Продюсирование</span></span>
           <!-- Duplicate for seamless loop -->
-          <span class="trust-logo">🤖 <span data-i18n="trust_ai">AI-проекты</span></span>
+          <span class="trust-logo"><img src="/projects/KISELEVY_CREO/site/assets/icons/icon-ai.svg" class="site-icon" alt=""> <span data-i18n="trust_ai">AI-проекты</span></span>
           <span class="trust-logo">💬 <span data-i18n="trust_bots">Чат-боты</span></span>
           <span class="trust-logo">⚡ <span data-i18n="trust_automation">Автоматизация</span></span>
           <span class="trust-logo">📱 <span data-i18n="trust_dev">Веб-разработка</span></span>
-          <span class="trust-logo">🎯 <span data-i18n="trust_marketing">Маркетинг</span></span>
+          <span class="trust-logo"><img src="/projects/KISELEVY_CREO/site/assets/icons/icon-ppc.svg" class="site-icon" alt=""> <span data-i18n="trust_marketing">Маркетинг</span></span>
           <span class="trust-logo">🚀 <span data-i18n="trust_production">Продюсирование</span></span>
         </div>
       </div>
@@ -1714,10 +1716,10 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="flow-track"><div class="flow-pulse"></div></div>
         <div class="flow-steps">
           <div class="flow-step"><span class="flow-ic">📥</span><b>Заявка</b><span>Клиент написал или оставил заявку</span></div>
-          <div class="flow-step"><span class="flow-ic">🤖</span><b>AI / бот</b><span>Отвечает мгновенно, квалифицирует</span></div>
+          <div class="flow-step"><span class="flow-ic"><img src="/projects/KISELEVY_CREO/site/assets/icons/icon-ai.svg" class="site-icon" alt=""></span><b>AI / бот</b><span>Отвечает мгновенно, квалифицирует</span></div>
           <div class="flow-step"><span class="flow-ic">🗂</span><b>CRM</b><span>Сделка создаётся автоматически</span></div>
           <div class="flow-step"><span class="flow-ic">🧑‍💻</span><b>Человек</b><span>Подключается только на сложном моменте</span></div>
-          <div class="flow-step"><span class="flow-ic">✅</span><b>Результат</b><span>Клиент доволен, рутина — на автомате</span></div>
+          <div class="flow-step"><span class="flow-ic"><img src="/projects/KISELEVY_CREO/site/assets/icons/icon-medal.svg" class="site-icon" alt=""></span><b>Результат</b><span>Клиент доволен, рутина — на автомате</span></div>
         </div>
       </div>
 
@@ -1853,7 +1855,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         <div class="how-step reveal">
           <div class="how-num">03</div>
-          <span class="how-icon">⚙️</span>
+          <span class="how-icon"><img src="/projects/KISELEVY_CREO/site/assets/icons/icon-automation.svg" class="site-icon" alt=""></span>
           <h3 data-i18n="how_step3_title">Разработка</h3>
           <p data-i18n="how_step3_desc">Собираем продукт с поэтапными показами</p>
         </div>
@@ -2238,7 +2240,7 @@ const revealObserver = new IntersectionObserver(entries=>{
 })();
 
 const CATEGORIES = {
-  automation: {label:'Автоматизация', icon:'⚙', class:'ph-automation'},
+  automation: {label:'Автоматизация', icon:'<img src="/projects/KISELEVY_CREO/site/assets/icons/icon-automation.svg" class="site-icon" alt="">', class:'ph-automation'},
   chatbot:    {label:'Чат-боты',      icon:'◔', class:'ph-chatbot'},
   ai:         {label:'AI-системы',    icon:'✦', class:'ph-ai'},
   production: {label:'Продюсирование', icon:'▶', class:'ph-production'},
@@ -2261,7 +2263,7 @@ const WORKS = [
 ];
 
 const SERVICES = [
-  {icon:'⚙', title:'Автоматизация', text:'Настройка процессов и интеграций между сайтом, CRM и мессенджерами — без ручной рутины.'},
+  {icon:'<img src="/projects/KISELEVY_CREO/site/assets/icons/icon-automation.svg" class="site-icon" alt="">', title:'Автоматизация', text:'Настройка процессов и интеграций между сайтом, CRM и мессенджерами — без ручной рутины.'},
   {icon:'◔', title:'Чат-боты', text:'Боты для Telegram, WhatsApp и сайта: продажи, запись, поддержка, оплата.'},
   {icon:'✦', title:'AI-системы', text:'Внедрение AI-ассистентов и нейросетей в бизнес-процессы и коммуникацию с клиентами.'},
   {icon:'▶', title:'Продюсирование', text:'Съёмка и монтаж рекламных роликов, кейсов и контента для соцсетей.'},
@@ -2333,7 +2335,7 @@ function buildCard(w){
     <div class="card-media ${w.image ? '' : cat.class}">
       ${w.image ? `<img src="${w.image}" alt="${w.title}" loading="lazy">` : `<span class="ph-icon">${cat.icon}</span>`}
       <div class="card-expand">⤢</div>
-      ${w.result ? `<div class="card-result">📈 ${w.result}</div>` : ''}
+      ${w.result ? `<div class="card-result"><img src="/projects/KISELEVY_CREO/site/assets/icons/icon-seo.svg" class="site-icon" alt=""> ${w.result}</div>` : ''}
     </div>
     <div class="card-body">
       <div class="card-tag">${cat.label}</div>
@@ -2428,7 +2430,7 @@ function openLightbox(w){
   document.getElementById('lightboxTitle').textContent = w.title;
   document.getElementById('lightboxDesc').textContent = w.description;
   const resultEl = document.getElementById('lightboxResult');
-  resultEl.innerHTML = w.result ? `📈 Результат: <b>${w.result}</b>` : '';
+  resultEl.innerHTML = w.result ? `<img src="/projects/KISELEVY_CREO/site/assets/icons/icon-seo.svg" class="site-icon" alt=""> Результат: <b>${w.result}</b>` : '';
   resultEl.style.display = w.result ? 'flex' : 'none';
   const media = document.getElementById('lightboxMedia');
   if(w.image){
@@ -2586,7 +2588,7 @@ calForm.addEventListener('submit', async (e)=>{
   calForm.style.display = 'none';
   const successEl = document.getElementById('calSuccess');
   successEl.style.display = 'flex';
-  successEl.innerHTML = `✅ Готово! Записал вас на ${selectedDay}, ${selectedTime}. Подтверждение придёт в Telegram/на почту.`;
+  successEl.innerHTML = `<img src="/projects/KISELEVY_CREO/site/assets/icons/icon-medal.svg" class="site-icon" alt=""> Готово! Записал вас на ${selectedDay}, ${selectedTime}. Подтверждение придёт в Telegram/на почту.`;
 });
 
 /* ---------------- СЛАЙДЕР ДО/ПОСЛЕ ---------------- */
@@ -2953,14 +2955,13 @@ async function getBotReply(userText){
   }
   return classifyLocal(userText);
 }
-</script>
+
 
 <!-- ================= ЧАТ-ВИДЖЕТ ================= -->
 <div class="chat-widget" id="chatWidget">
-  <button class="chat-toggle" id="chatToggle" aria-label="Чат">💬</button>
   <div class="chat-panel" id="chatPanel">
     <div class="chat-header">
-      <span>🤖 KISELEVY CREO Assistant</span>
+      <span><img src="/projects/KISELEVY_CREO/site/assets/icons/icon-ai.svg" class="site-icon" alt="" style="width:22px;height:22px;vertical-align:middle;margin-right:8px">KISELEVY CREO Assistant</span>
       <button class="chat-close" id="chatClose">✕</button>
     </div>
     <div class="chat-messages" id="chatMessages" style="flex:1; overflow-y:auto; padding:14px; display:flex; flex-direction:column; gap:10px;">
@@ -3058,7 +3059,9 @@ document.addEventListener('DOMContentLoaded', () => {
             text: `💬 Чат с сайта:\n\n${text}`
           })
         });
-        botMsg.innerHTML = '<p>✅ Сообщение отправлено! Мы ответим в ближайшее время.</p>';
+        botMsg.innerHTML = '<p><img src="/projects/KISELEVY_CREO/site/assets/icons/icon-medal.svg" class="site-icon" alt=""> Сообщение отправлено! Мы ответим в ближайшее время.</p>';
+        // Показываем начало ответа бота вверху области сообщений на мобильных устройствах
+        try { botMsg.scrollIntoView({ block: 'start' }); } catch(e) { messages.scrollTop = messages.scrollHeight; }
       } catch(err) {
         botMsg.innerHTML = '<p>❌ Ошибка отправки. Попробуйте позже.</p>';
       }
@@ -3090,7 +3093,7 @@ document.addEventListener('DOMContentLoaded', () => {
           text: `📋 Новая задача с сайта:\n\n${text}`
         })
       });
-      taskSuccess.textContent = '✅ Задача отправлена! Мы свяжемся с вами.';
+      taskSuccess.textContent = '<img src="/projects/KISELEVY_CREO/site/assets/icons/icon-medal.svg" class="site-icon" alt=""> Задача отправлена! Мы свяжемся с вами.';
       taskSuccess.style.display = 'block';
       taskForm.value = '';
     } catch(err) {
@@ -3169,6 +3172,24 @@ document.addEventListener('DOMContentLoaded', () => {
     orbs.forEach(orb => {
       orb.style.transform = 'translate(0, 0) scale(1)';
     });
+
+    trust_heading: 'TRUSTED BY',
+    trust_ai: 'AI Projects',
+    trust_bots: 'Chatbots',
+    trust_automation: 'Automation',
+    trust_dev: 'Web Development',
+    trust_marketing: 'Marketing',
+    trust_production: 'Production',
+    how_title: 'How We Work',
+    how_subtitle: 'From idea to ready product — 4 simple steps',
+    how_step1_title: 'Request & Brief',
+    how_step1_desc: 'Describe your task — we clarify details and timeline',
+    how_step2_title: 'Planning',
+    how_step2_desc: 'Architecture, design, technology selection',
+    how_step3_title: 'Development',
+    how_step3_desc: 'Building the product with stage-by-stage previews',
+    how_step4_title: 'Launch & Support',
+    how_step4_desc: 'Deployment, testing, ongoing maintenance',
   });
 });
 
@@ -3421,5 +3442,15 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 </script>
+
+
+<!-- Back button -->
+<style>
+#backBtn{position:fixed;left:16px;bottom:80px;width:52px;height:52px;border-radius:50%;background:linear-gradient(180deg,#f7d77a,#c69b2d);border:none;color:#111;font-size:22px;box-shadow:0 6px 20px rgba(0,0,0,.25);z-index:10000}
+#backBtn:active{transform:scale(.98)}
+@media(max-width:640px){ #backBtn{left:12px;bottom:90px;width:48px;height:48px;} }
+</style>
+<button id="backBtn" aria-label="Назад" title="Назад" onclick="(function(){ try{ if(history.length>1) history.back(); else location.href='/' }catch(e){ location.href='/' } })()">←</button>
+
 </body>
 </html>
