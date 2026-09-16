@@ -1,4 +1,8 @@
 User-agent: *
 Allow: /
 
+User-agent: *
+Disallow: /voice-test.html
+Disallow: /api/voice-token
+
 Sitemap: https://kiselevycreo.ru/sitemap.xml

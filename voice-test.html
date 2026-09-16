@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Голосовой ассистент - KISELEVY CREO (тест)</title>
+<style>
+  :root{
+    --peach:#e8b593;
+    --peach-dark:#d9986f;
+    --cream:#e9ddd0;
+    --choco:#5c4033;
+    --warm-white:#fffdf9;
+    --blue:#8fb3c9;
+    --green:#6f9f7c;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    min-height:100vh;
+    background:var(--choco);
+    color:var(--choco);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+  }
+  .card{
+    width:100%;
+    max-width:560px;
+    background:var(--warm-white);
+    border-radius:24px;
+    padding:28px 24px;
+    box-shadow:0 18px 50px rgba(0,0,0,.35);
+  }
+  .brand{
+    font-size:13px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--peach-dark);font-weight:600;margin-bottom:6px;
+  }
+  h1{font-size:22px;margin:0 0 4px;font-weight:650}
+  .sub{font-size:14px;color:#8a7364;margin-bottom:22px}
+  .status{
+    display:flex;align-items:center;gap:10px;font-size:14px;
+    background:var(--cream);border-radius:14px;padding:12px 14px;margin-bottom:20px;
+  }
+  .dot{width:10px;height:10px;border-radius:50%;background:#bbb;flex:none;transition:background .3s}
+  .dot.live{background:var(--green);box-shadow:0 0 0 5px rgba(111,159,124,.22)}
+  .dot.err{background:#c0603f}
+  .dot.work{background:var(--peach);animation:pulse 1s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+  .controls{display:flex;gap:10px;flex-wrap:wrap}
+  button{
+    font:inherit;font-weight:600;font-size:15px;border:none;border-radius:14px;
+    padding:14px 22px;cursor:pointer;transition:transform .12s,opacity .2s;
+  }
+  button:active{transform:scale(.97)}
+  button:disabled{opacity:.45;cursor:not-allowed}
+  .btn-main{background:var(--peach-dark);color:#fff;flex:1;min-width:190px}
+  .btn-main.stop{background:#a5563c}
+  .btn-ghost{background:var(--cream);color:var(--choco)}
+  .log{
+    margin-top:20px;border-top:1px solid var(--cream);padding-top:16px;
+    max-height:230px;overflow-y:auto;font-size:14px;line-height:1.55;
+  }
+  .row{margin-bottom:10px}
+  .who{
+    display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;
+    text-transform:uppercase;padding:2px 8px;border-radius:6px;margin-right:8px;vertical-align:2px;
+  }
+  .who.bot{background:var(--peach);color:#fff}
+  .who.you{background:var(--blue);color:#fff}
+  .who.sys{background:var(--cream);color:#8a7364}
+  .hint{font-size:12.5px;color:#9c8778;margin-top:14px;line-height:1.5}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="brand">Kiselevy Creo</div>
+  <h1>Голосовой ассистент</h1>
+  <div class="sub">Тестовый режим. Живой диалог с ботом голосом в браузере.</div>
+
+  <div class="status">
+    <span class="dot" id="dot"></span>
+    <span id="statusText">Не подключено</span>
+  </div>
+
+  <div class="controls">
+    <button class="btn-main" id="startBtn">Начать разговор</button>
+    <button class="btn-ghost" id="stopBtn" disabled>Стоп</button>
+  </div>
+
+  <div class="log" id="log"></div>
+
+  <div class="hint">
+    Нужен доступ к микрофону. Лучше всего работает в Chrome или Safari, обязательно по https.
+  </div>
+</div>
+
+<script>
+// Токен доступа для теста (защита от чужих запусков).
+const ACCESS = new URLSearchParams(location.search).get('t') || '';
+const MODEL = new URLSearchParams(location.search).get('model') || 'models/gemini-3.1-flash-live-preview';
+
+const SYSTEM_PROMPT = [
+  'Ты голосовой ассистент студии Kiselevy Creo. Отвечай по-русски, коротко и по делу.',
+  'Твоя задача: поприветствовать человека, выяснить, что ему нужно (бот, сайт, автоматизация процессов),',
+  'узнать имя и телефон или Telegram, предложить удобное время для созвона и подтвердить заявку.',
+  'Говори живо и по-человечески, без канцелярита. Не выдумывай цены, если не уверен, скажи что уточнит менеджер.',
+  'Один ответ - максимум две короткие фразы, это телефонный разговор.'
+].join(' ');
+
+const dot = document.getElementById('dot');
+const statusText = document.getElementById('statusText');
+const startBtn = document.getElementById('startBtn');
+const stopBtn = document.getElementById('stopBtn');
+const logEl = document.getElementById('log');
+
+let ws = null, audioCtx = null, micStream = null, processor = null, sourceNode = null;
+let playbackCtx = null, nextPlayTime = 0, running = false;
+
+function setStatus(text, cls){
+  statusText.textContent = text;
+  dot.className = 'dot' + (cls ? ' ' + cls : '');
+}
+function log(who, text){
+  const row = document.createElement('div');
+  row.className = 'row';
+  const tag = document.createElement('span');
+  tag.className = 'who ' + who;
+  tag.textContent = who === 'bot' ? 'Бот' : who === 'you' ? 'Вы' : 'Инфо';
+  row.appendChild(tag);
+  row.appendChild(document.createTextNode(text));
+  logEl.appendChild(row);
+  logEl.scrollTop = logEl.scrollHeight;
+}
+function b64encode(bytes){
+  let bin = '';
+  const chunk = 0x8000;
+  for (let i = 0; i < bytes.length; i += chunk){
+    bin += String.fromCharCode.apply(null, bytes.subarray(i, i + chunk));
+  }
+  return btoa(bin);
+}
+function b64decode(str){
+  const bin = atob(str);
+  const out = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+  return out;
+}
+function floatToPcm16(f32){
+  const out = new Int16Array(f32.length);
+  for (let i = 0; i < f32.length; i++){
+    const s = Math.max(-1, Math.min(1, f32[i]));
+    out[i] = s < 0 ? s * 0x8000 : s * 0x7fff;
+  }
+  return new Uint8Array(out.buffer);
+}
+function pcm16ToFloat(u8){
+  const view = new Int16Array(u8.buffer, u8.byteOffset, u8.byteLength / 2);
+  const out = new Float32Array(view.length);
+  for (let i = 0; i < view.length; i++) out[i] = view[i] / 0x8000;
+  return out;
+}
+
+// Берём эфемерный токен у нашего сервера. Ключ Gemini в браузер не попадает.
+async function fetchToken(){
+  const r = await fetch('/api/voice-token?t=' + encodeURIComponent(ACCESS), {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({t: ACCESS, model: MODEL})
+  });
+  if (!r.ok){
+    const e = await r.json().catch(() => ({}));
+    throw new Error(e.error || ('http_' + r.status));
+  }
+  return r.json();
+}
+
+async function start(){
+  try {
+    setStatus('Получаю доступ...', 'work');
+    const { token, model } = await fetchToken();
+
+    setStatus('Включаю микрофон...', 'work');
+    micStream = await navigator.mediaDevices.getUserMedia({
+      audio:{channelCount:1, echoCancellation:true, noiseSuppression:true}
+    });
+
+    const wsUrl = 'wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1alpha.GenerativeService.BidiGenerateContent?key=' + encodeURIComponent(token);
+    ws = new WebSocket(wsUrl);
+
+    ws.onopen = () => {
+      ws.send(JSON.stringify({
+        setup:{
+          model: model,
+          generationConfig:{ responseModalities:['AUDIO'], speechConfig:{ languageCode:'ru-RU' } },
+          systemInstruction:{ parts:[{text: SYSTEM_PROMPT}] },
+          outputAudioTranscription:{},
+          inputAudioTranscription:{}
+        }
+      }));
+    };
+
+    ws.onmessage = async (ev) => {
+      let data = ev.data;
+      if (data instanceof Blob) data = await data.text();
+      let msg;
+      try { msg = JSON.parse(data); } catch(e){ return; }
+
+      if (msg.setupComplete){
+        log('sys', 'Соединение установлено. Говорите.');
+        setStatus('На связи', 'live');
+        startMic();
+        startBtn.disabled = true;
+        stopBtn.disabled = false;
+        running = true;
+        return;
+      }
+      const sc = msg.serverContent;
+      if (!sc) return;
+      if (sc.inputTranscription && sc.inputTranscription.text) log('you', sc.inputTranscription.text);
+      if (sc.outputTranscription && sc.outputTranscription.text) log('bot', sc.outputTranscription.text);
+      if (sc.interrupted) nextPlayTime = 0;
+      const parts = (sc.modelTurn && sc.modelTurn.parts) || [];
+      for (const p of parts){
+        if (p.inlineData && p.inlineData.data) playPcm(b64decode(p.inlineData.data));
+      }
+      if (sc.turnComplete) nextPlayTime = 0;
+    };
+
+    ws.onerror = () => { log('sys', 'Ошибка соединения.'); setStatus('Ошибка соединения', 'err'); };
+    ws.onclose = (e) => {
+      if (running) log('sys', 'Соединение закрыто (код ' + e.code + ').');
+      cleanup();
+    };
+  } catch(e){
+    const msg = String(e.message || e);
+    if (msg === 'forbidden'){ log('sys', 'Нет доступа. Открой страницу по правильной ссылке с токеном.'); setStatus('Доступ закрыт', 'err'); }
+    else if (msg === 'rate_limited'){ log('sys', 'Слишком много попыток. Подожди немного.'); setStatus('Слишком часто', 'err'); }
+    else if (msg === 'server_not_configured'){ log('sys', 'На сервере не задан ключ Gemini.'); setStatus('Не настроено', 'err'); }
+    else { log('sys', 'Не удалось начать: ' + msg); setStatus('Ошибка', 'err'); }
+    if (micStream){ micStream.getTracks().forEach(t => t.stop()); micStream = null; }
+  }
+}
+
+function startMic(){
+  audioCtx = new (window.AudioContext || window.webkitAudioContext)({sampleRate:16000});
+  sourceNode = audioCtx.createMediaStreamSource(micStream);
+  processor = audioCtx.createScriptProcessor(2048, 1, 1);
+  processor.onaudioprocess = (e) => {
+    if (!ws || ws.readyState !== 1) return;
+    const pcm = floatToPcm16(e.inputBuffer.getChannelData(0));
+    ws.send(JSON.stringify({realtimeInput:{mediaChunks:[{mimeType:'audio/pcm;rate=16000', data: b64encode(pcm)}]}}));
+  };
+  sourceNode.connect(processor);
+  processor.connect(audioCtx.destination);
+}
+
+function playPcm(u8){
+  if (!playbackCtx) playbackCtx = new (window.AudioContext || window.webkitAudioContext)({sampleRate:24000});
+  const f32 = pcm16ToFloat(u8);
+  const buf = playbackCtx.createBuffer(1, f32.length, 24000);
+  buf.copyToChannel(f32, 0);
+  const src = playbackCtx.createBufferSource();
+  src.buffer = buf;
+  src.connect(playbackCtx.destination);
+  const now = playbackCtx.currentTime;
+  if (nextPlayTime < now) nextPlayTime = now;
+  src.start(nextPlayTime);
+  nextPlayTime += buf.duration;
+}
+
+function cleanup(){
+  running = false;
+  startBtn.disabled = false;
+  stopBtn.disabled = true;
+  if (processor){ try{processor.disconnect()}catch(e){} processor = null; }
+  if (sourceNode){ try{sourceNode.disconnect()}catch(e){} sourceNode = null; }
+  if (audioCtx){ try{audioCtx.close()}catch(e){} audioCtx = null; }
+  if (micStream){ micStream.getTracks().forEach(t => t.stop()); micStream = null; }
+  if (ws && ws.readyState === 1) ws.close();
+  ws = null;
+  nextPlayTime = 0;
+  setStatus('Отключено');
+}
+
+startBtn.onclick = start;
+stopBtn.onclick = cleanup;
+</script>
+</body>
+</html>
