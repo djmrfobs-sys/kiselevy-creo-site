@@ -184,9 +184,26 @@ async function start(){
     const { token, model } = await fetchToken();
 
     setStatus('Включаю микрофон...', 'work');
-    micStream = await navigator.mediaDevices.getUserMedia({
-      audio:{channelCount:1, echoCancellation:true, noiseSuppression:true}
-    });
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+      log('sys', 'Браузер не даёт доступ к микрофону. Открой ссылку в Chrome или Safari, а не внутри Telegram.');
+      throw new Error('mic');
+    }
+    if (!window.isSecureContext){
+      log('sys', 'Страница открыта не по https, микрофон недоступен.');
+      throw new Error('mic');
+    }
+    log('sys', 'Запрашиваю микрофон...');
+    try {
+      micStream = await navigator.mediaDevices.getUserMedia({audio:{channelCount:1, echoCancellation:true, noiseSuppression:true}});
+    } catch(me){
+      const n = (me && me.name) || 'Error';
+      if (n === 'NotAllowedError') log('sys', 'Доступ к микрофону запрещён. Разреши его в настройках браузера для этого сайта.');
+      else if (n === 'NotFoundError') log('sys', 'Микрофон не найден на устройстве.');
+      else if (n === 'NotReadableError') log('sys', 'Микрофон занят другим приложением.');
+      else log('sys', 'Микрофон не открылся: ' + n + ' - ' + ((me && me.message) || ''));
+      throw new Error('mic');
+    }
+    log('sys', 'Микрофон включён.');
 
     const wsUrl = 'wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1alpha.GenerativeService.BidiGenerateContent?key=' + encodeURIComponent(token);
     ws = new WebSocket(wsUrl);
@@ -240,6 +257,7 @@ async function start(){
     if (msg === 'forbidden'){ log('sys', 'Нет доступа. Открой страницу по правильной ссылке с токеном.'); setStatus('Доступ закрыт', 'err'); }
     else if (msg === 'rate_limited'){ log('sys', 'Слишком много попыток. Подожди немного.'); setStatus('Слишком часто', 'err'); }
     else if (msg === 'server_not_configured'){ log('sys', 'На сервере не задан ключ Gemini.'); setStatus('Не настроено', 'err'); }
+    else if (msg === 'mic'){ setStatus('Микрофон не открылся', 'err'); }
     else { log('sys', 'Не удалось начать: ' + msg); setStatus('Ошибка', 'err'); }
     if (micStream){ micStream.getTracks().forEach(t => t.stop()); micStream = null; }
   }
