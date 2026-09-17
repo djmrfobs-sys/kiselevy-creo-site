@@ -1455,7 +1455,7 @@
     }
     wrap.appendChild(div);
     if(alignTop){
-      wrap.scrollTop = div.offsetTop - 8;
+      try{ div.scrollIntoView({block: 'start'}); }catch(e){ wrap.scrollTop = div.offsetTop - 8; }
     } else {
       wrap.scrollTop = wrap.scrollHeight;
     }
