@@ -1432,9 +1432,12 @@
     // Экранируем весь текст, затем оборачиваем ссылки в <a>, чтобы в виджете чата
     // адрес был настоящей кликабельной ссылкой, а не серым текстом.
     let safe = escapeHtml(String(raw));
-    safe = safe.replace(/(https?:\/\/[^\s<>()]+)/g, function(u){
-      return '<a href="' + u + '" target="_blank" rel="noopener noreferrer">' + u + '</a>';
+    safe = safe.replace(/((?:https?:\/\/|t\.me\/)[^\s<>()]+)/g, function(u){
+      var url = u;
+      if(url.indexOf('t.me/') === 0) url = 'https://' + url;
+      return '<a href="' + url + '" target="_blank" rel="noopener noreferrer">' + url + '</a>';
     });
+
     return safe;
   }
 
@@ -1444,14 +1447,19 @@
     div.className = 'chat-msg chat-msg-' + who;
     div.innerHTML = chatLinkify(text);
     // Если бот дал ссылку на канал - добавляем кнопку, чтобы промахнуться было нельзя
-    if(typeof text === 'string' && text.indexOf('t.me/Kiselevy_Creo_digital') !== -1){
-      var btn = document.createElement('a');
-      btn.href = 'https://t.me/Kiselevy_Creo_digital';
-      btn.target = '_blank';
-      btn.rel = 'noopener noreferrer';
-      btn.className = 'chat-channel-btn';
-      btn.textContent = 'Подписаться на канал';
-      div.appendChild(btn);
+    if(typeof text === 'string' && text.match(/t\.me\/[^\s<>()]*/)) {
+      var m = text.match(/(t\.me\/[^\s<>()]*)/);
+      if(m){
+        var link = m[1];
+        if(link.indexOf('t.me/') === 0) link = 'https://' + link;
+        var btn = document.createElement('a');
+        btn.href = link;
+        btn.target = '_blank';
+        btn.rel = 'noopener noreferrer';
+        btn.className = 'chat-channel-btn';
+        btn.textContent = 'Подписаться на канал';
+        div.appendChild(btn);
+      }
     }
     wrap.appendChild(div);
     if(alignTop){
